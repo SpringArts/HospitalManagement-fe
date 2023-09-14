@@ -19,8 +19,7 @@ export default function Page() {
                 console.error("Passwords do not match");
                 return;
             }
-            await axios.get('/sanctum/csrf-cookie')
-            const response = await axios.post("api/register", data);
+            const response = await axios.post("/register", data);
             console.log("Registration successful:", response.data.message);
         } catch (error) {
             if (error.response && error.response.status === 422) {

@@ -12,7 +12,7 @@ export default function Home() {
     const user = JSON.stringify(Cookies.get("user_info"))
     console.log("token",token);
     if(!token){
-        router.push("/register")
+        router.push("/auth/register")
     }else{
         if(user.role === "admin"){
             router.push("/dashboard")

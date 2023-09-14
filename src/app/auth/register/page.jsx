@@ -34,14 +34,14 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <div className="overflow-hidden">
             <form
                 method="POST"
                 onSubmit={handleRegister}
                 className="min-h-screen flex items-center justify-center bg-gray-100"
             >
                 <div className="min-w-full h-screen relative bg-gradient-to-br from-teal-300 to-blue-500 p-5">
-                    <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24 lg:pl-96">
+                    <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24">
                         <div className="w-full sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
                             <h1 className="font-medium text-2xl text-opacity-35 text-[#000000] text-center">
                                 Create Account
@@ -148,9 +148,9 @@ export default function Page() {
                                 Sign Up
                             </button>
                         </div>
-                        <div className="flex items-center p-3 mt-4 sm:ml-4 sm:ml-12 md:ml-48">
+                        <div className="flex items-center p-3 mt-4 md:ml-48">
                             <Image
-                                className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+                                className="relative "
                                 src="/login.svg"
                                 alt="Register Logo"
                                 width={750}

@@ -8,17 +8,11 @@ export default function Page() {
         name: "",
         email: "",
         password: "",
-        passwordConfirmation: "",
     });
     let data = JSON.stringify(formData);
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            // Check if passwords match
-            if (formData.password !== formData.passwordConfirmation) {
-                console.error("Passwords do not match");
-                return;
-            }
             const response = await axios.post("/register", data);
             console.log("Registration successful:", response.data.message);
         } catch (error) {
@@ -107,20 +101,6 @@ export default function Page() {
                                     value={formData.password}
                                     onChange={handleChange}
                                     placeholder="Password"
-                                />
-                            </div>
-                            <div className="relative mt-5">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512"><path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" /></svg>
-                                </div>
-                                <input
-                                    type="text"
-                                    id="password-icon"
-                                    name="passwordConfirmation"
-                                    className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    value={formData.passwordConfirmation}
-                                    onChange={handleChange}
-                                    placeholder="Confirm Password"
                                 />
                             </div>
 

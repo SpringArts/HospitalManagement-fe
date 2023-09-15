@@ -1,6 +1,22 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 import Image from "next/image";
+// import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Home() {
+    const router = useRouter();
+    const token = Cookies.get("token");
+    const user = JSON.stringify(Cookies.get("user_info"));
+    console.log("token", token);
+    if (!token) {
+        router.push("auth/register");
+    } else {
+        if (user.role === "admin") {
+            router.push("/dashboard");
+        }
+    }
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">

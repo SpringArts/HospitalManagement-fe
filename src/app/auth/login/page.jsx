@@ -13,13 +13,7 @@ const page = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            const response = await axios.post("/login", {
-                headers: {
-                    'Content-Type' : "application/json",
-                    'accept' : "application/json"
-                },
-                body: data
-            });
+            const response = await axios.post("/login", data);
 
             console.log("Login successfully: ", response.data);
         }catch(error){
@@ -27,7 +21,7 @@ const page = () => {
                 const validationErrors = error.response.data.errors;
                 console.error("Validation errors:", validationErrors);
             } else {
-                console.error("Registration error:", error.message);
+                console.error("Login error:", error.message);
             }
         }
     };

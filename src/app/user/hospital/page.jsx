@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import axios from "axios";
+import axios from "@/lib/axios";
 import Layout from "../Layout";
 
 const page = () => {
@@ -10,16 +10,12 @@ const page = () => {
     const token = Cookies.get("token");
     const getHospitalList = async () => {
         try {
-            const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/hospitals?perPage=8",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
+            const { data } = await axios.get("/hospitals?perPage=8", {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
-            );
+            });
             console.log(data);
             setHospitalLists(data.data.hospitals);
             return data;

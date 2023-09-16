@@ -9,7 +9,7 @@ export default function Layout({ children }) {
         {
             id: 2,
             name: "Partners",
-            to: "/partners",
+            to: "/user/hospital",
         },
         {
             id: 3,

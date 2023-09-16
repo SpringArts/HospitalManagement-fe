@@ -9,7 +9,7 @@ export default function ProtectRoute() {
     if (!token) {
         router.push("auth/register");
     } else {
-        if (user.role === "admin") {
+        if (user?.role === "admin") {
             router.push("/dashboard");
         }
     }

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "@/lib/axios";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 export default function Page() {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export default function Page() {
         email: "",
         password: "",
     });
+    Cookies.set("token","1|QxYOcMXPNsg535WOKtkpNu1Lk7TO4WveMOYeMzqg7d459c07")
     let data = JSON.stringify(formData);
     const handleRegister = async (e) => {
         e.preventDefault();

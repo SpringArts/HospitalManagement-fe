@@ -14,7 +14,7 @@ export default function Layout({ children }) {
         {
             id: 3,
             name: "About us",
-            to: "/about-us",
+            to: "/user/about-us",
         },
     ];
     return (

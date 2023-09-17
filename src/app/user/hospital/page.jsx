@@ -103,7 +103,7 @@ const page = () => {
                 {/* Hospital Lists */}
                 <div className="w-full max-w-6xl mx-auto">
                     <div className="grid grid-cols-4 gap-x-8 gap-y-8">
-                        {hospitalLists?.hospitals?.map((item, index) => (
+                        {hospitalLists?.data?.map((item, index) => (
                             <div key={index}>
                                 <img
                                     src="/sample.svg"

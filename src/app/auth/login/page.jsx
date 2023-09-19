@@ -25,7 +25,7 @@ const LoginPage = () => {
             const token = data.data.token
             Cookies.set('user_info', JSON.stringify(user))
             Cookies.set('token', token)
-            router.push('/')
+            router.push('/user')
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 const data = error.response.data

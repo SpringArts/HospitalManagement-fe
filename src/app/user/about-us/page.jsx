@@ -32,7 +32,7 @@ const page = () => {
                                 height={150}
                                 priority
                             />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">
                                 <a href="#">Aung Zaw Phyo</a>
                             </h3>
                             <p>Developer</p>
@@ -101,7 +101,7 @@ const page = () => {
                                 height={150}
                                 priority
                             />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
                                 <a href="#">Khant Lin Nyan</a>
                             </h3>
                             <p>Developer</p>
@@ -170,7 +170,7 @@ const page = () => {
                                 height={150}
                                 priority
                             />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
                                 <a href="#">Lwin Moe Aung</a>
                             </h3>
                             <p>Developer</p>
@@ -239,7 +239,7 @@ const page = () => {
                                 height={150}
                                 priority
                             />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
                                 <a href="#">Min Hein Ko Ko</a>
                             </h3>
                             <p>Developer</p>
@@ -308,7 +308,7 @@ const page = () => {
                                 height={150}
                                 priority
                             />
-                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">
                                 <a href="#">Yoon Yoon Htike</a>
                             </h3>
                             <p>UI/UX</p>

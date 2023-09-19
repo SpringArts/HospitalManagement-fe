@@ -1,153 +1,78 @@
-"use client";
-import { useState } from "react";
+"use client"
+import { useState, useRef } from 'react'
 import axios from "@/lib/axios";
+import Image from 'next/image'
+import login_img from '/public/images/health_care.svg'
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
-const page = () => {
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    });
+const LoginPage = () => {
+    const [error, setError] = useState(null)
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const router = useRouter()
 
-    let data = JSON.stringify(formData);
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try{
-            const response = await axios.post("/login", {
-                headers: {
-                    'Content-Type' : "application/json",
-                    'accept' : "application/json"
-                },
-                body: data
-            });
-
-            console.log("Login successfully: ", response.data);
-        }catch(error){
+    const submitHandler = async (event) => {
+        event.preventDefault()
+        setError(null)
+        const email = emailRef.current.value
+        const password = passwordRef.current.value
+        try {
+            const response = await axios.post("/login", JSON.stringify({ email, password }));
+            const data = response.data
+            console.log(data)
+            const user = data.data.user
+            const token = data.data.token
+            Cookies.set('user_info', JSON.stringify(user))
+            Cookies.set('token', token)
+            router.push('/')
+        } catch (error) {
             if (error.response && error.response.status === 422) {
-                const validationErrors = error.response.data.errors;
-                console.error("Validation errors:", validationErrors);
+                const data = error.response.data
+                setError(data.message)
             } else {
-                console.error("Registration error:", error.message);
+                setError('Something wrong.')
             }
         }
-    };
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+    }
 
     return (
-        <div className="overflow-hidden">
-            <form
-                method="POST"
-                onSubmit={handleLogin}
-                className="min-h-screen flex items-center justify-center bg-gray-100"
-            >
-                <div className="min-w-full h-screen relative bg-gradient-to-br from-teal-300 to-blue-500 p-5">
-                    <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24">
-                        <div className="w-full sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
-                            <h1 className="font-medium text-2xl text-opacity-35 text-[#000000] text-center">
-                                Create Account
-                            </h1>
-                            <div className="flex justify-center items-center mt-4 space-x-3">
-                                {/* GitHub Icon */}
-                                <div className="flex items-center border border-blue-500 rounded-full p-3 mr-3">
-                                    <svg
-                                        className="w-4 h-4 text-[#327CEC] dark:text-gray-400"
-                                        fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="1em"
-                                        viewBox="0 0 496 512"
-                                    >
-                                        <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
-                                    </svg>
-                                </div>
-
-                                {/* Gmail Icon */}
-                                <div className="flex items-center border border-blue-500 rounded-full p-3 ml-3">
-                                    <svg
-                                        className="w-4 h-4 text-[#327CEC] dark:text-gray-400"
-                                        fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="1em"
-                                        viewBox="0 0 512 512"
-                                    >
-                                        <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div className="text-center text-black text-opacity-40 font-bold text-sm tracking-wide pt-5">
-                                or use your email for login
-                            </div>
-
-                            <div className="relative mt-5">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                                    <svg
-                                        className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 16"
-                                    >
-                                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                                    </svg>
-                                </div>
-                                <input
-                                    type="text"
-                                    id="email-icon"
-                                    name="email"
-                                    className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Email Address"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="relative mt-5">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                                    <svg
-                                        className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="currentColor"
-                                        height="1em"
-                                        viewBox="0 0 448 512"
-                                    >
-                                        <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" />
-                                    </svg>
-                                </div>
-                                <input
-                                    type="text"
-                                    id="password-icon"
-                                    name="password"
-                                    className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Password"
-                                />
-                            </div>
-
-                            <button className="w-full h-12 mt-4 px-6 rounded-full text-white bg-[#1EC1A4] focus:shadow-outline hover:bg-indigo-800">
-                                Sign Up
-                            </button>
-                        </div>
-                        <div className="flex items-center p-3 mt-4 md:ml-48">
-                            {/* <Image
-                        className="relative "
-                        src="/login.svg"
-                        alt="Register Logo"
-                        width={750}
-                        height={750}
-                        priority
-                    /> */}
-                        </div>
+        <div className="w-screen h-screen text-[#333] bg-gradient-to-br from-[#eee] from-40% to-blue-500 ">
+            <div className='container p-4 lg:p-8 flex justify-center items-center h-full w-full'>
+                <div className="w-full lg:w-[50%] flex justify-center items-center">
+                    <div className="w-full md:w-[60%] mx-auto bg-white p-6 rounded-2xl">
+                        <h1 className="text-center text-[28px] mb-4">Welcome</h1>
+                        <p className="text-center mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, id?</p>
+                        <form onSubmit={submitHandler} className="flex flex-col">
+                            {error && <div className='text-red-800  bg-[#eee] p-2 h-[45px] rounded-2xl flex justify-center items-center mb-4'>{error}</div>}
+                            <input type="text" placeholder="Enter your email"
+                                className="
+                                        border-[1px] border-gray-700 h-[45px] rounded-2xl mb-6 p-2
+                                        outline-none focus:p-3 duration-150
+                                    "
+                                ref={emailRef}
+                            />
+                            <input type="password" placeholder="Enter your password"
+                                className="
+                                        border-[1px] border-gray-700 h-[45px] rounded-2xl mb-4 p-2
+                                        outline-none focus:p-3 duration-150
+                                    "
+                                ref={passwordRef}
+                            />
+                            <p className="text-end mb-4">Forget Your Password?</p>
+                            <button className="bg-[#1EC1A4] text-white h-[45px] rounded-2xl">SIGN IN</button>
+                        </form>
                     </div>
                 </div>
-            </form>
+                <div className="hidden w-[50%] lg:flex justify-center items-center">
+                    <Image src={login_img} alt="Picture of the author"
+                        className='w-[80%]'
+                    />
+                </div>
+            </div>
+
         </div>
     );
 };
 
-export default page;
+export default LoginPage;

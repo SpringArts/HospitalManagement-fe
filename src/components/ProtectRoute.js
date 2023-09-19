@@ -7,10 +7,12 @@ export default function ProtectRoute() {
     const user = JSON.stringify(Cookies.get("user_info"));
     console.log("token", token);
     if (!token) {
-        router.push("auth/register");
+        router.push("auth/login");
     } else {
-        if (user.role === "admin") {
+        if (user?.role === "admin") {
             router.push("/dashboard");
+        }else{
+            router.push("/user")
         }
     }
 }

@@ -20,7 +20,7 @@ export default function Layout({ children }) {
     return (
         <>
             <Navbar NavbarTitle={Navtitle} />
-            <div>{children}</div>
+            <div className="px-4 max-w-6xl mx-auto">{children}</div>
         </>
     );
 }

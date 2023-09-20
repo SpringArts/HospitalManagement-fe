@@ -38,7 +38,7 @@ export default function Navbar({ NavbarTitle }) {
                 scrollShadow ? "shadow-sm" : ""
             }`}
         >
-            <div className="grid md:grid-cols-3 py-2 px-2 mx-auto lg:max-w-7xl md:px-8">
+            <div className="grid text-center md:grid-cols-3  py-2 px-2 mx-auto lg:max-w-7xl md:px-8">
                 <div className="grid grid-cols-3 md:hidden gap-2 py-2 md:py-5 ">
                     <ToggleBtn toggleMenu={toggleMenu} open={open} />
                     <Link
@@ -49,7 +49,10 @@ export default function Navbar({ NavbarTitle }) {
                     </Link>
                     <NotiAndProfileIcon />
                 </div>
-                <Logo className={"md:block hidden w-8/12"} />
+                <div className="w-full flex justify-center">
+                    <Logo className={"md:block hidden w-9"} />
+                </div>
+
                 <div
                     className={`flex flex-row w-full rounded-xl items-center justify-between py-2 md:bg-transparent md:block bg-gray-100 ${
                         open ? "block " : "hidden"
@@ -59,7 +62,7 @@ export default function Navbar({ NavbarTitle }) {
                         {NavbarTitle.map((item) => (
                             <Link
                                 onClick={toggleMenu}
-                                className={`text-base text-black text-center py-3 px-3 md:text-lg font-normal hover:text-green-600 w-full`}
+                                className={`text-base text-zinc-700 text-center py-1 px-3 font-normal hover:text-green-600 w-full`}
                                 href={item.to}
                                 key={item.id}
                             >

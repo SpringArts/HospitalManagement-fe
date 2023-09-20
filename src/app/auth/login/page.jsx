@@ -1,4 +1,3 @@
-"use client";
 import Login from "@/components/Login";
 const page = () => {
     return (
@@ -59,4 +58,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default LoginPage;

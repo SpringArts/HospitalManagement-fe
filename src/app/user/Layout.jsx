@@ -16,6 +16,11 @@ export default function Layout({ children }) {
             name: "About us",
             to: "/user/about-us",
         },
+        {
+            id: 4,
+            name: "Contact us",
+            to: "/user/contact-us",
+        },
     ];
     return (
         <>

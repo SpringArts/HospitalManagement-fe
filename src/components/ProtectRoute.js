@@ -11,7 +11,7 @@ export default function ProtectRoute() {
     } else if (token) {
         router.push("/user");
     } else {
-        if (user.role === "admin") {
+        if (user?.role === "admin") {
             router.push("/dashboard");
         }
     }

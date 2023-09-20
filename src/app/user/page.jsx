@@ -2,9 +2,6 @@ import Layout from "./Layout";
 export default function Page() {
     return (
         <Layout>
-<<<<<<< HEAD
-            <h2>user page</h2>
-=======
             <div className="justify-center items-center flex h-min">
                 <section>
                     <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
@@ -226,7 +223,6 @@ export default function Page() {
                 </section>
             </div>
 
->>>>>>> 750afc73c80b92c53421ba9f5685413a47b02948
         </Layout>
     );
 }

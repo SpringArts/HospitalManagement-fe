@@ -58,4 +58,4 @@ const page = () => {
     );
 };
 
-export default LoginPage;
+export default page;

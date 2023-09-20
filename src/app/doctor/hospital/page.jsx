@@ -9,7 +9,7 @@ const HospitalPage = () => {
     return (
         <Layout title='Hospitals'>
             <div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="rounded shadow-lg">
                         <Image className="rounded-t mb-3 w-full mx-auto" alt='Doctor Profile' width={250} height={250} src='/hospital.jpg'/>
                         <div className="p-3">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import {AiOutlineMenu} from 'react-icons/ai'
 
 const Layout = (props) => {
     return  (
@@ -33,8 +34,9 @@ const Layout = (props) => {
                 </ul>
             </div>
             <div className="w-4/5 p-3">
-                <div className="mb-4">
+                <div className="mb-4 shadow-lg bg-[#EEEEEE] rounded p-3 flex justify-between items-center sticky top-0">
                     <h1 className="text-[26px]">{props.title}</h1>
+                    <AiOutlineMenu size={30}/>
                 </div>
                 {props.children}
             </div>

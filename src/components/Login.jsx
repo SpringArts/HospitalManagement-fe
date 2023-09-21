@@ -93,7 +93,7 @@ export default function Login() {
             </div>
 
             <button className="w-full h-12 mt-4 px-6 rounded-full text-white bg-[#1EC1A4] focus:shadow-outline hover:bg-indigo-800">
-                Sign Up
+                Sign In
             </button>
         </form>
     );

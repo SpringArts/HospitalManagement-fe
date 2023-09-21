@@ -8,11 +8,10 @@ export default function ProtectRoute() {
     console.log("token", token);
     if (!token) {
         router.push("/auth/login");
-    } else if (token) {
-        router.push("/user");
     } else {
         if (user?.role === "admin") {
             router.push("/dashboard");
         }
     }
+    return null;
 }

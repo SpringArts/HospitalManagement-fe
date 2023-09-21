@@ -1,5 +1,5 @@
 import Login from "@/components/Login";
-const page = () => {
+const Page = () => {
     return (
         <div className="overflow-hidden">
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -7,7 +7,7 @@ const page = () => {
                     <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24">
                         <div className="w-full sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
                             <h1 className="font-medium text-2xl text-opacity-35 text-zinc-800 text-center">
-                                Login
+                                Sign in
                             </h1>
                             <div className="flex justify-center items-center mt-4 space-x-3">
                                 {/* GitHub Icon */}
@@ -58,4 +58,4 @@ const page = () => {
     );
 };
 
-export default LoginPage;
+export default Page;

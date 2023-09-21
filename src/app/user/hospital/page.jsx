@@ -66,19 +66,6 @@ const page = () => {
                             placeholder="Search Hospital Name"
                         />
                     </div>
-                    <div className="relative mt-5">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                            <img src="/search.png" className="w-4 h-4" alt="" />
-                        </div>
-                        <input
-                            type="text"
-                            id="name-icon"
-                            name="name"
-                            value=""
-                            className="my-2 p-3 bg-gray-50 border rounded-full text-gray-900 text-sm block w-full pl-10 bg-transparent placeholder:text-gray-800 border-black"
-                            placeholder="Search Department"
-                        />
-                    </div>
                 </div>
 
                 {/* line break */}

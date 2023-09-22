@@ -119,11 +119,11 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="w-full max-w-6xl mx-auto">
-                    <div className="grid grid-cols-3 gap-x-4 gap-y-4">
-                        {hospitalLists?.data?.map((item, index) => (
-
-                            <Link href={`/user/hospital/${item.id}/doctors`} key={index}
+                <div className="flex flex-wrap">
+                    {hospitalLists?.data?.map((item, index) => (
+                        <div key={index}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4">
+                            <Link href={`/user/hospital/${item.id}/doctors`}
                                 className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm transition hover:shadow-lg">
                                 <div>
                                     <span
@@ -190,8 +190,8 @@ const Page = () => {
 
                                 </div>
                             </Link>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
                 {hospitalLists.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">

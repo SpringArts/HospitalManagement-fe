@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import Pagination from "@/components/DoctorOfHospital/Pagination";
+import Pagination from "@/components/Pagination";
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);

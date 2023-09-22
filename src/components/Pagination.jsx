@@ -1,101 +1,129 @@
-import React from "react";
-import { usePagination , DOTS } from "./usePagination";
 
-const Pagination = ({
-    onPageChange,
-    totalCount,
-    siblingCount = 1,
-    currentPage,
-    pageSize,
-}) => {
+import { usePathname, useRouter } from 'next/navigation';
 
-    const paginationRange = usePagination({
-        currentPage,
-        siblingCount,
-        pageSize,
-        totalCount,
-    });
+const Pagination = ({ meta, onPageChange, perPage }) => {
+    const pathname = usePathname()
+    const router = useRouter()
 
-    // If there are less than 2 times in pagination range we shall not render the component
-    if (currentPage === 0 || paginationRange?.length < 2) {
-        return null;
-    }
-
-    const onNext = () => {
-        onPageChange(currentPage + 1);
+    const handlePageChange = (page) => {
+        onPageChange(page);
+        router.push(pathname + `?page=${page}&perPage=${perPage}`);//to Change Url
     };
-
-    const onPrevious = () => {
-        onPageChange(currentPage - 1);
-    };
-
-    let lastPage = paginationRange[paginationRange.length - 1];
-
 
     return (
-        <div className="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-      <div className="flex items-center">
-        <button
-          disabled={currentPage === 1}
-          type="button"
-          className="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
-          onClick={onPrevious}
-        >
-          <svg
-            width="9"
-            fill="currentColor"
-            height="8"
-            className=""
-            viewBox="0 0 1792 1792"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z"></path>
-          </svg>
-        </button>
-        {paginationRange?.map((pageNumber , index) => {
-          if (pageNumber === DOTS) {
-            return (
-              <button key={index} className="cursor-default w-full px-4 py-2 text-base bg-white border">
-                &#8230;
-              </button>
-            );
-          }
+        <div>
+            <ol className="flex justify-center gap-1 text-xs font-medium">
+                <li>
 
-          return (
-            <button
-              type="button" key={index}
-              className={`w-full px-4 py-2 text-base border ${
-                pageNumber === currentPage
-                  ? "text-white bg-blue-500"
-                  : "text-gray-600 bg-white hover:bg-gray-100"
-              }`}
-              onClick={() => onPageChange(pageNumber)}
-            >
-              {pageNumber}
-            </button>
-          );
-        })}
+                    {meta.currentPage > 1 && (
+                        <div
+                            onClick={() => handlePageChange(meta.currentPage - 1)}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
+                        >
+                            <span className="sr-only">Prev Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>
+                    )}
 
-        <button
-          disabled={currentPage === lastPage}
-          type="button"
-          className="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
-          onClick={onNext}
-        >
-          <svg
-            width="9"
-            fill="currentColor"
-            height="8"
-            className=""
-            viewBox="0 0 1792 1792"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-    );
-};
+                </li>
+                {meta.totalPages > 5 ? (
+                    <>
+                        {meta.currentPage > 3 && (
+                            <div
+                                onClick={() => handlePageChange(1)}
+                                className="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
+                            >
+                                1
+                            </div>
+                        )}
+                        {meta.currentPage > 4 && (
+                            <div
+                                className="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
+                            >
+                                ...
+                            </div>
+                        )}
+                        {Array.from(
+                            { length: 5 },
+                            (_, index) => {
+                                const page = meta.currentPage <= 2 ? index + 1 : index + meta.currentPage - 2;
+                                return page;
+                            }
+                        ).map((page) => (
+                            <div
+                                key={page}
+                                onClick={() => handlePageChange(page)}
+                                className={`block h-8 w-8 rounded border border-gray-100 text-center leading-8  ${page === meta.currentPage ? 'text-indigo-500 bg-indigo-100' : 'text-gray-700 hover:bg-gray-50'
+                                    } cursor-pointer`}
+                            >
+                                {page}
+                            </div>
+                        ))}
+                        {meta.currentPage + 2 < meta.totalPages && (
+                            <div
+                                className="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 cursor-pointer"
+                            >
+                                ...
+                            </div>
+                        )}
+                        {meta.currentPage + 1 < meta.totalPages && (
+                            <div
+                                onClick={() => handlePageChange(meta.totalPages)}
+                                className="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 cursor-pointer"
+                            >
+                                {meta.totalPages}
+                            </div>
+                        )}
+                    </>
+                ) : (
+                    Array.from({ length: meta.totalPages }, (_, index) => index + 1).map((page) => (
+                        <div
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`block h-8 w-8 rounded border border-gray-100 text-center leading-8 ${page === meta.currentPage ? 'text-indigo-500 bg-indigo-100' : 'text-gray-700 hover:bg-gray-50'
+                                } cursor-pointer`}
+                        >
+                            {page}
+                        </div>
+                    ))
+                )}
 
-export default Pagination;
+                <li>
+                    {meta.currentPage < meta.totalPages && (
+                        <div
+                            onClick={() => handlePageChange(meta.currentPage + 1)}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 cursor-pointer"
+                        >
+                            <span className="sr-only">Next</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>
+                    )}
+                </li>
+            </ol>
+        </div>
+    )
+}
+
+export default Pagination

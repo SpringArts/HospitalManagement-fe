@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import ProtectRoute from "@/components/ProtectRoute";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={`${poppins.className} mx-auto bg-white`}>
+                <ProtectRoute />
                 {children}
             </body>
         </html>

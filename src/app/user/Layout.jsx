@@ -13,19 +13,19 @@ export default function Layout({ children }) {
         },
         {
             id: 3,
-            name: "About us",
+            name: "About",
             to: "/user/about-us",
         },
         {
             id: 4,
-            name: "Contact us",
+            name: "Contact",
             to: "/user/contact-us",
         },
     ];
     return (
         <>
             <Navbar NavbarTitle={Navtitle} />
-            <div>{children}</div>
+            <div className="px-4 max-w-6xl mx-auto">{children}</div>
         </>
     );
 }

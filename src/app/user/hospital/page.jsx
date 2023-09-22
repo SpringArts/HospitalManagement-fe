@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "@/lib/axios";
 import Layout from "../Layout";
 import Pagination from "@/components/Pagination";
 import ReactPaginate from "react-paginate";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const page = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -78,25 +80,29 @@ const page = () => {
                 <div className="w-full max-w-6xl mx-auto">
                     <div className="grid grid-cols-4 gap-x-8 gap-y-8">
                         {hospitalLists?.data?.map((item, index) => (
-                            <div key={index}>
-                                <img
-                                    src="/sample.svg"
-                                    className="w-[365px] h-[262px] object-cover rounded-lg mb-3"
-                                    alt=""
-                                />
-                                <h3 className="text-[20px] text-[#327CEC] tracking-wide">
-                                    {item?.name}
-                                </h3>
-                                <ul className="my-2 text-black flex flex-wrap gap-x-2">
-                                    {item.department?.map((dep) => (
-                                        <li>#{dep}</li>
-                                    ))}
-                                </ul>
-                                <button className="text-white fond-sm flex gap-x-3 items-center">
-                                    See Details{" "}
-                                    <img src="/rightArrow.svg" alt="" />{" "}
-                                </button>
-                            </div>
+
+                            <Link href={`/user/hospital/${item.id}/doctors`} key={index}>
+                                <div>
+                                    <Image
+                                        src="/login.svg"
+                                        alt="Doctor Avatar"
+                                        width={365}
+                                        height={365}
+                                        className="object-cover rounded-lg mb-3"
+                                    />
+                                    <h3 className="text-[20px] text-[#327CEC] tracking-wide">
+                                        {item?.name}
+                                    </h3>
+                                    <ul className="my-2 text-black flex flex-wrap gap-x-2">
+                                        {item.department?.map((dep) => (
+                                            <li>#{dep}</li>
+                                        ))}
+                                    </ul>
+                                    <button className="text-white fond-sm flex gap-x-3 items-center">
+                                        See Details{" "}
+                                        <img src="/rightArrow.svg" alt="" />{" "}
+                                    </button></div>
+                            </Link>
                         ))}
                     </div>
 

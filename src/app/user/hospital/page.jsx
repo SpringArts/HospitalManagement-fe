@@ -51,6 +51,7 @@ const page = () => {
                         </h3>
                     </div>
                 </div>
+
                 <div className="flex w-full">
                     <div className="relative w-full mx-2 md:mt-5">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">

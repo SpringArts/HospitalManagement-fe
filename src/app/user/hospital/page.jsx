@@ -193,7 +193,7 @@ const Page = () => {
                         ))}
                     </div>
                 </div>
-                {data.length === 0 ? (
+                {hospitalLists.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">
                         <p className="mb-2">No data available</p>
                         <p className="text-sm">Please check back later or refine your search criteria.</p>

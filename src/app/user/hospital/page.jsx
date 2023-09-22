@@ -5,7 +5,7 @@ import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Pagination from "@/components/DoctorOfHospital/Pagination";
+import Pagination from "@/components/Pagination";
 
 const Page = () => {
     const [meta, setMeta] = useState({});

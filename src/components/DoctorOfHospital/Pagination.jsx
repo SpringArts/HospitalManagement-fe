@@ -1,13 +1,13 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
-const Pagination = ({ meta, onPageChange }) => {
+const Pagination = ({ meta, onPageChange, perPage }) => {
     const pathname = usePathname()
     const router = useRouter()
 
     const handlePageChange = (page) => {
         onPageChange(page);
-        router.push(pathname + `?page=${page}`);//to Change Url
+        router.push(pathname + `?page=${page}&perPage=${perPage}`);//to Change Url
     };
 
     return (
@@ -56,7 +56,10 @@ const Pagination = ({ meta, onPageChange }) => {
                         )}
                         {Array.from(
                             { length: 5 },
-                            (_, index) => index + meta.currentPage - 2
+                            (_, index) => {
+                                const page = meta.currentPage <= 2 ? index + 1 : index + meta.currentPage - 2;
+                                return page;
+                            }
                         ).map((page) => (
                             <div
                                 key={page}

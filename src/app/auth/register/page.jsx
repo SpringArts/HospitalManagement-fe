@@ -10,7 +10,7 @@ export default function Page() {
         email: "",
         password: "",
     });
-    Cookies.set("token", "1|G1HwLQ3WNoaaXBecucfYos3pM4o08gfTumSYebWOb8f548d2")
+    // Cookies.set("token", "1|Hjxpnf9axydntAOa1RCfAk3i3ax9incqVOammSUya297f8be")
     let data = JSON.stringify(formData);
     const handleRegister = async (e) => {
         e.preventDefault();

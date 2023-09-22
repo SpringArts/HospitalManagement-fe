@@ -37,7 +37,6 @@ const page = () => {
 
     console.log(hospitalLists);
 
-
     return (
         <Layout>
             <section className="flex flex-col gap-y-3 min-w-full max-w-7xl relative bg-gradient-to-br from-teal-300 to-blue-500">
@@ -58,7 +57,7 @@ const page = () => {
                 <div className="w-full mt-5 bg-[#327CEC] h-[0.1rem]"></div>
 
                 {/* search box */}
-                <div className="flex px-20 justify-end">
+                <div className="flex px-20 gap-x-2 justify-end items-center">
                     <div className="relative mt-5 mx-2">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                             <img src="/search.png" className="w-4 h-4" alt="" />
@@ -114,11 +113,13 @@ const page = () => {
                         ))}
                     </div>
 
-                                        {/* //Pagination */}
+                    {/* //Pagination */}
                     <ReactPaginate
                         breakLabel="..."
                         nextLabe="next"
-                        onPageChange={(page) => setCurrentPage(page?.selected + 1)}
+                        onPageChange={(page) =>
+                            setCurrentPage(page?.selected + 1)
+                        }
                         pageRangeDisplayed={3}
                         pageCount={hospitalLists?.meta?.totalPages}
                         prevPageRel="prev"
@@ -130,7 +131,7 @@ const page = () => {
                         containerClassName="flex justify-center items-center w-full mt-8 gap-x-3"
                         pageClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-4 py-3 text-sm rounded-full tracking tracking-wider"
                     />
-{/* old pagination */}
+                    {/* old pagination */}
                     {/* <div className="flex justify-center w-full mt-8 gap-x-3">
                         <button
                             onClick={prevPage}

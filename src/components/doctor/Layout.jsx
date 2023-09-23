@@ -1,143 +1,26 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {AiOutlineMenu} from 'react-icons/ai'
-import UserProfile from "./UserProfile";
+import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
+    const [sidebar, setSidebar] = useState(false)
+    const sidebarChangeHandler = () => {
+        setSidebar(prev => !prev)
+    }
     return  (
         <div className="flex">
-            <div className="w-1/5 p-3 shadow-lg text-[#333] h-screen">
-                <div className="flex h-screen overflow-hidden sticky flex-col justify-between border-e bg-white">
-                    <div className="px-4 py-6">
-                        <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-                            Logo
-                        </span>
-
-                        <ul className="mt-6 space-y-1">
-                            <li>
-                                <a
-                                    href="/doctor"
-                                    className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
-                                >
-                                    General
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    href="/doctor/profile"
-                                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                >
-                                    Profile
-                                </a>
-                            </li>
-
-                            <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
-                                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                        <span className="text-sm font-medium">
-                                            Hospitals
-                                        </span>
-
-                                        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </summary>
-
-                                    <ul className="mt-2 space-y-1 px-4">
-                                        <li>
-                                            <a
-                                                href="/doctor/hospital"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Connected Hospitals
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/doctor/hospital"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                All Hospitals
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/doctor/hospital"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Appointments
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </details>
-                            </li>
-                            <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
-                                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                        <span className="text-sm font-medium">
-                                            Patients
-                                        </span>
-
-                                        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </summary>
-
-                                    <ul className="mt-2 space-y-1 px-4">
-                                        <li>
-                                            <a
-                                                href="/doctor/patient"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Patients
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/doctor/patient"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Appointments
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </details>
-                            </li>
-                        </ul>
-                    </div>
-                    <UserProfile />
-                </div>
+            <div 
+                className={`${sidebar ? 'translate-x-0' : 'translate-x-[-100%]' } translate-x-[-100%] lg:translate-x-0 lg:w-1/5 duration-300 fixed z-30 p-3 shadow-lg bg-white text-[#333] !h-[100vh] overflow-hidden lg:sticky top-0 bottom-0`}
+            >
+                <Sidebar/>
             </div>
-            <div className="w-4/5 p-3 bg-[#F8F9FB]">
+            <div className="w-full lg:w-4/5 p-3 bg-[#F8F9FB]">
                 <div className="mb-4 bg-[#fff] rounded p-3 flex justify-between items-center sticky top-0 z-20">
                     <h1 className="text-[22px]">{props.title}</h1>
-                    <AiOutlineMenu size={25}/>
+                    <AiOutlineMenu className="lg:hidden cursor-pointer" onClick={sidebarChangeHandler} size={25}/>
                 </div>
                 {props.children}
             </div>

@@ -33,7 +33,7 @@ const PatientPage = () => {
   return (
     <Layout title='Patients'>
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 ld:grid-cols-4 gap-4">
                 {
                     !error && patients.map(patient => (
                         <a key={patient}

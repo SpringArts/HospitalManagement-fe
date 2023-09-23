@@ -6,7 +6,7 @@ const UserProfile = () => {
     const {name , email} = JSON.parse(Cookies.get("user_info"))
 
   return (
-    <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
+            <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
                 <a
                     href="#"
                     className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"

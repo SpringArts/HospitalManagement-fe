@@ -16,6 +16,7 @@ export default function Login() {
         e.preventDefault();
         try {
             const response = await axios.post("/login", data);
+            console.log(data);
 
             console.log("Login successfully: ", response.data);
             let resData = response.data;

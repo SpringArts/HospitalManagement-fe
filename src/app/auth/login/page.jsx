@@ -1,11 +1,12 @@
 import Login from "@/components/Login";
+import Link from "next/link";
 const Page = () => {
     return (
         <div className="overflow-hidden">
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="min-w-full h-screen relative bg-gradient-to-br from-teal-300 to-blue-500 p-5">
                     <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24">
-                        <div className="w-full sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
+                        <div className="w-full sm:w-96 flex flex-col rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
                             <h1 className="font-medium text-2xl text-opacity-35 text-zinc-800 text-center">
                                 Sign in
                             </h1>
@@ -36,20 +37,19 @@ const Page = () => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="text-center text-black text-opacity-40 font-bold text-sm tracking-wide pt-5">
+                            <div className="text-center text-black text-opacity-40 font-bold text-sm tracking-wide pt-5 gap-5">
                                 or use your email for login
                             </div>
                             <Login />
-                        </div>
-                        <div className="flex items-center p-3 mt-4 md:ml-48">
-                            {/* <Image
-                        className="relative "
-                        src="/login.svg"
-                        alt="Register Logo"
-                        width={750}
-                        height={750}
-                        priority
-                    /> */}
+                            <Link
+                                href={"/auth/register"}
+                                className="text-base mt-5 text-zinc-800 "
+                            >
+                                Don't have an account?
+                                <span className="text-green-600 ml-2">
+                                    Sign Up
+                                </span>
+                            </Link>
                         </div>
                     </div>
                 </div>

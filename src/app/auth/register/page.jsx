@@ -1,13 +1,13 @@
 import Register from "@/components/Register";
 import Image from "next/image";
-
+import Link from "next/link";
 export default function Page() {
     return (
         <div className="overflow-hidden">
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="min-w-full h-screen relative bg-gradient-to-br from-teal-300 to-blue-500 p-5">
                     <div className="flex h-screen flex-col sm:flex-row items-center justify-center sm:pl-6 md:pl-24 ">
-                        <div className="w-full sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
+                        <div className="w-full flex flex-col sm:w-96 rounded-lg shadow-lg p-6 sm:p-10 bg-[#C1F8FC]">
                             <h1 className="font-medium text-2xl text-opacity-35 text-[#000000] text-center">
                                 Create Account
                             </h1>
@@ -42,6 +42,15 @@ export default function Page() {
                                 or use your email for registration
                             </div>
                             <Register />
+                            <Link
+                                href={"/auth/login"}
+                                className="text-base mt-5 text-zinc-800 "
+                            >
+                                Already have an account
+                                <span className="text-green-600 ml-2">
+                                    Sign In
+                                </span>
+                            </Link>
                         </div>
 
                         <div className="flex items-center p-3 mt-4 md:ml-48">

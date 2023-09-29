@@ -4,7 +4,7 @@ import UserBookingList from "./UserBookingList";
 export default function UserBookingData() {
     const [selectedButton, setSelectedButton] = useState(1);
     const [dynamicData, setDynamicData] = useState([]);
-    const activeStyle = "border-green-600 text-green-500";
+    const activeStyle = "border-green-600 border-green-500";
     const defStyle = "text-gray-500 hover:border-gray-300 hover:text-gray-700";
     const handleButtonClick = (number) => {
         // setDynamicData(number);
@@ -12,7 +12,7 @@ export default function UserBookingData() {
     };
 
     return (
-        <div className="mt-3">
+        <div className="mt-6">
             <div className="border-b border-gray-200">
                 <nav
                     className="-mb-px justify-center flex gap-6 md:gap-12"

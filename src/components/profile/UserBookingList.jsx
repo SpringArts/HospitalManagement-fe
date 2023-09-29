@@ -5,7 +5,7 @@ import { IdentificationCard, MapPin } from "@phosphor-icons/react";
 export default function UserBookingList() {
     return (
         <div className="gird grid-col-1 sm:grid-col-2 mt-5">
-            <div className="shadow bg-zinc-50 border rounded-xl p-2 mt-5">
+            <div className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
                 <h2 className="text-base mb-2 font-medium text-zinc-700">
                     Oct 25, 2023 - 10:00 AM
                 </h2>
@@ -65,7 +65,7 @@ export default function UserBookingList() {
                     </div>
                 </div>
             </div>
-            <div className="shadow mt-8 bg-zinc-50 border rounded-xl p-2">
+            <div className="shadow mt-8 bg-zinc-50 border rounded-xl p-3">
                 <h2 className="text-base mb-2 font-medium text-zinc-700">
                     Oct 25, 2023 - 10:00 AM
                 </h2>

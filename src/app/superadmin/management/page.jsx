@@ -28,8 +28,7 @@ const page = () => {
     const getDepartmentLists = async () => {
         await axios
             .get(
-                `http://127.0.0.1:8000/api/departments?page=${
-                    paginationModel.page + 1
+                `http://127.0.0.1:8000/api/departments?page=${paginationModel.page + 1
                 }&perPage=${paginationModel.pageSize}`,
                 {
                     headers: {
@@ -58,7 +57,7 @@ const page = () => {
                 type: "image",
                 editable: false,
                 renderCell: (params) => (
-                    <ImageAction image={params} model="doctors" />
+                    <ImageAction image={params} model="departments" />
                 ),
             },
             {
@@ -72,7 +71,7 @@ const page = () => {
                 field: "createdAt",
                 headerName: "Created_At",
                 flex: 1,
-                editable: false ,
+                editable: false,
                 sortable: false,
             },
             {
@@ -88,12 +87,14 @@ const page = () => {
                     if (isInEditMode) {
                         return [
                             <GridActionsCellItem
+                                key={id}
                                 icon={<SaveIcon />}
                                 label="Save"
                                 sx={{ color: "primary.main" }}
                                 onClick={() => handleSaveClick(id, row)}
                             />,
                             <GridActionsCellItem
+                                key={id}
                                 icon={<CancelIcon />}
                                 label="Cancel"
                                 className="textPrimary"
@@ -105,6 +106,7 @@ const page = () => {
 
                     return [
                         <GridActionsCellItem
+                            key={id}
                             icon={<EditIcon />}
                             label="Edit"
                             className="textPrimary"
@@ -112,9 +114,10 @@ const page = () => {
                             color="inherit"
                         />,
                         <GridActionsCellItem
+                            key={id}
                             icon={<DeleteIcon />}
                             label="Delete"
-                            onClick={()=>handleDeleteClick(id , row)}
+                            onClick={() => handleDeleteClick(id, row)}
                             color="inherit"
                         />,
                     ];
@@ -168,18 +171,18 @@ const page = () => {
         }
     };
     const handleDeleteClick = async (id) => {
-        try{
+        try {
             await axios.delete(`http://127.0.0.1:8000/api/departments/${id}`,
-            {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((response)=> {
-                console.log(response)
-                toast.success("The patient is deleted successfully.")
-            })
-        }catch (error){
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }).then((response) => {
+                    console.log(response)
+                    toast.success("The patient is deleted successfully.")
+                })
+        } catch (error) {
             if (error.response && error.response.status === 422) {
                 toast.error(error.response.data.errors);
             } else {

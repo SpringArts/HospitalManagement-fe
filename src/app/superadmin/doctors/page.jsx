@@ -35,8 +35,7 @@ const page = () => {
         try {
             await axios
                 .get(
-                    `http://127.0.0.1:8000/api/doctors?page=${
-                        paginationModel.page + 1
+                    `http://127.0.0.1:8000/api/doctors?page=${paginationModel.page + 1
                     }&perPage=${paginationModel.pageSize}`,
                     {
                         headers: {
@@ -62,8 +61,8 @@ const page = () => {
 
     const handleSaveClick = async (id, row) => {
         try {
-            const { department, experience, bio , duty_start_time , duty_end_time , license } = row;
-            console.log({ department, experience, bio, id , duty_start_time , duty_end_time , license });
+            const { department, experience, bio, duty_start_time, duty_end_time, license } = row;
+            console.log({ department, experience, bio, id, duty_start_time, duty_end_time, license });
             await axios
                 .put(
                     `http://127.0.0.1:8000/api/doctors/${id}`,
@@ -112,8 +111,8 @@ const page = () => {
         }
     };
 
-    const handleDeleteClick = async (id , row) => {
-        if(row.image?.url){
+    const handleDeleteClick = async (id, row) => {
+        if (row.image?.url) {
             try {
                 await axios.delete(
                     `http://127.0.0.1:8000/api/image-upload/${image.row?.image?.id}`,
@@ -132,17 +131,17 @@ const page = () => {
                 }
             }
         }
-        try{
-            await axios.delete(`http://127.0.0.1:8000/api/doctors/${id}`, 
-            {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((response)=> {
-                toast.success("The doctor is deleted successfully.")
-            })
-        }catch (error){
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/doctors/${id}`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }).then((response) => {
+                    toast.success("The doctor is deleted successfully.")
+                })
+        } catch (error) {
             if (error.response && error.response.status === 422) {
                 toast.error(error.response.data.errors);
             } else {
@@ -227,7 +226,7 @@ const page = () => {
             },
             {
                 field: "duty_end_time",
-                headerName: "Start",
+                headerName: "End",
                 width: 100,
                 editable: true,
             },
@@ -270,7 +269,7 @@ const page = () => {
                         <GridActionsCellItem
                             icon={<DeleteIcon />}
                             label="Delete"
-                            onClick={()=>handleDeleteClick(id , row)}
+                            onClick={() => handleDeleteClick(id, row)}
                             color="inherit"
                         />,
                     ];

@@ -15,7 +15,7 @@ export default function UserBookingList() {
                         width={100}
                         height={100}
                         src={profileImg}
-                        className="bg-gray-100 w-20 h-20 rounded-md p-3"
+                        className="bg-gray-200 w-20 h-20 rounded-2xl p-3"
                     />
                     <div className="flex gap-1 flex-col">
                         <h1 className="text-lg text-zinc-800">Dr.Mg Mg</h1>

@@ -7,7 +7,7 @@ export default function page() {
             <h1 className="text-2xl  text-zinc-700 font-semibold">Profile</h1>
             <UserProfile />
             <hr />
-            <h1 className="text-lg font-medium text-zinc-700 text-center mt-4">
+            <h1 className="text-lg font-medium text-zinc-700 text-center mt-2">
                 My Booking
             </h1>
             <UserBookingData />

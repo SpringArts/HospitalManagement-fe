@@ -1,8 +1,9 @@
-'use client'
+"use client";
 import Layout from "@/app/user/Layout";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
+import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 
@@ -15,16 +16,19 @@ const Page = ({ params }) => {
     const [search, setSearch] = useState("");
     const token = Cookies.get("token");
     const fetchData = async () => {
-        const { data } = await axios.get(`/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`, {
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
+        const { data } = await axios.get(
+            `/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             },
-        });
+        );
         console.log(data.data);
         setData(data.data.data);
         setMeta(data.data.meta);
-    }
+    };
 
     const handlePageChange = (newPage) => {
         setPage(newPage);
@@ -41,7 +45,10 @@ const Page = ({ params }) => {
                     <nav aria-label="Breadcrumb">
                         <ol className="flex items-center gap-1 text-sm text-gray-600">
                             <li>
-                                <a href="#" className="block transition hover:text-gray-700">
+                                <a
+                                    href="#"
+                                    className="block transition hover:text-gray-700"
+                                >
                                     <span className="sr-only"> Home </span>
 
                                     <svg
@@ -77,7 +84,13 @@ const Page = ({ params }) => {
                             </li>
 
                             <li>
-                                <a href="#" className="block transition hover:text-gray-700"> Partners </a>
+                                <a
+                                    href="#"
+                                    className="block transition hover:text-gray-700"
+                                >
+                                    {" "}
+                                    Partners{" "}
+                                </a>
                             </li>
                             <li className="rtl:rotate-180">
                                 <svg
@@ -95,7 +108,13 @@ const Page = ({ params }) => {
                             </li>
 
                             <li>
-                                <a href="#" className="block transition hover:text-gray-700"> Doctors </a>
+                                <a
+                                    href="#"
+                                    className="block transition hover:text-gray-700"
+                                >
+                                    {" "}
+                                    Doctors{" "}
+                                </a>
                             </li>
                         </ol>
                     </nav>
@@ -108,11 +127,16 @@ const Page = ({ params }) => {
                 </div>
             </div>
             <div>
-
                 <div className="flex w-full">
                     <div className="relative w-full mx-2 md:mt-5">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" /></svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="1em"
+                                viewBox="0 0 512 512"
+                            >
+                                <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                            </svg>
                         </div>
                         <input
                             type="text"
@@ -130,8 +154,8 @@ const Page = ({ params }) => {
             <div className="flex flex-wrap">
                 {data.map((item, index) => (
                     <div
-                        key={index}
-                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4"
+                        key={item.id}
+                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
                     >
                         <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6">
                             <div className="flex items-center">
@@ -145,7 +169,7 @@ const Page = ({ params }) => {
                                     />
                                 </div>
 
-                                <div className="ml-1">
+                                <div className="ml-1 ">
                                     <a href="#">
                                         <h3 className="mt-0.5 text-lg font-medium text-gray-900">
                                             {item.name}
@@ -160,11 +184,11 @@ const Page = ({ params }) => {
                                 </div>
                             </div>
 
-                            <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                            <p className="mt-5 line-clamp-3 text-sm/relaxed text-gray-500">
                                 {item.bio}
                             </p>
 
-                            <a
+                            <Link
                                 href="#"
                                 className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
                             >
@@ -175,27 +199,27 @@ const Page = ({ params }) => {
                                 >
                                     &rarr;
                                 </span>
-                            </a>
+                            </Link>
                         </article>
                     </div>
-                ))
-                }
-            </div >
+                ))}
+            </div>
             {data.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">
                     <p className="mb-2">No data available</p>
-                    <p className="text-sm">Please check back later or refine your search criteria.</p>
+                    <p className="text-sm">
+                        Please check back later or refine your search criteria.
+                    </p>
                 </div>
-
-
             ) : (
-                <Pagination meta={meta} onPageChange={handlePageChange} perPage={perPage} />
+                <Pagination
+                    meta={meta}
+                    onPageChange={handlePageChange}
+                    perPage={perPage}
+                />
             )}
-
-        </Layout >
-
-    )
-}
-
+        </Layout>
+    );
+};
 
 export default Page;

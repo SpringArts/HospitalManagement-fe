@@ -1,8 +1,7 @@
 "use client";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import profileImg from "../../public/images/userProfile.png";
-import Link from "next/link";
+import profileImg from "../../../public/images/userProfile.png";
 import { useEffect, useState } from "react";
 
 function UserProfile() {
@@ -27,10 +26,10 @@ function UserProfile() {
     }, []);
 
     return (
-        <div className="flex justify-center md:justify-start gap-5 ">
+        <div className="flex flex-col md:flex-row  mt-5 justify-center mb-4 sm:justify-start gap-5 ">
             {userInfo ? (
                 <>
-                    <div className=" h-auto w-28  md:w-44 rounded-full">
+                    <div className=" h-auto mx-auto w-28  md:w-44 rounded-full md:mx-0">
                         <Image
                             src={profileImg}
                             width={320}
@@ -40,18 +39,12 @@ function UserProfile() {
                     </div>
 
                     <div className="flex flex-col ">
-                        <h2 className="font-semibold text-zinc-800 text-lg md:text-2xl">
+                        <h2 className="font-semibold text-center  md:text-left text-zinc-800 text-xl md:text-2xl">
                             {userInfo.name}
                         </h2>
-                        <p className="text-zinc-600 text-base md:text-xl">
+                        <p className="text-zinc-600 text-center md:text-left text-base md:text-xl">
                             {userInfo.email}
                         </p>
-                        <Link
-                            className="font-semibold rounded-lg text-center mt-auto text-white px-4 py-2 bg-green-500 md:mt-5"
-                            href={"/user/profile/edit-profile"}
-                        >
-                            Edit Profile
-                        </Link>
                     </div>
                 </>
             ) : (

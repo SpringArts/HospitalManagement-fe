@@ -25,7 +25,9 @@ export default function Layout({ children, className }) {
     return (
         <>
             <Navbar NavbarTitle={Navtitle} />
-            <div className={`px-5 max-w-6xl md:px-8 mx-auto ${className}`}>
+            <div
+                className={`px-5 mb-8 max-w-lg sm:max-w-6xl md:px-8 mx-auto ${className}`}
+            >
                 {children}
             </div>
         </>

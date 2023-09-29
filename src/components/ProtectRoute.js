@@ -5,7 +5,6 @@ export default function ProtectRoute() {
     const router = useRouter();
     const token = Cookies.get("token");
     const user = JSON.stringify(Cookies.get("user_info"));
-    console.log("token", token);
     if (!token) {
         router.push("/auth/login");
     } else {

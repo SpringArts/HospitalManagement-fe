@@ -1,49 +1,41 @@
 "use client";
-import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Layout from "../Layout";
 import {
     DataGrid,
     GridActionsCellItem,
-    GridCellEditStartReasons,
     GridRowEditStopReasons,
     GridRowModes,
     GridToolbar,
 } from "@mui/x-data-grid";
-
-// Icons import
+import Cookies from "js-cookie";
+import ImageAction from "@/components/admin/ImageAction";
+import axios from "axios";
+import { Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import toast from "react-hot-toast";
-import Link from "next/link";
-import { Avatar } from "@mui/material";
-import ImageAction from "@/components/admin/ImageAction";
 
 const page = () => {
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const [itemsPerPage, setItemsPerPage] = useState(20);
-    const [hospitalLists, setHospitalLists] = useState([]);
+    const [doctorLists, setDoctorLists] = useState([]);
+    const [rowCountState, setRowCountState] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [isSuccess, setIsSuccess] = useState(false);
-    const [rowCountState, setRowCountState] = useState();
-    const [rowId, setRowId] = useState(null);
     const [rowModesModel, setRowModesModel] = useState({});
-    const [queryOptions, setQueryOptions] = useState({});
-
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 10,
     });
 
     const token = Cookies.get("token");
-    const getHospitalList = async () => {
+
+    const getDoctorsList = async () => {
         try {
             await axios
                 .get(
-                    `http://127.0.0.1:8000/api/hospitals?page=${
+                    `http://127.0.0.1:8000/api/doctors?page=${
                         paginationModel.page + 1
                     }&perPage=${paginationModel.pageSize}`,
                     {
@@ -55,34 +47,27 @@ const page = () => {
                 )
                 .then((response) => {
                     setIsLoading(false);
-                    setHospitalLists(response.data.data.data);
-                    setRowCountState(response.data.data.meta.totalItems);
+                    setDoctorLists(response.data.data);
+                    setRowCountState(response.data.meta.totalItems);
                     setIsSuccess(true);
-                })
-                .then((error) => console.log(error));
+                });
         } catch (err) {
             console.log(err);
         }
     };
 
     useEffect(() => {
-        getHospitalList();
+        getDoctorsList();
     }, [paginationModel]);
-
-    const handleEditClick = (id) => () => {
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: { mode: GridRowModes.Edit },
-        });
-    };
 
     const handleSaveClick = async (id, row) => {
         try {
-            const { name, email, phone, address, bio } = row;
+            const { department, experience, bio , duty_start_time , duty_end_time , license } = row;
+            console.log({ department, experience, bio, id , duty_start_time , duty_end_time , license });
             await axios
                 .put(
-                    `http://127.0.0.1:8000/api/hospitals/${id}`,
-                    { name, email, phone, address, bio },
+                    `http://127.0.0.1:8000/api/doctors/${id}`,
+                    { department, experience, bio },
                     {
                         headers: {
                             Accept: "application/json",
@@ -91,7 +76,7 @@ const page = () => {
                     },
                 )
                 .then((response) => {
-                    toast.success("Updated successfully");
+                    toast.success("Doctor is updated successfully.");
                     setRowModesModel({
                         ...rowModesModel,
                         [id]: { mode: GridRowModes.View },
@@ -106,30 +91,56 @@ const page = () => {
         }
     };
 
+    const handleEditClick = (id) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.Edit },
+        });
+    };
+
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
-        setHospitalLists(
-            hospitalLists.map((row) => {
+        setDoctorLists(
+            doctorLists.map((row) => {
                 return row.id === newRow.id ? updatedRow : row;
             }),
         );
     };
+    const handleRowEditStop = (params, event) => {
+        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+            event.defaultMuiPrevented = true;
+        }
+    };
 
-    // const handleRowModesModelChange = (newRowModesModel)=> {
-    //     setRowModesModel(newRowModesModel)
-    // }
-
-    const handleDeleteClick = async(id) => {
+    const handleDeleteClick = async (id , row) => {
+        if(row.image?.url){
+            try {
+                await axios.delete(
+                    `http://127.0.0.1:8000/api/image-upload/${image.row?.image?.id}`,
+                    {
+                        headers: {
+                            Accept: "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
+                );
+            } catch (error) {
+                if (error.response && error.response.status === 422) {
+                    toast.error(error.response.data.errors);
+                } else {
+                    toast.error(error.message);
+                }
+            }
+        }
         try{
-            await axios.delete(`http://127.0.0.1:8000/api/hospitals/${id}`, 
+            await axios.delete(`http://127.0.0.1:8000/api/doctors/${id}`, 
             {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,
                 },
             }).then((response)=> {
-                console.log(response)
-                toast.success("The hospital is deleted successfully.")
+                toast.success("The doctor is deleted successfully.")
             })
         }catch (error){
             if (error.response && error.response.status === 422) {
@@ -147,34 +158,23 @@ const page = () => {
         });
     };
 
-    const handleRowEditStop = (params, event) => {
-        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-            event.defaultMuiPrevented = true;
-        }
-    };
-
     const columns = useMemo(
         () => [
             {
-                field: 'image',
+                field: "image",
                 headerName: "Profile",
                 width: 60,
                 sortable: false,
-                type: 'image',
-                editable: true,
-                // renderCell: (params) => <ImageAction src={params} />
-            },
-            {
-                field: "id",
-                headerName: "ID",
+                type: "image",
                 editable: false,
-                width: 60,
-                sortable: false,
+                renderCell: (params) => (
+                    <ImageAction image={params} model="doctors" />
+                ),
             },
             {
                 field: "name",
                 headerName: "Name",
-                editable: true,
+                editable: false,
                 flex: 0.6,
                 sortable: false,
             },
@@ -186,25 +186,24 @@ const page = () => {
                 sortable: false,
             },
             {
-                field: "phone",
-                headerName: "Phone",
-                editable: true,
-                width: 120,
-                sortable: false,
-            },
-            {
-                field: "address",
-                headerName: "Address",
-                editable: true,
-                flex: 1,
-                sortable: false,
-            },
-            {
                 field: "department",
                 headerName: "Department",
-                editable: false,
+                editable: true,
                 flex: 1,
                 sortable: false,
+            },
+            {
+                field: "experience",
+                headerName: "Experience",
+                editable: true,
+                flex: 0.5,
+                sortable: false,
+            },
+            {
+                field: "license",
+                headerName: "License",
+                width: 100,
+                editable: true,
             },
             {
                 field: "bio",
@@ -214,11 +213,23 @@ const page = () => {
                 sortable: false,
             },
             {
-                field: "createdAt",
-                headerName: "created_at",
-                editable: false,
+                field: "hospital",
+                headerName: "Hospital",
+                editable: true,
                 flex: 1,
                 sortable: false,
+            },
+            {
+                field: "duty_start_time",
+                headerName: "Start",
+                width: 100,
+                editable: true,
+            },
+            {
+                field: "duty_end_time",
+                headerName: "Start",
+                width: 100,
+                editable: true,
             },
             {
                 field: "actions",
@@ -259,7 +270,7 @@ const page = () => {
                         <GridActionsCellItem
                             icon={<DeleteIcon />}
                             label="Delete"
-                            onClick={()=>handleDeleteClick(id)}
+                            onClick={()=>handleDeleteClick(id , row)}
                             color="inherit"
                         />,
                     ];
@@ -301,7 +312,7 @@ const page = () => {
                 <DataGrid
                     sx={{ width: "100%" }}
                     columns={columns}
-                    rows={hospitalLists || []}
+                    rows={doctorLists || []}
                     rowCount={rowCountState}
                     loading={isLoading}
                     pageSizeOptions={[10, 15, 20]}

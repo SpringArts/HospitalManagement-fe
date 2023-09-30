@@ -2,22 +2,30 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import axios from "@/lib/axios";
+import axios from "axios";
 import Layout from "../Layout";
+import Pagination from "@/components/Pagination";
+import ReactPaginate from "react-paginate";
 
 const page = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(8);
     const [hospitalLists, setHospitalLists] = useState([]);
+    const [search, setSearch] = useState("");
     const token = Cookies.get("token");
     const getHospitalList = async () => {
         try {
-            const { data } = await axios.get("/hospitals?perPage=8", {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
+            const { data } = await axios.get(
+                `http://127.0.0.1:8000/api/hospitals?keyword=${search}&page=${currentPage}&perPage=${itemsPerPage}`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                 },
-            });
+            );
             console.log(data);
-            setHospitalLists(data.data.hospitals);
+            setHospitalLists(data.data);
             return data;
         } catch (err) {
             console.log(err);
@@ -25,8 +33,10 @@ const page = () => {
     };
     useEffect(() => {
         getHospitalList();
-    }, []);
+    }, [currentPage, search]);
+
     console.log(hospitalLists);
+
 
     return (
         <Layout>
@@ -57,7 +67,8 @@ const page = () => {
                             type="text"
                             id="name-icon"
                             name="name"
-                            value=""
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             className="my-2 p-3 bg-gray-50 border rounded-full text-gray-900 text-sm block w-full pl-10 bg-transparent placeholder:text-gray-800 border-black focus:border-[#327CEC] focus:ring-blue-600"
                             placeholder="Search Hospital Name"
                         />
@@ -80,7 +91,7 @@ const page = () => {
                 {/* Hospital Lists */}
                 <div className="w-full max-w-6xl mx-auto">
                     <div className="grid grid-cols-4 gap-x-8 gap-y-8">
-                        {hospitalLists.map((item, index) => (
+                        {hospitalLists?.data?.map((item, index) => (
                             <div key={index}>
                                 <img
                                     src="/sample.svg"
@@ -102,11 +113,59 @@ const page = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center w-full mt-8">
-                        <button className="bg-[#327CEC] mb-10 px-8 py-3 text-sm rounded-full tracking tracking-wider">
-                            Load More
+
+                                        {/* //Pagination */}
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabe="next"
+                        onPageChange={(page) => setCurrentPage(page?.selected + 1)}
+                        pageRangeDisplayed={3}
+                        pageCount={hospitalLists?.meta?.totalPages}
+                        prevPageRel="prev"
+                        renderOnZeroPageCount={null}
+                        breakClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-4 py-2 text-sm rounded-full text-lg"
+                        activeClassName="bg-green-200 hover:bg-green-300 text-white transition-all duration-300 ease-in-out"
+                        previousClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-8 py-3 text-sm rounded-full tracking tracking-wider"
+                        nextClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-8 py-3 text-sm rounded-full tracking tracking-wider"
+                        containerClassName="flex justify-center items-center w-full mt-8 gap-x-3"
+                        pageClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-4 py-3 text-sm rounded-full tracking tracking-wider"
+                    />
+{/* old pagination */}
+                    {/* <div className="flex justify-center w-full mt-8 gap-x-3">
+                        <button
+                            onClick={prevPage}
+                            disabled={currentPage === 1}
+                            className="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-8 py-3 text-sm rounded-full tracking tracking-wider"
+                        >
+                            Prev
                         </button>
-                    </div>
+                        <ul className="flex items-center gap-x-2 justify-center w-auto">
+                            {[...Array(hospitalLists?.meta?.totalPages)].map(
+                                (page, index) => (
+                                    <li key={page}>
+                                        <button
+                                            onClick={() =>
+                                                setCurrentPage(index + 1)
+                                            }
+                                            disabled={currentPage === index + 1}
+                                            className="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-5 py-3 text-sm rounded-full"
+                                        >
+                                            {index + 1}
+                                        </button>
+                                    </li>
+                                ),
+                            )}
+                        </ul>
+                        <button
+                            onClick={nextPage}
+                            disabled={
+                                currentPage === hospitalLists?.meta?.totalPages
+                            }
+                            className="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-8 py-3 text-sm rounded-full tracking tracking-wider"
+                        >
+                            Next
+                        </button>
+                    </div> */}
                 </div>
             </section>
         </Layout>

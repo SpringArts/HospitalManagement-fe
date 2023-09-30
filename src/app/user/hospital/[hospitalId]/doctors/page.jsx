@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Layout from "@/app/user/Layout";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
@@ -6,15 +6,19 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
+import AppointmentPopup from "@/components/AppointmentPopUp/AppointmentPopup";
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);
     const [meta, setMeta] = useState({});
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(6);
+    const [isOpen, setIsOpen] = useState(false);
     const hospitalId = params.hospitalId;
     const [search, setSearch] = useState("");
     const token = Cookies.get("token");
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
+
     const fetchData = async () => {
         const { data } = await axios.get(
             `/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
@@ -25,7 +29,6 @@ const Page = ({ params }) => {
                 },
             },
         );
-        console.log(data.data);
         setData(data.data.data);
         setMeta(data.data.meta);
     };
@@ -150,11 +153,10 @@ const Page = ({ params }) => {
                     </div>
                 </div>
             </div>
-
             <div className="flex flex-wrap">
                 {data.map((item, index) => (
                     <div
-                        key={item.id}
+                        key={index}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
                     >
                         <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6">
@@ -188,9 +190,12 @@ const Page = ({ params }) => {
                                 {item.bio}
                             </p>
 
-                            <Link
-                                href="#"
+                            <button
                                 className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                                onClick={() => {
+                                    setSelectedDoctor(item);
+                                    setIsOpen(true);
+                                }}
                             >
                                 Appointment
                                 <span
@@ -199,11 +204,21 @@ const Page = ({ params }) => {
                                 >
                                     &rarr;
                                 </span>
-                            </Link>
+                            </button>
                         </article>
                     </div>
                 ))}
             </div>
+
+            {selectedDoctor && isOpen && (
+                <AppointmentPopup
+                    isOpen={isOpen}
+                    onClose={setIsOpen}
+                    doctorId={selectedDoctor.id}
+                    doctorName={selectedDoctor.name}
+                />
+            )}
+
             {data.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">
                     <p className="mb-2">No data available</p>

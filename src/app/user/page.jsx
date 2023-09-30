@@ -5,16 +5,17 @@ export default function Page() {
             <div className="justify-center items-center flex h-min">
                 <section>
                     <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-                        <div
-                            className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16"
-                        >
-                            <div
-                                className="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right"
-                            >
-                                <h2 className="text-3xl font-bold sm:text-4xl">Find your career path</h2>
+                        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
+                            <div className="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
+                                <h2 className="text-3xl font-bold sm:text-4xl">
+                                    Find your career path
+                                </h2>
 
                                 <p className="mt-4 text-gray-600">
-                                    To provide persons who have had life altering medical interventions (project specific) with education in daily living, management, and comfort.
+                                    To provide persons who have had life
+                                    altering medical interventions (project
+                                    specific) with education in daily living,
+                                    management, and comfort.
                                 </p>
 
                                 <a
@@ -39,9 +40,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -51,7 +50,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">General Medical Care</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        General Medical Care
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -71,9 +72,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -83,7 +82,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">Surgical Services</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        Surgical Services
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -103,9 +104,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -115,7 +114,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">Specialized Treatments</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        Specialized Treatments
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -135,9 +136,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -147,7 +146,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">Maternity and Pediatrics</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        Maternity and Pediatrics
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -167,9 +168,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -179,7 +178,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">COVID-19 Safety Measures</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        COVID-19 Safety Measures
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -199,9 +200,7 @@ export default function Page() {
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                                            ></path>
+                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -211,7 +210,9 @@ export default function Page() {
                                         </svg>
                                     </span>
 
-                                    <h2 className="mt-2 font-bold">Emergency Care 24/7</h2>
+                                    <h2 className="mt-2 font-bold">
+                                        Emergency Care 24/7
+                                    </h2>
 
                                     <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                         Lorem ipsum dolor sit amet consectetur.
@@ -222,7 +223,6 @@ export default function Page() {
                     </div>
                 </section>
             </div>
-
         </Layout>
     );
 }

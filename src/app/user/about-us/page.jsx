@@ -8,13 +8,13 @@ const page = () => {
             <div className="bg-white ">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
                     <div className="mx-auto mb-8 max-w-screen-sm lg:mb-16">
-                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-zinc-700">
                             Our team
                         </h2>
                         <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
                             At{" "}
                             <span className="text-red-500 font-semibold">
-                                ThaKhinGyiMyar
+                                Team Fresher
                             </span>{" "}
                             Team, our team of dedicated developers is at the
                             heart of our success. With a passion for innovation

@@ -34,18 +34,18 @@ const HospitalPage = (props) => {
     return (
         <Layout title='Hospitals'>
             <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {
                         !error && hospitals.map(hospital => (
                         <a key={hospital.id}
                             href="#"
-                            className="relative block overflow-hidden rounded-lg shadow border border-gray-100"
+                            className="relative block overflow-hidden rounded shadow-lg border border-gray-100"
                         >
                             <span
                                 className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
                             ></span>
                             <Image className="rounded-t mb-3 w-full mx-auto" alt='Doctor Profile' width={250} height={250} src={hospital.image ? hospital.image : '/hospital.jpg'}/>
-                            <div className="p-3">
+                            <div className="p-4">
                                 <p className="flex items-start mb-2">
                                     <FaRegHospital size={20} className="mr-3"/> 
                                     {hospital.name}

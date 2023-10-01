@@ -227,7 +227,7 @@ const page = () => {
             },
             {
                 field: "duty_end_time",
-                headerName: "Start",
+                headerName: "End",
                 width: 100,
                 editable: true,
             },

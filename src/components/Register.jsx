@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "@/lib/axios";
+import Link from "next/link";
 export default function Register() {
     const [formData, setFormData] = useState({
         name: "",
@@ -99,6 +100,8 @@ export default function Register() {
                     placeholder="Password"
                 />
             </div>
+
+            <Link href='/auth/forgot-password'>Forgot Password?</Link>
 
             <button className="w-full h-12 mt-4 px-6 rounded-full text-white bg-[#1EC1A4] focus:shadow-outline hover:bg-indigo-800">
                 Sign Up

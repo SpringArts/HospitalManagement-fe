@@ -5,8 +5,6 @@ import { toast } from "react-hot-toast";
 
 const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     const [appointmentTime, setAppointmentTime] = useState([]);
-    const toastSuccess = () =>
-        toast.success("Appointment Confirmed", { position: "top-center" });
     const [formData, setFormData] = useState({
         doctorId: doctorId,
         appointmentType: "outpatient",
@@ -23,8 +21,6 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                 Authorization: `Bearer ${Cookies.get("token")}`,
             },
         });
-
-        console.log(appointmentTime.data.data);
         setAppointmentTime(appointmentTime.data.data);
     };
     useEffect(() => {
@@ -45,7 +41,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
 
     const handleCheckButtonClick = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        //console.log(formData);
         const response = await axios.post("/check-appointment", formData, {
             headers: {
                 Authorization: `Bearer ${Cookies.get("token")}`,
@@ -53,9 +49,12 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                 Accept: "application/json",
             },
         });
-        toastSuccess();
-        console.log(response);
-        onClose();
+        // console.log(response);
+        if (response.data.data === null) {
+            toast.error(response.data.message);
+        } else {
+            toast.success(response.data.message);
+        }
     };
 
     return (
@@ -67,21 +66,21 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
             }`}
         >
             <div
-                className={`bg-white rounded-lg border border-gray-200 shadow-xl p-6 animate__animated ${
+                className={`bg-white rounded-lg border border-gray-300 shadow-xl p-6 animate__animated ${
                     isOpen ? "animate__fadeInUp" : "animate__fadeOutDown"
                 } w-full sm:w-96 transition-transform duration-300 ease-in-out`}
             >
-                <p className="font-semibold text-lg mb-4 text-center text-gray-800">
-                    Appointment Registration
-                </p>
-                <form onSubmit={handleCheckButtonClick}>
-                    <div className="appointment-popup">
+                <div>
+                    <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
+                        Appointment Registration
+                    </h2>
+                    <form onSubmit={handleCheckButtonClick}>
                         <div className="flex flex-col space-y-4">
                             <div className="flex flex-row space-x-4">
                                 <div className="w-1/2">
                                     <label
                                         htmlFor="PatientName"
-                                        className="block text-xs font-medium text-gray-700"
+                                        className="block text-sm font-medium text-gray-700"
                                     >
                                         Patient Name
                                     </label>
@@ -90,14 +89,14 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         id="PatientName"
                                         name="patientName"
                                         value={name}
-                                        className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                                        className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                         readOnly
                                     />
                                 </div>
                                 <div className="w-1/2">
                                     <label
                                         htmlFor="DoctorName"
-                                        className="block text-xs font-medium text-gray-700"
+                                        className="block text-sm font-medium text-gray-700"
                                     >
                                         Doctor Name
                                     </label>
@@ -106,7 +105,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         id="DoctorName"
                                         name="doctorName"
                                         value={doctorName}
-                                        className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                                        className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                         readOnly
                                     />
                                 </div>
@@ -115,7 +114,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                 <div className="w-1/2">
                                     <label
                                         htmlFor="AppointmentDate"
-                                        className="block text-xs font-medium text-gray-700"
+                                        className="block text-sm font-medium text-gray-700"
                                     >
                                         Appointment Date
                                     </label>
@@ -125,13 +124,13 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         name="appointmentDate"
                                         value={formData.appointmentDate}
                                         onChange={handleInputChange}
-                                        className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                                        className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                     />
                                 </div>
                                 <div className="w-1/2">
                                     <label
                                         htmlFor="AppointmentTime"
-                                        className="block text-xs font-medium text-gray-700"
+                                        className="block text-sm font-medium text-gray-700"
                                     >
                                         Appointment Time
                                     </label>
@@ -140,7 +139,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         name="appointmentTime"
                                         value={formData.appointmentTime}
                                         onChange={handleInputChange}
-                                        className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                        className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                     >
                                         <option value="">Select Time</option>
                                         {appointmentTime.map((item, index) => (
@@ -166,7 +165,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     id="appointmentType"
                                     value={formData.appointmentType}
                                     onChange={handleInputChange}
-                                    className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                    className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                 >
                                     <option value="outpatient">
                                         OutPatient
@@ -187,28 +186,28 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     id="OrderNotes"
                                     value={formData.description}
                                     onChange={handleInputChange}
-                                    className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+                                    className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                     rows="4"
                                     placeholder="Enter your current state of health here..."
                                 ></textarea>
                             </div>
-                            <div className="flex justify-between mt-4">
+                            <div className="flex justify-between mt-6">
                                 <button
                                     type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring focus:border-blue-300"
                                 >
                                     Check Appointment
                                 </button>
                                 <button
                                     onClick={handlePopUpClick}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300"
+                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring focus:border-gray-500"
                                 >
                                     Cancel
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     );

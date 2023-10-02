@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Link from "next/link";
 export default function Login() {
     const toastSuccess = () =>
         toast.success("Successfully Sign in", { position: "top-center" });
@@ -99,7 +100,7 @@ export default function Login() {
                     placeholder="Password"
                 />
             </div>
-
+            <Link href='/auth/forgot-password' className="text-blue-500 font-normal text-sm">Forgot Password</Link>
             <button className="w-full h-12 mt-4 px-6 rounded-full text-white bg-[#1EC1A4] focus:shadow-outline hover:bg-indigo-800">
                 Sign In
             </button>

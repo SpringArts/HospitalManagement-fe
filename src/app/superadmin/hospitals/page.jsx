@@ -68,6 +68,7 @@ const page = () => {
     useEffect(() => {
         getHospitalList();
     }, [paginationModel]);
+    console.log(hospitalLists)
 
     const handleEditClick = (id) => () => {
         setRowModesModel({

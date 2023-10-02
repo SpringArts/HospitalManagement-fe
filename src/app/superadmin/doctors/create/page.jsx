@@ -72,6 +72,8 @@ const page = () => {
         getDepartmentLists();
     }, []);
 
+    console.log(hospitalLists)
+
     // const handleSubmit = async(e) =>{
     //     e.preventDefault();
     //     console.log({user_id : selectUser , hospital_id : selectHospital , department_id : department , experience , duty_start_time :startTime , duty_end_time : endTime , license , bio })

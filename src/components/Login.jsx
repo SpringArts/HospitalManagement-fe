@@ -84,7 +84,7 @@ export default function Login() {
                     </svg>
                 </div>
                 <input
-                    type="text"
+                    type="password"
                     id="password-icon"
                     name="password"
                     className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -93,7 +93,7 @@ export default function Login() {
                     placeholder="Password"
                 />
             </div>
-            <Link href='/auth/forgot-password'>Forgot Password</Link>
+            <Link href='/auth/forgot-password' className="text-blue-500 font-normal text-sm">Forgot Password</Link>
             <button className="w-full h-12 mt-4 px-6 rounded-full text-white bg-[#1EC1A4] focus:shadow-outline hover:bg-indigo-800">
                 Sign In
             </button>

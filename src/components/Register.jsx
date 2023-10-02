@@ -1,7 +1,16 @@
 "use client";
 import { useState } from "react";
 import axios from "@/lib/axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 export default function Register() {
+    const router = useRouter();
+    const toastSuccess = () =>
+        toast.success("Registration successful: Please check your email", {
+            position: "top-center",
+        });
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -10,12 +19,31 @@ export default function Register() {
     let data = JSON.stringify(formData);
     const handleRegister = async (e) => {
         e.preventDefault();
+        let toastErr;
+        if (!formData.email) {
+            toastErr = "Please fill the email";
+        } else if (!formData.name) {
+            toastErr = "Please fill the name";
+        } else if (!formData.password) {
+            toastErr = "Please fill the password";
+        }
         try {
             const response = await axios.post("/register", data);
             console.log("Registration successful:", response.data.message);
+
+            toastSuccess();
+            router.push("auth/login");
         } catch (error) {
-            if (error.response && error.response.status === 422) {
+            toast.error(
+                error.response.data.errors.email
+                    ? error.response.data.errors.email
+                    : toastErr,
+                { position: "top-center" },
+            );
+
+            if (error.response) {
                 const validationErrors = error.response.data.errors;
+
                 console.error("Validation errors:", validationErrors);
             } else {
                 console.error("Registration error:", error.message);
@@ -30,6 +58,7 @@ export default function Register() {
             [name]: value,
         });
     };
+    console.log(formData);
     return (
         <form method="POST" onSubmit={handleRegister} className="relative">
             <div className="relative mt-5">
@@ -90,7 +119,7 @@ export default function Register() {
                     </svg>
                 </div>
                 <input
-                    type="text"
+                    type="password"
                     id="password-icon"
                     name="password"
                     className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

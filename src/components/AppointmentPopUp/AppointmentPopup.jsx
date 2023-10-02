@@ -1,11 +1,12 @@
-
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     const [appointmentTime, setAppointmentTime] = useState([]);
-
+    const toastSuccess = () =>
+        toast.success("Appointment Confirmed", { position: "top-center" });
     const [formData, setFormData] = useState({
         doctorId: doctorId,
         appointmentType: "outpatient",
@@ -20,13 +21,12 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
         const appointmentTime = await axios.get(`/${doctorId}/appointments`, {
             headers: {
                 Authorization: `Bearer ${Cookies.get("token")}`,
-            }
+            },
         });
 
         console.log(appointmentTime.data.data);
         setAppointmentTime(appointmentTime.data.data);
-
-    }
+    };
     useEffect(() => {
         fetchData();
     }, []);
@@ -48,25 +48,41 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
         console.log(formData);
         const response = await axios.post("/check-appointment", formData, {
             headers: {
-                "Authorization": `Bearer ${Cookies.get("token")}`,
+                Authorization: `Bearer ${Cookies.get("token")}`,
                 "Content-Type": "application/json",
-                "Accept": "application/json",
+                Accept: "application/json",
             },
         });
+        toastSuccess();
         console.log(response);
         onClose();
     };
 
     return (
-        <div className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none transform scale-95"}`}>
-            <div className={`bg-white rounded-lg border border-gray-200 shadow-xl p-6 animate__animated ${isOpen ? "animate__fadeInUp" : "animate__fadeOutDown"} w-full sm:w-96 transition-transform duration-300 ease-in-out`}>
-                <p className="font-semibold text-lg mb-4 text-center text-gray-800">Appointment Registration</p>
+        <div
+            className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${
+                isOpen
+                    ? "opacity-100"
+                    : "opacity-0 pointer-events-none transform scale-95"
+            }`}
+        >
+            <div
+                className={`bg-white rounded-lg border border-gray-200 shadow-xl p-6 animate__animated ${
+                    isOpen ? "animate__fadeInUp" : "animate__fadeOutDown"
+                } w-full sm:w-96 transition-transform duration-300 ease-in-out`}
+            >
+                <p className="font-semibold text-lg mb-4 text-center text-gray-800">
+                    Appointment Registration
+                </p>
                 <form onSubmit={handleCheckButtonClick}>
                     <div className="appointment-popup">
                         <div className="flex flex-col space-y-4">
                             <div className="flex flex-row space-x-4">
                                 <div className="w-1/2">
-                                    <label htmlFor="PatientName" className="block text-xs font-medium text-gray-700">
+                                    <label
+                                        htmlFor="PatientName"
+                                        className="block text-xs font-medium text-gray-700"
+                                    >
                                         Patient Name
                                     </label>
                                     <input
@@ -79,7 +95,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     />
                                 </div>
                                 <div className="w-1/2">
-                                    <label htmlFor="DoctorName" className="block text-xs font-medium text-gray-700">
+                                    <label
+                                        htmlFor="DoctorName"
+                                        className="block text-xs font-medium text-gray-700"
+                                    >
                                         Doctor Name
                                     </label>
                                     <input
@@ -94,7 +113,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                             </div>
                             <div className="flex flex-row space-x-4">
                                 <div className="w-1/2">
-                                    <label htmlFor="AppointmentDate" className="block text-xs font-medium text-gray-700">
+                                    <label
+                                        htmlFor="AppointmentDate"
+                                        className="block text-xs font-medium text-gray-700"
+                                    >
                                         Appointment Date
                                     </label>
                                     <input
@@ -107,7 +129,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     />
                                 </div>
                                 <div className="w-1/2">
-                                    <label htmlFor="AppointmentTime" className="block text-xs font-medium text-gray-700">
+                                    <label
+                                        htmlFor="AppointmentTime"
+                                        className="block text-xs font-medium text-gray-700"
+                                    >
                                         Appointment Time
                                     </label>
                                     <select
@@ -119,7 +144,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     >
                                         <option value="">Select Time</option>
                                         {appointmentTime.map((item, index) => (
-                                            <option value={item.appointmentTime} key={index}>
+                                            <option
+                                                value={item.appointmentTime}
+                                                key={index}
+                                            >
                                                 {item.appointmentTime}
                                             </option>
                                         ))}
@@ -127,7 +155,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                 </div>
                             </div>
                             <div>
-                                <label htmlFor="appointmentType" className="block text-sm font-medium text-gray-900">
+                                <label
+                                    htmlFor="appointmentType"
+                                    className="block text-sm font-medium text-gray-900"
+                                >
                                     Please Select Appointment Type
                                 </label>
                                 <select
@@ -137,13 +168,18 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     onChange={handleInputChange}
                                     className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                                 >
-                                    <option value="outpatient">OutPatient</option>
+                                    <option value="outpatient">
+                                        OutPatient
+                                    </option>
                                     <option value="chat">Live Chat</option>
                                     <option value="video">Live Video</option>
                                 </select>
                             </div>
                             <div>
-                                <label htmlFor="OrderNotes" className="block text-sm font-medium text-gray-700">
+                                <label
+                                    htmlFor="OrderNotes"
+                                    className="block text-sm font-medium text-gray-700"
+                                >
                                     How do you feel today?
                                 </label>
                                 <textarea
@@ -157,10 +193,16 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                 ></textarea>
                             </div>
                             <div className="flex justify-between mt-4">
-                                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300">
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300"
+                                >
                                     Check Appointment
                                 </button>
-                                <button onClick={handlePopUpClick} className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300">
+                                <button
+                                    onClick={handlePopUpClick}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300"
+                                >
                                     Cancel
                                 </button>
                             </div>

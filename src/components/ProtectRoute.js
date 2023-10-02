@@ -15,7 +15,7 @@ export default function ProtectRoute() {
 
     const getStartingRoute = (pathname) => {
         const parts = pathname.split("/");
-        return `/${parts[1]}`; // Assuming the starting route is the second part of the pathname
+        return `/${parts[1]}`;
     };
     // Use useEffect to perform navigation after rendering
     useEffect(() => {
@@ -35,8 +35,5 @@ export default function ProtectRoute() {
             router.push("/user");
         }
     }, [token, user, router]);
-    // console.log(pathName);
-    console.log(getStartingRoute(pathName));
-    // Return null or any other content as needed
     return null;
 }

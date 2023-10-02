@@ -100,6 +100,7 @@ const page = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 },
+                console.log(selectUser),
             );
             router.push("/superadmin/doctors");
             toast.success("The hospital is created successfully.");
@@ -140,7 +141,10 @@ const page = () => {
                                     >
                                         <option>Please Choose User</option>
                                         {userLists?.map((user) => (
-                                            <option value={user.id}>
+                                            <option
+                                                key={user.id}
+                                                value={user.id}
+                                            >
                                                 {user?.name}
                                             </option>
                                         ))}
@@ -160,7 +164,10 @@ const page = () => {
                                     >
                                         <option>Please Choose Hospital</option>
                                         {hospitalLists?.map((hospital) => (
-                                            <option value={hospital.id}>
+                                            <option
+                                                key={hospital.id}
+                                                value={hospital.id}
+                                            >
                                                 {hospital?.name}
                                             </option>
                                         ))}
@@ -181,7 +188,10 @@ const page = () => {
                                             Please Choose Department
                                         </option>
                                         {departmentLists?.map((department) => (
-                                            <option value={department.id}>
+                                            <option
+                                                key={department.id}
+                                                value={department.id}
+                                            >
                                                 {department?.name}
                                             </option>
                                         ))}

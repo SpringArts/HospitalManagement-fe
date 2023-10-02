@@ -1,9 +1,14 @@
 "use client";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 export default function Login() {
+    const toastSuccess = () =>
+        toast.success("Successfully Sign in", { position: "top-center" });
+    const toastError = () =>
+        toast.error("Error! cannot find account", { position: "top-center" });
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
@@ -24,11 +29,13 @@ export default function Login() {
             let token = resData.data.token;
             Cookies.set("user_info", JSON.stringify(user));
             Cookies.set("token", token);
+            toastSuccess();
 
             if (response.data.status) {
                 router.push("/user");
             }
         } catch (error) {
+            toastError();
             if (error.response && error.response.status === 422) {
                 const validationErrors = error.response.data.errors;
                 console.error("Validation errors:", validationErrors);
@@ -83,7 +90,7 @@ export default function Login() {
                     </svg>
                 </div>
                 <input
-                    type="text"
+                    type="password"
                     id="password-icon"
                     name="password"
                     className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

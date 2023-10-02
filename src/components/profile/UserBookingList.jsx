@@ -1,100 +1,59 @@
 "use client";
-import Image from "next/image";
-import profileImg from "../../../public/images/doctor.png";
-import { IdentificationCard, MapPin } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import axios from "@/lib/axios";
+import Cookies from "js-cookie";
+import AppointmentCard from "./AppointmentCard";
 export default function UserBookingList() {
+    const [appointments, setAppointments] = useState([]);
+    const [error, setError] = useState(null);
+
+    // Function to format date as "Oct 25, 2023" and use the appointment time
+
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(`/appointments`, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                },
+            });
+            setAppointments(res.data.data);
+        } catch (error) {
+            setError("Error fetching data. Please try again later.");
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const rearrangeAppointments = (appointmentData) => {
+        return appointmentData.sort((a, b) => {
+            const dateTimeA = new Date(
+                `${a.appointmentDate}T${a.appointmentTime}`,
+            );
+            const dateTimeB = new Date(
+                `${b.appointmentDate}T${b.appointmentTime}`,
+            );
+            return dateTimeA - dateTimeB;
+        });
+    };
+
+    const sortedAppointments = rearrangeAppointments(appointments);
     return (
-        <div className="gird grid-col-1 sm:grid-col-2 mt-5">
-            <div className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
-                <h2 className="text-base mb-2 font-medium text-zinc-700">
-                    Oct 25, 2023 - 10:00 AM
-                </h2>
-                <hr />
-                <div className="flex py-3 px-1.5 gap-3">
-                    <Image
-                        width={100}
-                        height={100}
-                        src={profileImg}
-                        className="bg-gray-200 w-20 h-20 rounded-2xl p-3"
-                    />
-                    <div className="flex gap-1 flex-col">
-                        <h1 className="text-lg text-zinc-800">Dr.Mg Mg</h1>
-                        <div className="flex gap-1">
-                            <MapPin size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Shwe Gone Tine Rd. Yangon
-                            </p>
-                        </div>
-                        <div className="flex gap-1">
-                            <IdentificationCard size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Booking ID :{" "}
-                                <span className="text-green-600">#290435</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="shadow mt-8 bg-zinc-50 border rounded-xl p-2">
-                <h2 className="text-base mb-2 font-medium text-zinc-700">
-                    Oct 25, 2023 - 10:00 AM
-                </h2>
-                <hr />
-                <div className="flex py-3 px-1.5 gap-3">
-                    <Image
-                        width={100}
-                        height={100}
-                        src={profileImg}
-                        className="bg-gray-100 w-20 h-20 rounded-md p-3"
-                    />
-                    <div className="flex gap-1 flex-col">
-                        <h1 className="text-lg text-zinc-800">Dr.Mg Mg</h1>
-                        <div className="flex gap-1">
-                            <MapPin size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Shwe Gone Tine Rd. Yangon
-                            </p>
-                        </div>
-                        <div className="flex gap-1">
-                            <IdentificationCard size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Booking ID :{" "}
-                                <span className="text-green-600">#290435</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="shadow mt-8 bg-zinc-50 border rounded-xl p-3">
-                <h2 className="text-base mb-2 font-medium text-zinc-700">
-                    Oct 25, 2023 - 10:00 AM
-                </h2>
-                <hr />
-                <div className="flex py-3 px-1.5 gap-3">
-                    <Image
-                        width={100}
-                        height={100}
-                        src={profileImg}
-                        className="bg-gray-100 w-20 h-20 rounded-md p-3"
-                    />
-                    <div className="flex gap-1 flex-col">
-                        <h1 className="text-lg text-zinc-800">Dr.Mg Mg</h1>
-                        <div className="flex gap-1">
-                            <MapPin size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Shwe Gone Tine Rd. Yangon
-                            </p>
-                        </div>
-                        <div className="flex gap-1">
-                            <IdentificationCard size={20} color="#006400" />
-                            <p className="text-sm text-zinc-500">
-                                Booking ID :{" "}
-                                <span className="text-green-600">#290435</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div className="grid grid-cols-1 mt-5">
+            {error && <div className="text-red-500">{error}</div>}
+            {sortedAppointments
+                ? sortedAppointments.map((appointment) => (
+                      <AppointmentCard
+                          key={appointment.id}
+                          id={appointment.id}
+                          appointmentDate={appointment.appointmentDate}
+                          appointmentTime={appointment.appointmentTime}
+                          doctorName={appointment.doctorName}
+                          doctorLocation={appointment.doctorLocation}
+                          bookingId={appointment.bookingId}
+                      />
+                  ))
+                : null}
         </div>
     );
 }

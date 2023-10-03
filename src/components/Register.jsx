@@ -1,13 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "@/lib/axios";
-<<<<<<< HEAD
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-
-=======
 import Link from "next/link";
->>>>>>> e5e4f5c0161b046c64343a6fa0d6166c2da9b80b
 export default function Register() {
     const router = useRouter();
     const toastSuccess = () =>

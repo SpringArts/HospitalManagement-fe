@@ -60,7 +60,10 @@ export default function UserBookingData() {
                     </button>
                 </nav>
             </div>
-            <UserBookingList />
+            <UserBookingList
+                selectedButton={selectedButton}
+                dynamicData={dynamicData}
+            />
         </div>
     );
 }

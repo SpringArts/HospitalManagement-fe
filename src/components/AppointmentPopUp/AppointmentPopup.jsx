@@ -1,10 +1,12 @@
+"use client";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     const [appointmentTime, setAppointmentTime] = useState([]);
+
     const [formData, setFormData] = useState({
         doctorId: doctorId,
         appointmentType: "outpatient",

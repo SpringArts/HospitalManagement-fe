@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 import profileImg from "../../../public/images/doctor.png";
 import { IdentificationCard, MapPin } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
+import axios from "@/lib/axios";
+import Cookies from "js-cookie";
 
 const AppointmentCard = ({
     id,
@@ -10,7 +13,12 @@ const AppointmentCard = ({
     doctorName,
     doctorLocation,
     bookingId,
+    status,
+    fetchData,
+    is_visible,
 }) => {
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [cancelActionTriggered, setCancelActionTriggered] = useState(false);
     const formatDateTime = (dateString, timeString) => {
         const appointmentDate = new Date(dateString);
         const optionsDate = { month: "short", day: "numeric", year: "numeric" };
@@ -19,7 +27,6 @@ const AppointmentCard = ({
             optionsDate,
         );
 
-        // Assuming timeString is in "HH:mm" format (e.g., "15:30")
         const [hours, minutes] = timeString.split(":");
         const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${
             hours >= 12 ? "PM" : "AM"
@@ -27,6 +34,29 @@ const AppointmentCard = ({
 
         return `${formattedDate} - ${formattedTime}`;
     };
+    const handleCancelAppointment = async () => {
+        setIsUpdating(true);
+
+        try {
+            const headers = {
+                Authorization: `Bearer ${Cookies.get("token")}`,
+            };
+
+            await axios.delete(`/appointments/${id}`, {
+                headers,
+            });
+            setCancelActionTriggered(true);
+            console.log("sucess");
+            setIsUpdating(false);
+        } catch (error) {
+            setIsUpdating(false);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, [cancelActionTriggered]);
+
+    console.log(status);
 
     return (
         <div className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
@@ -59,6 +89,17 @@ const AppointmentCard = ({
                     </div>
                 </div>
             </div>
+            {is_visible === 0 ? null : (
+                <>
+                    <hr />
+                    <button
+                        onClick={handleCancelAppointment}
+                        className="bg-red-500 mt-2 w-full md:w-1/3 text-white px-3 py-3 rounded-md hover:bg-red-600"
+                    >
+                        {isUpdating ? "Cancelling..." : "Cancel"}
+                    </button>
+                </>
+            )}
         </div>
     );
 };

@@ -31,6 +31,7 @@ function UserProfile() {
                 <>
                     <div className=" h-auto mx-auto w-28  md:w-44 rounded-full md:mx-0">
                         <Image
+                            alt="Profile Image"
                             src={profileImg}
                             width={320}
                             height={320}

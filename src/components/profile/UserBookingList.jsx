@@ -3,20 +3,42 @@ import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import AppointmentCard from "./AppointmentCard";
-export default function UserBookingList() {
+
+export default function UserBookingList({ selectedButton }) {
     const [appointments, setAppointments] = useState([]);
     const [error, setError] = useState(null);
 
-    // Function to format date as "Oct 25, 2023" and use the appointment time
+    const token = Cookies.get("token");
 
     const fetchData = async () => {
         try {
-            const res = await axios.get(`/appointments`, {
+            const res = await axios.get("/appointments", {
                 headers: {
-                    Authorization: `Bearer ${Cookies.get("token")}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
-            setAppointments(res.data.data);
+
+            let filteredAppointments = res.data.data;
+
+            if (selectedButton === 1) {
+                filteredAppointments = filteredAppointments.filter(
+                    (appointment) =>
+                        appointment.status === "upcoming" &&
+                        appointment.is_visible === 1,
+                );
+            } else if (selectedButton === 2) {
+                filteredAppointments = filteredAppointments.filter(
+                    (appointment) =>
+                        appointment.status === "complete" &&
+                        appointment.is_visible === 1,
+                );
+            } else if (selectedButton === 3) {
+                filteredAppointments = filteredAppointments.filter(
+                    (appointment) => appointment.is_visible === 0,
+                );
+            }
+
+            setAppointments(filteredAppointments);
         } catch (error) {
             setError("Error fetching data. Please try again later.");
         }
@@ -24,7 +46,8 @@ export default function UserBookingList() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [selectedButton]);
+
     const rearrangeAppointments = (appointmentData) => {
         return appointmentData.sort((a, b) => {
             const dateTimeA = new Date(
@@ -38,6 +61,7 @@ export default function UserBookingList() {
     };
 
     const sortedAppointments = rearrangeAppointments(appointments);
+
     return (
         <div className="grid grid-cols-1 mt-5">
             {error && <div className="text-red-500">{error}</div>}
@@ -46,6 +70,9 @@ export default function UserBookingList() {
                       <AppointmentCard
                           key={appointment.id}
                           id={appointment.id}
+                          fetchData={fetchData}
+                          is_visible={appointment.is_visible}
+                          status={appointment.status}
                           appointmentDate={appointment.appointmentDate}
                           appointmentTime={appointment.appointmentTime}
                           doctorName={appointment.doctorName}

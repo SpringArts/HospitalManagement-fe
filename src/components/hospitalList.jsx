@@ -16,7 +16,8 @@ export default function hospitalLists({ item, index }) {
                 ))}
             </ul>
             <button className="text-white fond-sm flex gap-x-3 items-center">
-                See Details <img src="/rightArrow.svg" alt="" />{" "}
+                {/* See Details <img src="/rightArrow.svg" alt="" />{" "} */}
+                See Detail
             </button>
         </div>
     );

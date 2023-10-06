@@ -69,9 +69,10 @@ const ImageAction = ({ image, model }) => {
                 className="cursor-pointer bg-transparent"
             >
                 {image.row?.image ? (
-                    <img
+                    <Image
                         src={`http://127.0.0.1:8000${url}`}
                         className="w-10 h-10 rounded-full object-cover"
+                        alt="Profile Image"
                     />
                 ) : (
                     <BsFillPersonFill className="w-12 h-12" />

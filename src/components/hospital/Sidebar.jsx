@@ -44,10 +44,10 @@ const Sidebar = () => {
                     <ul className="mt-6 space-y-1">
                         <li>
                             <Link
-                                href=""
+                                href={`/dashboard/hospital/${hospitalId}`}
                                 className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                             >
-                                General
+                                Dashboard
                             </Link>
                         </li>
 
@@ -56,7 +56,7 @@ const Sidebar = () => {
                                 <summary
                                     className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    <span className="text-sm font-medium"> Hospital Section </span>
+                                    <span className="text-sm font-medium"> Appointment Section </span>
 
                                     <span
                                         className="shrink-0 transition duration-300 group-open:-rotate-180"
@@ -77,14 +77,6 @@ const Sidebar = () => {
                                 </summary>
 
                                 <ul className="mt-2 space-y-1 px-4">
-                                    <li>
-                                        <Link
-                                            href=""
-                                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                        >
-                                            Hospital Information
-                                        </Link>
-                                    </li>
 
                                     <li>
                                         <Link

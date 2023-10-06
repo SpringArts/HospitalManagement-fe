@@ -8,6 +8,7 @@ import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import AppointmentPopup from "@/components/AppointmentPopUp/AppointmentPopup";
 import Layout from "@/components/hospital/Layout";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);
@@ -32,13 +33,25 @@ const Page = ({ params }) => {
         setMeta(data.meta);
     };
 
+    const handleDelete = async (id) => {
+    
+        const res = await axios.delete(`/doctors/${id}`, {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (res.status === 200) {
+            toast.success('Successfully Deleted!')
+        }
+    };
     const handlePageChange = (newPage) => {
         setPage(newPage);
     };
 
     useEffect(() => {
         fetchData();
-    }, [page, search]);
+    }, [page, search, data]);
 
     return (
         <Layout>
@@ -189,18 +202,18 @@ const Page = ({ params }) => {
                                 {item.bio}
                             </p>
 
-                            <Link
+                            <button
                                 className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                                href={"/auth/register"}
+                                onClick={() => handleDelete(item.id)}
                             >
-                                Detail
+                                Delete
                                 <span
                                     aria-hidden="true"
                                     className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
                                 >
                                     &rarr;
                                 </span>
-                            </Link>
+                            </button>
                         </article>
                     </div>
                 ))}

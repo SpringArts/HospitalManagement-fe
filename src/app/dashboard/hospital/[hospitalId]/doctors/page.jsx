@@ -1,5 +1,5 @@
 'use client';
-import Layout from "@/app/user/Layout";
+
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
@@ -7,21 +7,20 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import AppointmentPopup from "@/components/AppointmentPopUp/AppointmentPopup";
+import Layout from "@/components/hospital/Layout";
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);
     const [meta, setMeta] = useState({});
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(6);
-    const [isOpen, setIsOpen] = useState(false);
-    const hospitalId = params.hospitalId;
     const [search, setSearch] = useState("");
     const token = Cookies.get("token");
-    const [selectedDoctor, setSelectedDoctor] = useState(null);
+    const hospitalId = params.hospitalId;
 
     const fetchData = async () => {
         const { data } = await axios.get(
-            `/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
+            `/dashboard/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
             {
                 headers: {
                     Accept: "application/json",
@@ -30,6 +29,7 @@ const Page = ({ params }) => {
             },
         );
         setData(data.data.data);
+        console.log(data.data.data);
         setMeta(data.data.meta);
     };
 
@@ -92,7 +92,7 @@ const Page = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Partners{" "}
+                                    Dashboard{" "}
                                 </a>
                             </li>
                             <li className="rtl:rotate-180">
@@ -159,7 +159,7 @@ const Page = ({ params }) => {
                         key={index}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
                     >
-                        <article className="rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition hover:shadow-lg sm:p-6">
+                        <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6">
                             <div className="flex items-center">
                                 <div className=" rounded-lg p-3">
                                     <Image
@@ -167,14 +167,14 @@ const Page = ({ params }) => {
                                         alt="Doctor Avatar"
                                         width="0"
                                         height="0"
-                                        className="w-28 h-auto"
+                                        className="w-32 h-auto"
                                     />
                                 </div>
 
-                                <div className="ml-1">
+                                <div className="ml-1 ">
                                     <a href="#">
-                                        <h3 className="mt-0.5 text-base font-medium text-gray-900">
-                                            {item.name}
+                                        <h3 className="mt-0.5 text-lg font-medium text-gray-900">
+                                            {item.doctorInfo.name}
                                         </h3>
                                     </a>
                                     <p className="text-sm text-gray-500">
@@ -186,38 +186,26 @@ const Page = ({ params }) => {
                                 </div>
                             </div>
 
-                            <p className="mt-5 line-clamp-2 text-sm/relaxed text-gray-500">
+                            <p className="mt-5 text-sm/relaxed text-gray-500 line-clamp-2">
                                 {item.bio}
                             </p>
 
-                            <button
+                            <Link
                                 className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                                onClick={() => {
-                                    setSelectedDoctor(item);
-                                    setIsOpen(true);
-                                }}
+                                href={"/auth/register"}
                             >
-                                Appointment
+                                Detail
                                 <span
                                     aria-hidden="true"
                                     className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
                                 >
                                     &rarr;
                                 </span>
-                            </button>
+                            </Link>
                         </article>
                     </div>
                 ))}
             </div>
-
-            {selectedDoctor && isOpen && (
-                <AppointmentPopup
-                    isOpen={isOpen}
-                    onClose={setIsOpen}
-                    doctorId={selectedDoctor.id}
-                    doctorName={selectedDoctor.name}
-                />
-            )}
 
             {data.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">

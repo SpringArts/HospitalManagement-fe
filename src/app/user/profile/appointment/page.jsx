@@ -51,7 +51,7 @@ const AppointmentPage = () => {
                 },
             })
         ]);
-        console.log(fetchAppointments.data);
+        //   console.log(fetchAppointments.data);
         setCurrentPage(fetchAppointments.data.meta.currentPage);
         setItemsPerPage(7);
         setTotalPages(fetchAppointments.data.meta.totalPages);

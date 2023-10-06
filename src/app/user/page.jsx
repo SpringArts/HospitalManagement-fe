@@ -1,228 +1,67 @@
 import Layout from "./Layout";
+
+const ServiceCard = ({ title, description }) => {
+    return (
+        <div className="flex items-start gap-4 p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-2 border border-gray-200 hover:border-gray-300">
+            <span className="shrink-0 rounded-lg inline-flex items-center justify-center bg-gray-200 p-3">
+                <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                    ></path>
+                </svg>
+            </span>
+            <div>
+                <h2 className="text-base font-semibold text-gray-800 mb-1">{title}</h2>
+                <p className="text-sm text-gray-600">{description}</p>
+            </div>
+        </div>
+    );
+};
+
 export default function Page() {
+    const services = [
+        { title: "General Medical Care", description: "The branch of medicine that deals with the diagnosis and (nonsurgical) treatment of diseases of the internal organs (especially in adults)." },
+        { title: "Surgical Services", description: "Provide operative procedures (surgeries) for the correction of deformities and defects, repair of injuries, and cure of certain diseases. " },
+        { title: "Specialized Treatments", description: "Specialized treatment issues include specific screening techniques, ability to address both issues in the treatment plan." },
+        { title: "Emergency Care 24/7", description: "Involves life-threatening illnesses or accidents which require immediate treatment and an emergency department (A&E)." },
+        { title: "Maternity and Pediatrics", description: "The health service provided to mothers (women in their child bearing age) and children." },
+        { title: "COVID-19 Safety Measures", description: "Handles promotion of R&D, production, distribution policies, and drug pricing." }
+    ];
+
     return (
         <Layout>
-            <div className="justify-center items-center flex h-min">
-                <section>
-                    <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-                        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
-                            <div className="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
-                                <h2 className="text-3xl font-bold sm:text-4xl">
-                                    Find your career path
-                                </h2>
+            <section className="max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+                <div className="max-w-xl">
+                    <h2 className="text-3xl font-bold sm:text-4xl">Find Your Best <span className="text-red-400">HEALER</span></h2>
+                    <p className="mt-4">
+                        Discover the perfect healer tailored to your needs and preferences. Your journey to optimal well-being starts here.Your path to vibrant health and inner harmony begins with finding your best healer.
+                    </p>
+                    {/* Call to action button */}
+                    <a
+                        href="#"
+                        className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
+                    >
+                        Get Started Now
+                    </a>
+                </div>
 
-                                <p className="mt-4 text-gray-600">
-                                    To provide persons who have had life
-                                    altering medical interventions (project
-                                    specific) with education in daily living,
-                                    management, and comfort.
-                                </p>
-
-                                <a
-                                    href="#"
-                                    className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
-                                >
-                                    Get Started Now
-                                </a>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        General Medical Care
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        Surgical Services
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        Specialized Treatments
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        Maternity and Pediatrics
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        COVID-19 Safety Measures
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-
-                                <a
-                                    className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                                    href="/accountant"
-                                >
-                                    <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                        <svg
-                                            className="h-6 w-6"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                                            ></path>
-                                        </svg>
-                                    </span>
-
-                                    <h2 className="mt-2 font-bold">
-                                        Emergency Care 24/7
-                                    </h2>
-
-                                    <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                <div className="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
+                    {services.map((service, index) => (
+                        <ServiceCard key={index} {...service} />
+                    ))}
+                </div>
+            </section>
         </Layout>
     );
 }

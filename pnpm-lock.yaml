@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@emotion/react':
     specifier: ^11.11.1
@@ -23,6 +19,9 @@ dependencies:
   '@phosphor-icons/react':
     specifier: ^2.0.13
     version: 2.0.13(react-dom@18.2.0)(react@18.2.0)
+  '@tailwindcss/forms':
+    specifier: ^0.5.6
+    version: 0.5.6(tailwindcss@3.3.3)
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.29)
@@ -53,6 +52,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-feather:
+    specifier: ^2.0.10
+    version: 2.0.10(react@18.2.0)
   react-hot-toast:
     specifier: ^2.4.1
     version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
@@ -692,6 +694,15 @@ packages:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@tailwindcss/forms@0.5.6(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-Fw+2BJ0tmAwK/w01tEFL5TiaJBX1NLT1/YbWgvm7ws3Qcn11kiXxzNTEQDMs5V3mQemhB56l3u0i9dwdzSQldA==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
+    dependencies:
+      mini-svg-data-uri: 1.4.4
+      tailwindcss: 3.3.3
     dev: false
 
   /@types/json5@0.0.29:
@@ -2709,6 +2720,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-feather@2.0.10(react@18.2.0):
+    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==}
     engines: {node: '>=10'}
@@ -2734,6 +2754,7 @@ packages:
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
+
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
@@ -3336,3 +3357,7 @@ packages:
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

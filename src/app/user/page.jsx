@@ -22,7 +22,9 @@ const ServiceCard = ({ title, description }) => {
                 </svg>
             </span>
             <div>
-                <h2 className="text-base font-semibold text-gray-800 mb-1">{title}</h2>
+                <h2 className="text-base font-semibold text-gray-800 mb-1">
+                    {title}
+                </h2>
                 <p className="text-sm text-gray-600">{description}</p>
             </div>
         </div>
@@ -31,21 +33,51 @@ const ServiceCard = ({ title, description }) => {
 
 export default function Page() {
     const services = [
-        { title: "General Medical Care", description: "The branch of medicine that deals with the diagnosis and (nonsurgical) treatment of diseases of the internal organs (especially in adults)." },
-        { title: "Surgical Services", description: "Provide operative procedures (surgeries) for the correction of deformities and defects, repair of injuries, and cure of certain diseases. " },
-        { title: "Specialized Treatments", description: "Specialized treatment issues include specific screening techniques, ability to address both issues in the treatment plan." },
-        { title: "Emergency Care 24/7", description: "Involves life-threatening illnesses or accidents which require immediate treatment and an emergency department (A&E)." },
-        { title: "Maternity and Pediatrics", description: "The health service provided to mothers (women in their child bearing age) and children." },
-        { title: "COVID-19 Safety Measures", description: "Handles promotion of R&D, production, distribution policies, and drug pricing." }
+        {
+            title: "General Medical Care",
+            description:
+                "The branch of medicine that deals with the diagnosis and (nonsurgical) treatment of diseases of the internal organs (especially in adults).",
+        },
+        {
+            title: "Surgical Services",
+            description:
+                "Provide operative procedures (surgeries) for the correction of deformities and defects, repair of injuries, and cure of certain diseases. ",
+        },
+        {
+            title: "Specialized Treatments",
+            description:
+                "Specialized treatment issues include specific screening techniques, ability to address both issues in the treatment plan.",
+        },
+        {
+            title: "Emergency Care 24/7",
+            description:
+                "Involves life-threatening illnesses or accidents which require immediate treatment and an emergency department (A&E).",
+        },
+        {
+            title: "Maternity and Pediatrics",
+            description:
+                "The health service provided to mothers (women in their child bearing age) and children.",
+        },
+        {
+            title: "COVID-19 Safety Measures",
+            description:
+                "Handles promotion of R&D, production, distribution policies, and drug pricing.",
+        },
     ];
 
     return (
         <Layout>
             <section className="max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
                 <div className="max-w-xl">
-                    <h2 className="text-3xl font-bold sm:text-4xl">Find Your Best <span className="text-red-400">HEALER</span></h2>
-                    <p className="mt-4">
-                        Discover the perfect healer tailored to your needs and preferences. Your journey to optimal well-being starts here.Your path to vibrant health and inner harmony begins with finding your best healer.
+                    <h2 className="text-6xl text-zinc-800 font-bold sm:text-4xl">
+                        Find Your Best{" "}
+                        <span className="text-red-400">HEALER</span>
+                    </h2>
+                    <p className="mt-4 text-zinc-600 ">
+                        Discover the perfect healer tailored to your needs and
+                        preferences. Your journey to optimal well-being starts
+                        here.Your path to vibrant health and inner harmony
+                        begins with finding your best healer.
                     </p>
                     {/* Call to action button */}
                     <a

@@ -20,7 +20,7 @@ const Sidebar = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            const { name, email } = res.data.data.data;
+            const { name, email } = res.data.data;
             setHospitalName(name);
             setHospitalEmail(email);
         } catch (error) {

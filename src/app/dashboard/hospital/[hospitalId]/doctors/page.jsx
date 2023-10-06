@@ -28,9 +28,8 @@ const Page = ({ params }) => {
                 },
             },
         );
-        setData(data.data.data);
-        console.log(data.data.data);
-        setMeta(data.data.meta);
+        setData(data.data);
+        setMeta(data.meta);
     };
 
     const handlePageChange = (newPage) => {
@@ -154,7 +153,7 @@ const Page = ({ params }) => {
                 </div>
             </div>
             <div className="flex flex-wrap">
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                     <div
                         key={index}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"

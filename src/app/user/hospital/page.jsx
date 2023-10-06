@@ -25,7 +25,7 @@ const Page = () => {
                 },
             );
             setHospitalLists(data.data);
-            setMeta(data.data.meta);
+            setMeta(data.meta);
             return data;
         } catch (err) {
             console.log(err);
@@ -40,7 +40,6 @@ const Page = () => {
         getHospitalList();
     }, [page, search]);
 
-    console.log(hospitalLists);
 
     return (
         <Layout>
@@ -120,7 +119,7 @@ const Page = () => {
                 </div>
 
                 <div className="flex flex-wrap">
-                    {hospitalLists?.data?.map((item, index) => (
+                    {hospitalLists?.map((item, index) => (
                         <div key={index}
                             className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4">
                             <Link href={`/user/hospital/${item.id}/doctors`}

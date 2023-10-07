@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Layout from '../../Layout';
+import Layout from '../../../../Layout';
 import ConfirmPopup from '@/components/AppointmentPopUp/ConfirmPopup';
 
 const ChatApp = () => {

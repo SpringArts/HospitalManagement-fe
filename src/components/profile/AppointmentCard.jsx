@@ -5,6 +5,7 @@ import { IdentificationCard, MapPin } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 const AppointmentCard = ({
     id,
@@ -14,8 +15,11 @@ const AppointmentCard = ({
     doctorLocation,
     bookingId,
     status,
+    appointmentType,
     fetchData,
     is_visible,
+    doctorId,
+    patientId,
 }) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [cancelActionTriggered, setCancelActionTriggered] = useState(false);
@@ -28,9 +32,8 @@ const AppointmentCard = ({
         );
 
         const [hours, minutes] = timeString.split(":");
-        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${
-            hours >= 12 ? "PM" : "AM"
-        }`;
+        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${hours >= 12 ? "PM" : "AM"
+            }`;
 
         return `${formattedDate} - ${formattedTime}`;
     };
@@ -46,14 +49,15 @@ const AppointmentCard = ({
                 headers,
             });
             setCancelActionTriggered(true);
-            console.log("sucess");
             setIsUpdating(false);
         } catch (error) {
             setIsUpdating(false);
         }
     };
+
     useEffect(() => {
         fetchData();
+        console.log({ doctorId })
     }, [cancelActionTriggered]);
 
     console.log(status);
@@ -89,17 +93,29 @@ const AppointmentCard = ({
                     </div>
                 </div>
             </div>
-            {is_visible === 0 ? null : (
-                <>
-                    <hr />
-                    <button
-                        onClick={handleCancelAppointment}
-                        className="bg-red-500 mt-2 w-full md:w-1/3 text-white px-3 py-3 rounded-md hover:bg-red-600"
-                    >
-                        {isUpdating ? "Cancelling..." : "Cancel"}
-                    </button>
-                </>
-            )}
+            <div className="flex justify-between">
+                {is_visible === 0 ? null : (
+                    <div className="flex-shrink-0">
+                        <button
+                            onClick={handleCancelAppointment}
+                            className="bg-red-500 mt-2 text-white px-3 py-3 rounded-md hover:bg-red-600"
+                        >
+                            {isUpdating ? "Cancelling..." : "Cancel"}
+                        </button>
+                    </div>
+                )}
+                {(appointmentType === "outpatient") && (
+                    <div className="flex-shrink-0">
+                        <Link
+                            href={`/user/realtime/chat/${doctorId}/${patientId}`}
+                            className="bg-blue-500 mt-2 text-white px-3 py-3 rounded-md hover:bg-blue-600"
+                        >
+                            Enter Room Now
+                        </Link>
+                    </div>
+                )}
+            </div>
+
         </div>
     );
 };

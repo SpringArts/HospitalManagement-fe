@@ -20,7 +20,7 @@ const Page = ({ params }) => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     const fetchData = async () => {
-        const { data } = await axios.get(
+        const res = await axios.get(
             `/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
             {
                 headers: {
@@ -29,8 +29,9 @@ const Page = ({ params }) => {
                 },
             },
         );
-        setData(data.data.data);
-        setMeta(data.data.meta);
+
+        setData(res.data.data);
+        setMeta(res.data.meta);
     };
 
     const handlePageChange = (newPage) => {
@@ -154,7 +155,7 @@ const Page = ({ params }) => {
                 </div>
             </div>
             <div className="flex flex-wrap">
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                     <div
                         key={index}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"

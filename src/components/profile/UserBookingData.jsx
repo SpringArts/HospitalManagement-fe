@@ -19,7 +19,7 @@ export default function UserBookingData() {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(res);
+        console.log(res.data.data);
     };
 
     useEffect(() => {
@@ -33,27 +33,24 @@ export default function UserBookingData() {
                     aria-label="Tabs"
                 >
                     <button
-                        className={`shrink-0  px-1 pb-4 text-sm md:text-base font-medium  ${
-                            selectedButton === 1 ? activeStyle : defStyle
-                        }`}
+                        className={`shrink-0  px-1 pb-4 text-sm md:text-base font-medium  ${selectedButton === 1 ? activeStyle : defStyle
+                            }`}
                         onClick={() => handleButtonClick(1)}
                     >
-                        Upcomming
+                        UpComing
                     </button>
 
                     <button
-                        className={`shrink-0   px-1 pb-4 text-sm md:text-base font-medium ${
-                            selectedButton === 2 ? activeStyle : defStyle
-                        }`}
+                        className={`shrink-0   px-1 pb-4 text-sm md:text-base font-medium ${selectedButton === 2 ? activeStyle : defStyle
+                            }`}
                         onClick={() => handleButtonClick(2)}
                     >
                         Completed
                     </button>
 
                     <button
-                        className={`shrink-0 px-1 pb-4 text-sm md:text-base font-medium ${
-                            selectedButton === 3 ? activeStyle : defStyle
-                        }`}
+                        className={`shrink-0 px-1 pb-4 text-sm md:text-base font-medium ${selectedButton === 3 ? activeStyle : defStyle
+                            }`}
                         onClick={() => handleButtonClick(3)}
                     >
                         Cancelled

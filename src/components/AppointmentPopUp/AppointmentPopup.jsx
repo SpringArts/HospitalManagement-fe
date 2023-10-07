@@ -61,16 +61,14 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
 
     return (
         <div
-            className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${
-                isOpen
+            className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${isOpen
                     ? "opacity-100"
                     : "opacity-0 pointer-events-none transform scale-95"
-            }`}
+                }`}
         >
             <div
-                className={`bg-white rounded-lg border border-gray-300 shadow-xl p-6 animate__animated ${
-                    isOpen ? "animate__fadeInUp" : "animate__fadeOutDown"
-                } w-full sm:w-96 transition-transform duration-300 ease-in-out`}
+                className={`bg-white rounded-lg border border-gray-300 shadow-xl p-6 animate__animated ${isOpen ? "animate__fadeInUp" : "animate__fadeOutDown"
+                    } w-full sm:w-96 transition-transform duration-300 ease-in-out`}
             >
                 <div>
                     <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">

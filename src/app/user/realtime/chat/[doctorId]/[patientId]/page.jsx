@@ -1,21 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../../../../Layout';
 import ConfirmPopup from '@/components/AppointmentPopUp/ConfirmPopup';
+import echo from '@/app/echo';
+import axios from '@/lib/axios';
+import Cookies from "js-cookie";
 
 const ChatApp = () => {
     const [showPopup, setShowPopup] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const token = Cookies.get("token");
+    const fetchData = async () => {
+        try {
+            const res = await axios.get('/api/appointment/doctor', {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setMessages(data.messages);
+        } catch (error) {
+
+        }
+    }
     const handlePopup = () => {
         setShowPopup(!showPopup);
     }
-    const messages = [
-        { text: 'Hi there!', sender: 'user', timestamp: '10:00 AM' },
-        { text: 'Hello! How can I assist you today?', sender: 'admin', timestamp: '10:05 AM' },
-        { text: 'I have a question about my appointment.', sender: 'user', timestamp: '10:10 AM' },
-        { text: 'Sure, feel free to ask your question.', sender: 'admin', timestamp: '10:15 AM' },
-        // Add more messages as needed
-    ];
+
+    const sendMessage = () => {
+        console.log('Sending message:', newMessage);
+        // Clear the input field after sending the message
+        setNewMessage('');
+    };
+    useEffect(() => {
+        fetchData();
+        echo.channel('notification')
+            .listen('MessageNotification', (event) => {
+                console.log(event);
+                setMessages(prevMessages => [...prevMessages, event.message]);
+            });
+    }, []);
 
     return (
         <Layout>
@@ -118,8 +144,13 @@ const ChatApp = () => {
                             type="text"
                             className="flex-1 mr-2 p-2 border rounded transition duration-300 ease-in-out focus:border-transparent hover:border-blue-500"
                             placeholder="Type your message..."
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
                         />
-                        <button className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 ease-in-out">
+                        <button
+                            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+                            onClick={sendMessage}
+                        >
                             Send
                         </button>
                     </div>

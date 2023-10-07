@@ -30,25 +30,11 @@ export default function ProtectRoute() {
                 router.push("/auth/login");
             }
         } else if (token) {
-            if (encodedUserInfo) {
-                // URL-decode the string to get the JSON data
-                const decodedUserInfo = decodeURIComponent(encodedUserInfo);
+            // if (getStartingRoute(pathName) == "/user") {
+            //     return;
+            // }
+            // router.push("/user");
 
-                try {
-                    // Parse the JSON string into a JavaScript object
-                    const userInfoObject = JSON.parse(decodedUserInfo);
-                    if (
-                        getStartingRoute(pathName) == "/user" ||
-                        userInfoObject.role == "admin"
-                    ) {
-                        return;
-                    } else {
-                        router.push("/user");
-                    }
-                } catch (error) {
-                    console.error("Error parsing user_info:", error);
-                }
-            }
         }
     }, [token, router]);
     return null;

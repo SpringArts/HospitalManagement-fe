@@ -23,6 +23,8 @@ const AppointmentCard = ({
 }) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [cancelActionTriggered, setCancelActionTriggered] = useState(false);
+    const currentTime = new Date();
+
     const formatDateTime = (dateString, timeString) => {
         const appointmentDate = new Date(dateString);
         const optionsDate = { month: "short", day: "numeric", year: "numeric" };
@@ -37,6 +39,19 @@ const AppointmentCard = ({
 
         return `${formattedDate} - ${formattedTime}`;
     };
+
+    const checkAppointmentTime = (appointmentTime) => {
+        const [hours, minutes] = appointmentTime.split(':').map(Number);
+        const targetTime = new Date();
+        targetTime.setHours(hours, minutes, 0, 0);
+        const currentTime = new Date();
+        const currentTimePlus30Minutes = new Date(currentTime);
+        currentTimePlus30Minutes.setMinutes(currentTime.getMinutes() + 30);
+
+        // console.log(currentTime + ' targetTime : ' + appointmentTime + ' currentTimePlus30Minutes : ' + currentTimePlus30Minutes);
+        return currentTime >= targetTime && currentTime <= currentTimePlus30Minutes;
+    };
+
     const handleCancelAppointment = async () => {
         setIsUpdating(true);
 
@@ -57,10 +72,8 @@ const AppointmentCard = ({
 
     useEffect(() => {
         fetchData();
-        console.log({ doctorId })
     }, [cancelActionTriggered]);
-
-    console.log(status);
+    const isButtonDisabled = checkAppointmentTime(appointmentTime);
 
     return (
         <div className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
@@ -93,28 +106,46 @@ const AppointmentCard = ({
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
                 {is_visible === 0 ? null : (
-                    <div className="flex-shrink-0">
+                    <div className="">
                         <button
                             onClick={handleCancelAppointment}
-                            className="bg-red-500 mt-2 text-white px-3 py-3 rounded-md hover:bg-red-600"
+                            className="bg-red-500 text-white px-3 py-3 rounded-md hover:bg-red-600"
                         >
                             {isUpdating ? "Cancelling..." : "Cancel"}
                         </button>
                     </div>
                 )}
-                {(appointmentType === "outpatient") && (
-                    <div className="flex-shrink-0">
-                        <Link
-                            href={`/user/realtime/chat/${doctorId}/${patientId}`}
-                            className="bg-blue-500 mt-2 text-white px-3 py-3 rounded-md hover:bg-blue-600"
-                        >
-                            Enter Room Now
-                        </Link>
-                    </div>
-                )}
+                {
+                    (appointmentType == "outpatient" && status == 'upcoming' && is_visible === 1) ? (
+                        <div className="flex shrink-0">
+                            <div className="flex shrink-0">
+                                {isButtonDisabled ? (
+                                    <Link href={`/user/realtime/chat/${doctorId}/${patientId}`} passHref>
+                                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-3 rounded-md">
+                                            Enter Room Now
+                                        </button>
+                                    </Link>
+
+                                ) : (
+                                    <button className="bg-gray-500 text-white px-3 py-3 rounded-md cursor-not-allowed" disabled>
+                                        Enter Room Now
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex shrink-0">
+                            <button className="bg-gray-500 text-white px-3 py-3 rounded-md" disabled>
+                                Empty Room
+                            </button>
+                        </div>
+                    )
+                }
+
             </div>
+
 
         </div>
     );

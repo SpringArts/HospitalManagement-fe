@@ -19,7 +19,7 @@ export default function UserBookingData() {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(res);
+        console.log(res.data.data);
     };
 
     useEffect(() => {

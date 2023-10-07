@@ -39,6 +39,7 @@ export default function UserBookingList({ selectedButton }) {
             }
 
             setAppointments(filteredAppointments);
+            console.log(appointments);
         } catch (error) {
             setError("Error fetching data. Please try again later.");
         }
@@ -77,7 +78,7 @@ export default function UserBookingList({ selectedButton }) {
                         appointmentTime={appointment.appointmentTime}
                         patientId={appointment.patientId}
                         doctorId={appointment.doctorId}
-                        doctorName={appointment.doctorName}
+                        doctorName={appointment.doctorName ?? 'Unknown'}
                         doctorLocation={appointment.doctorLocation}
                         bookingId={appointment.bookingId}
                         appointmentType={appointment.appointmentType}

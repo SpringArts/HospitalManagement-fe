@@ -29,10 +29,10 @@ export default function ProtectRoute() {
                 router.push("/auth/login");
             }
         } else if (token) {
-            if (getStartingRoute(pathName) == "/user") {
-                return;
-            }
-            router.push("/user");
+            // if (getStartingRoute(pathName) == "/user") {
+            //     return;
+            // }
+            // router.push("/user");
         }
     }, [token, user, router]);
     return null;

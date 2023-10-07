@@ -69,7 +69,7 @@ export default function Page() {
         <Layout>
             <section className="max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
                 <div className="max-w-xl">
-                    <h2 className="text-6xl text-zinc-800 font-bold sm:text-4xl">
+                    <h2 className="text-4xl text-zinc-800 font-bold md:text-6xl">
                         Find Your Best{" "}
                         <span className="text-red-400">HEALER</span>
                     </h2>

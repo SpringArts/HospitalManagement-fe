@@ -3,45 +3,83 @@
 import { useState, useEffect } from 'react';
 import Layout from '../../../../Layout';
 import ConfirmPopup from '@/components/AppointmentPopUp/ConfirmPopup';
-import echo from '@/app/echo';
 import axios from '@/lib/axios';
 import Cookies from "js-cookie";
+import Pusher from 'pusher-js';
+import { useSearchParams } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 
-const ChatApp = () => {
+
+const ChatApp = ({ params }) => {
+    const searchParams = useSearchParams()
+    const bookingId = searchParams.get('bookId')
+
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const token = Cookies.get("token");
-    const fetchData = async () => {
-        try {
-            const res = await axios.get('/api/appointment/doctor', {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setMessages(data.messages);
-        } catch (error) {
+    const [formData, setFormData] = useState({
+        doctorId: params.doctorId,
+        patientId: params.patientId,
+        bookingId: bookingId,
+    });
+    let allMessages = [];
 
+    const fetchMessages = async () => {
+        try {
+            const res = await axios
+                .get(`/message/${params.doctorId}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            console.log(res.data);
+            setMessages(res.data.message.messages);
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
+    }
+
+    const pusherJob = async () => {
+        try {
+            Pusher.logToConsole = true;
+            const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
+                cluster: 'ap3'
+            });
+
+            const channel = pusher.subscribe('message' + bookingId);
+            channel.bind('MessageSending' + bookingId, function (data) {
+                console.log('New message received:', data); // Log received data
+                console.log('New message received:', data);
+                setMessages(prevMessages => [...prevMessages, data]);
+            });
+        } catch (error) {
+            console.error('Error fetching messages:', error);
         }
     }
     const handlePopup = () => {
         setShowPopup(!showPopup);
     }
 
-    const sendMessage = () => {
-        console.log('Sending message:', newMessage);
-        // Clear the input field after sending the message
+    const sendMessage = async () => {
+        const updatedFormData = {
+            ...formData,
+            message: newMessage,
+        };
+        await axios.post('/message', updatedFormData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
         setNewMessage('');
     };
     useEffect(() => {
-        fetchData();
-        echo.channel('notification')
-            .listen('MessageNotification', (event) => {
-                console.log(event);
-                setMessages(prevMessages => [...prevMessages, event.message]);
-            });
-    }, []);
+        pusherJob();
+        fetchMessages();
+    }, [newMessage]);
 
     return (
         <Layout>
@@ -120,20 +158,16 @@ const ChatApp = () => {
                 <div className="max-w-screen mx-auto bg-white rounded-lg shadow-lg mt-10 overflow-hidden">
                     <div className="border-t-4 border-blue-500 p-6">
                         <div className="h-96 overflow-y-auto mb-4">
-                            {messages.map((message, index) => (
+                            {messages.map((message) => (
                                 <div
-                                    key={index}
-                                    className={`mb-4 ${message.sender === 'user' ? 'text-right text-blue-600' : 'text-left text-gray-700'
-                                        }`}
+                                    key={message.id}
+                                    className='mb-4 text-right text-blue-600'
                                 >
                                     <div
-                                        className={`p-4 rounded-lg inline-block border ${message.sender === 'user'
-                                            ? 'border-blue-300 bg-blue-200'
-                                            : 'border-gray-300 bg-gray-200'
-                                            }`}
+                                        className='p-4 rounded-lg inline-block border border-blue-300 bg-blue-200'
                                     >
-                                        <div className="mb-2 text-xs text-gray-500">{message.timestamp}</div>
-                                        {message.text}
+                                        <div className="mb-2 text-xs text-gray-500">10:00:00</div>
+                                        {message.message}
                                     </div>
                                 </div>
                             ))}

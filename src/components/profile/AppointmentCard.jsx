@@ -118,7 +118,7 @@ const AppointmentCard = ({
                     </div>
                 )}
                 {
-                    (appointmentType == "outpatient" && status == 'upcoming' && is_visible === 1) ? (
+                    (appointmentType != "outpatient" && status == 'upcoming' && is_visible === 1) ? (
                         <div className="flex shrink-0">
                             <div className="flex shrink-0">
                                 {isButtonDisabled ? (

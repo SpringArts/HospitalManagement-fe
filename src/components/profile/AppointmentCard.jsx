@@ -118,11 +118,11 @@ const AppointmentCard = ({
                     </div>
                 )}
                 {
-                    (appointmentType == "outpatient" && status == 'upcoming' && is_visible === 1) ? (
+                    (appointmentType != "outpatient" && status == 'upcoming' && is_visible === 1) ? (
                         <div className="flex shrink-0">
                             <div className="flex shrink-0">
                                 {isButtonDisabled ? (
-                                    <Link href={`/user/realtime/chat/${doctorId}/${patientId}`} passHref>
+                                    <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
                                         <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-3 rounded-md">
                                             Enter Room Now
                                         </button>

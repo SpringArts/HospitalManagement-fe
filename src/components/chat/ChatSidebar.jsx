@@ -1,46 +1,37 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { FaUserCircle , FaSearch } from 'react-icons/fa'
+import { FaUserCircle, FaSearch } from 'react-icons/fa'
 
-const ChatSidebar = ({recentMessages , getReceiverId}) => {
-  return (
-    <>
-                {/* Searchbox */}
-                <div className="search-box h-10 text-slate-300">
-            </div>
-            {/* //user list */}
-            <div className="user-list overflow-y-auto h-screen">
-                {
-                    recentMessages?.map((user, index)=>(
-                        <button onClick={()=>getReceiverId(user.user_id)} key={index} className="flex transition px-5 py-3 hover:bg-slate-100 hover:cursor-pointer">
-                            <div className="pr-4">
-                                {
-                                    user?.avatar !== undefined ? (
-                                        <img
-                                            src="https://w7.pngwing.com/pngs/4/736/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png"
-                                            width={50}
-                                            className="bg-transparent"
-                                            alt="sample"/>
-                                    ): (
-                                        // <i className='fa fa-user-circle text-gray-300 text-5xl'/>
-                                        <FaUserCircle className='text-gray-300 text-5xl' />
-                                    )
-                                }
+const ChatSidebar = ({ recentMessages, getReceiverId }) => {
+    return (
+        <>
+            <div className="sidebar-container w-72 p-4 bg-white border-r border-gray-200">
+                <h2 className="text-2xl font-semibold mb-4">Recent Chats</h2>
+                <div className="user-list overflow-y-auto">
+                    {recentMessages.map((user, index) => (
+                        <div
+                            key={index}
+                            className="user-item flex items-center py-2 cursor-pointer hover:bg-gray-100"
+                            onClick={() => getReceiverId(user.user_id)}
+                        >
+                            <div className="avatar mr-3">
+                                {user.avatar ? (
+                                    <img src={user.avatar} alt="User Avatar" className="w-10 h-10 rounded-full" />
+                                ) : (
+                                    <FaUserCircle className="w-10 h-10 text-gray-400" />
+                                )}
                             </div>
-                            <div className=''>
-                                <h3 className="text-violet-500 text-start text-md">{user.name.length > 0 ? user.name :"Unknown User"}</h3>
-                                <p className="text-sm text-start text-gray-400 font-light overflow-hidden h-5">
-                                    {user.message}
-                                </p>
+                            <div className="user-details">
+                                <h3 className="text-lg font-medium">{user.name}</h3>
+                                <p className="text-sm text-gray-500">aaa</p>
                             </div>
-                        </button>
-                    ))
-                }
-
+                        </div>
+                    ))}
+                </div>
             </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default ChatSidebar

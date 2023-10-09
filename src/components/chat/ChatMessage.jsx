@@ -1,30 +1,35 @@
-export default function ChatMessage({messages , auth_id}){
-    console.log(auth_id)
-
+const ChatMessage = ({ messages, auth_id }) => {
+    // console.log(auth_id)
+    const formatHumanTime = (timestamp) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(timestamp).toLocaleString(undefined, options);
+    };
     const isReceiveMessage = (message) => {
         return message.receiver_id === auth_id
     }
+    console.log(messages);
 
     return (
         <div className="w-full h-full overflow-y-auto">
-            {(messages || []).map((message , index)=>(
-                <div key={index}>
-                    <div className={`${isReceiveMessage(message) ? 'receive-chat justify-start': 'send-chat justify-end'} relative flex `}>
-                        <div className={`${isReceiveMessage(message) ? 'bg-violet-400 text-white' : 'bg-violet-200 text-slate-500'} px-5 py-2 mb-2  text-sm max-w-[80%] rounded`}>
-                            {/* {isReceiveMessage(message) ? (
-                                <i className="fa fa-caret-up text-violet-400 -top-2 absolute" />
-                            ) :(
-                                <i className="fa fa-caret-down text-violet-200 bottom-0 right-4 absolute" />
-                            ) } */}
-                            <p>
-                                {message.message}
-                            </p>
+            {(messages || []).map((message, index) => (
+                <div key={index} className={`flex justify-${isReceiveMessage(message) ? 'start' : 'end'} mb-4`}>
+                    <div
+                        className={`${isReceiveMessage(message) ? 'justify-start bg-red-500' : 'justify-end bg-blue-400'
+                            } text-white font-medium px-5 py-3 text-sm max-w-[80%] rounded-lg shadow-md`}
+                    >
+                        <p className="mb-1">{message.message}</p>
+                        <div className="flex justify-between items-center">
+                            <span className="text-xs text-gray-700">{formatHumanTime(message.created_at)}</span>
                         </div>
                     </div>
                 </div>
             ))}
-
-            {/* Send_Chat */}
         </div>
+
+
+
+
     )
 }
+
+export default ChatMessage

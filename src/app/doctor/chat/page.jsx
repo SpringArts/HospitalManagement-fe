@@ -20,7 +20,6 @@ const page = () => {
     const bookingId = '212202';
 
     const pusherJob = () => {
-        fetchRecentMessages();
         const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
             cluster: 'ap3'
         });
@@ -57,8 +56,12 @@ const page = () => {
     };
 
     useEffect(() => {
-        pusherJob();
+        fetchRecentMessages();
     }, [receiverId, bookingId]);
+
+    useEffect(() => {
+        pusherJob();
+    }, []);
 
     return (
         <>

@@ -13,7 +13,7 @@ const page = () => {
                         </h2>
                         <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
                             At{" "}
-                            <span className="text-red-500 font-semibold">
+                            <span className="text-green-500 font-semibold">
                                 Team Fresher
                             </span>{" "}
                             Team, our team of dedicated developers is at the

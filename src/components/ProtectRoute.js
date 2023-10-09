@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 export default function ProtectRoute() {
     const pathName = usePathname();
     const router = useRouter();

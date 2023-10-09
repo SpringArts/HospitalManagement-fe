@@ -5,51 +5,61 @@ import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatUserInfoHeader from "@/components/chat/ChatUserInfoHeader";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Pusher from 'pusher-js';
+
 import toast from "react-hot-toast";
 
 const page = () => {
     const [recentMessages, setRecentMessages] = useState([]);
-    // const [messages, setMessages] = useState("");
-    const [receiverId , setReceiverId] = useState();
-    const [receiver , setReceiver] = useState();
-    const [messages , setMessages]  = useState([]);
-    const token = Cookies.get("token")
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+    const [receiverId, setReceiverId] = useState();
+    const [receiver, setReceiver] = useState();
+    const [messages, setMessages] = useState([]);
+    const token = Cookies.get("token");
+    const userInfo = Cookies.get("user_info");
+    const bookingId = '212202';
 
+    const pusherJob = () => {
+        const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
+            cluster: 'ap3'
+        });
 
-    console.log(userInfo)
-    
+        const channel = pusher.subscribe('message' + bookingId);
+        channel.bind('chat', function (data) {
+            console.log(data);
+            setMessages(prevMessages => [...prevMessages, data.message]);
+        });
 
-    const getRecentMessages = async() => {
-        
-        let url = receiverId ? `/message/${receiverId}` : "/message"
+        return () => {
+            channel.unbind('chat');
+            pusher.unsubscribe('message' + bookingId);
+        };
 
+    };
+
+    const fetchRecentMessages = async () => {
         try {
-            await 
-            axios.get(url, {
-
+            let url = receiverId ? `/message/${receiverId}` : "/message";
+            const res = await axios.get(url, {
                 headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((response)=>{
-                // console.log(response)
-                setRecentMessages(response.data.message.chatUsers)
-                setReceiver(response.data.message.receiver)
-                setMessages(response.data.message.messages)
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
-
+            setRecentMessages(res.data.message.chatUsers);
+            setReceiver(res.data.message.receiver);
+            setMessages(res.data.message.messages);
         } catch (error) {
-            toast.error(error)
-            console.log(error);
+            toast.error(error.message || "Error fetching messages");
+            console.error(error);
         }
-    }
+    };
 
-    useEffect(()=>{
-getRecentMessages();
-    },[receiverId])
-console.log(messages)
+    useEffect(() => {
+        fetchRecentMessages();
+        pusherJob();
+    }, [receiverId, bookingId]);
+
     return (
         <>
             <div className="">
@@ -57,7 +67,7 @@ console.log(messages)
                     <div className="flex overflow-hidden">
                         <div className="w-96 pt-3 sticky overflow-hidden bg-white border-r border-slate-100 ">
                             <div className="search-box overflow-y-auto">
-                                <ChatSidebar recentMessages={recentMessages} getReceiverId={(value)=> setReceiverId(value)} />
+                                <ChatSidebar recentMessages={recentMessages} getReceiverId={(value) => setReceiverId(value)} />
                             </div>
                         </div>
                         {/* Message */}
@@ -75,13 +85,13 @@ console.log(messages)
                                         </div>
 
                                         {/* Message Input */}
-                                        <ChatInput receiver={receiver} />
+                                        <ChatInput receiver={receiver} fetchRecentMessages={fetchRecentMessages} />
                                     </div>
                                 </>
-                            ): (
+                            ) : (
                                 <div className="flex justify-center items-center bg-slate-100 h-screen">
-                                <p>Please select a user to start chatting</p>
-                            </div>
+                                    <p>Please select a user to start chatting</p>
+                                </div>
                             )}
 
                         </div>

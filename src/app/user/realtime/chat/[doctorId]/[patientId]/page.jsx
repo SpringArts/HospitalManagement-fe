@@ -23,42 +23,46 @@ const ChatApp = ({ params }) => {
         patientId: params.patientId,
         bookingId: bookingId,
     });
-    let allMessages = [];
 
-    const fetchMessages = async () => {
-        try {
-            const res = await axios
-                .get(`/message/${params.doctorId}`, {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-            console.log(res.data);
-            setMessages(res.data.message.messages);
-        } catch (error) {
-            toast.error(error);
-            console.log(error);
-        }
+    const pusherJob = () => {
+        const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
+            cluster: 'ap3'
+        });
+
+        const channel = pusher.subscribe('message' + bookingId);
+        channel.bind('chat', function (data) {
+            console.log(data);
+            setMessages(prevMessages => [...prevMessages, data.message]);
+        });
+
+        return () => {
+            channel.unbind('chat');
+            pusher.unsubscribe('message' + bookingId);
+        };
     }
+    // const pusherJob = async () => {
+    //     try {
+    //         Pusher.logToConsole = true;
+    //         const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
+    //             cluster: 'ap3'
+    //         });
 
-    const pusherJob = async () => {
-        try {
-            Pusher.logToConsole = true;
-            const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
-                cluster: 'ap3'
-            });
+    //         const channel = pusher.subscribe('message' + bookingId);
+    //         channel.bind('chat', function (data) {
+    //             console.log(data);
+    //             setMessages(prevMessages => [...prevMessages, data.message]);
+    //         });
+    //     } catch (error) {
+    //         console.error('Error fetching messages:', error);
+    //     }
+    // }
 
-            const channel = pusher.subscribe('message' + bookingId);
-            channel.bind('MessageSending' + bookingId, function (data) {
-                console.log('New message received:', data); // Log received data
-                console.log('New message received:', data);
-                setMessages(prevMessages => [...prevMessages, data]);
-            });
-        } catch (error) {
-            console.error('Error fetching messages:', error);
-        }
-    }
+    const formatHumanTime = (timestamp) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(timestamp).toLocaleString(undefined, options);
+    };
+
+
     const handlePopup = () => {
         setShowPopup(!showPopup);
     }
@@ -78,8 +82,7 @@ const ChatApp = ({ params }) => {
     };
     useEffect(() => {
         pusherJob();
-        fetchMessages();
-    }, [newMessage]);
+    }, []);
 
     return (
         <Layout>
@@ -166,7 +169,7 @@ const ChatApp = ({ params }) => {
                                     <div
                                         className='p-4 rounded-lg inline-block border border-blue-300 bg-blue-200'
                                     >
-                                        <div className="mb-2 text-xs text-gray-500">10:00:00</div>
+                                        <div className="mb-2 text-xs text-gray-500">{formatHumanTime(message.created_at)}</div>
                                         {message.message}
                                     </div>
                                 </div>

@@ -1,51 +1,60 @@
-import {AiOutlineMail, AiOutlineUser} from 'react-icons/ai'
-import {BiPhoneCall} from 'react-icons/bi'
+import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
+import { BiPhoneCall } from "react-icons/bi";
+import Layout from "../Layout";
 
 const ContactusPage = () => {
     return (
-        <div className="w-screen min-h-screen flex justify-center items-center text-[#333] bg-gradient-to-br from-[#eee] from-40% to-blue-500 ">
-            <div className="container">
-                <div className="w-full md:w-[50%] lg:w-[40%] xl:w-[35%] p-3 mx-auto">
-                    <h1 className="text-center text-[26px] mb-3">Contact Us</h1>
-                    <div className="text-center mb-5">We are always here to help out whatever way we can</div>
-                    <form action="">
-                        <div className='flex justify-center items-center mb-8'>
-                            <span className='border-[1px] border-r-0 border-gray-500 h-[40px] px-3 rounded-l-2xl flex justify-center items-center'>
-                                <AiOutlineUser size={22} className='text-[#0000ff5f]'/>
-                            </span>
-                            <input type="text" placeholder="Enter your name" 
-                                className='w-full bg-transparent border-[1px] border-l-0 border-gray-500 h-[40px] rounded-r-2xl py-1 outline-none' 
+        <Layout>
+            <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-md">
+                    <h1 className="text-center text-3xl font-bold text-indigo-600 mb-6">
+                        Contact Us
+                    </h1>
+
+                    <form className="space-y-6">
+                        <div>
+                            <label htmlFor="name" className="sr-only">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                className="w-full rounded-lg border border-gray-300 p-4 text-sm focus:outline-none focus:ring focus:border-indigo-300"
+                                placeholder="Your Name"
                             />
                         </div>
-                        <div className='flex justify-center items-center mb-8'>
-                            <span className='border-[1px] border-r-0 border-gray-500 h-[40px] px-3 rounded-l-2xl flex justify-center items-center'>
-                                <BiPhoneCall size={22} className='text-[#0000ff5f]'/>
-                            </span>
-                            <input type="text" placeholder="Enter your phone" 
-                                className='w-full bg-transparent border-[1px] border-l-0 border-gray-500 h-[40px] rounded-r-2xl py-1 outline-none' 
+
+                        <div>
+                            <label htmlFor="email" className="sr-only">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                className="w-full rounded-lg border border-gray-300 p-4 text-sm focus:outline-none focus:ring focus:border-indigo-300"
+                                placeholder="Your Email"
                             />
                         </div>
-                        <div className='flex justify-center items-center mb-8'>
-                            <span className='border-[1px] border-r-0 border-gray-500 h-[40px] px-3 rounded-l-2xl flex justify-center items-center'>
-                                <AiOutlineMail size={22} className='text-[#0000ff5f]'/>
-                            </span>
-                            <input type='email' placeholder="Enter your email" 
-                                className='w-full bg-transparent border-[1px] border-l-0 border-gray-500 h-[40px] rounded-r-2xl py-1 outline-none' 
-                            />
+
+                        <div>
+                            <label htmlFor="message" className="sr-only">Message</label>
+                            <textarea
+                                id="message"
+                                rows="4"
+                                className="w-full rounded-lg border border-gray-300 p-4 text-sm focus:outline-none focus:ring focus:border-indigo-300"
+                                placeholder="Your Message"
+                            ></textarea>
                         </div>
-                        <div className='mb-8'>
-                            <textarea rows="3"
-                                className='w-full h-[40px] bg-transparent border-[1px] border-t-0 border-l-0 border-r-0 border-gray-500 outline-none' 
-                                placeholder='Type your message .....'
-                            >
-                            </textarea>
-                        </div>
-                        <button className='border-none w-full h-[40px] bg-blue-500 text-white rounded-2xl py-1 outline-none'>SEND</button>
+
+                        <button
+                            type="submit"
+                            className="block w-full rounded-lg bg-indigo-600 text-white py-3 text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring focus:border-indigo-300"
+                        >
+                            Send
+                        </button>
                     </form>
                 </div>
             </div>
-        </div>
-    )
-}
 
-export default ContactusPage
+
+        </Layout>
+    );
+};
+
+export default ContactusPage;

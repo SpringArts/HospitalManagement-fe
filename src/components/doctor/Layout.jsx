@@ -19,7 +19,7 @@ const Layout = (props) => {
                 <Sidebar/>
             </div>
             <div className="w-full lg:w-4/5 p-6 bg-[#F8F9FB]">
-                <div className="mb-6 shadow-lg bg-[#fff] rounded p-3 flex justify-between items-center sticky top-0 z-20">
+                <div className="mb-6 shadow bg-[#fff] rounded-lg p-3 flex justify-between items-center sticky top-0 z-20">
                     <h1 className="text-[22px]">{props.title}</h1>
                     <AiOutlineMenu className="lg:hidden cursor-pointer" onClick={sidebarChangeHandler} size={25}/>
                 </div>

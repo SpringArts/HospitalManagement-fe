@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import UserProfile from "./UserProfile";
 
 const Sidebar = () => {
@@ -11,21 +12,21 @@ const Sidebar = () => {
 
             <ul className="mt-6 space-y-1">
                 <li>
-                    <a
+                    <Link
                         href="/doctor"
                         className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                     >
-                        General
-                    </a>
+                        Dashboard
+                    </Link>
                 </li>
 
                 <li>
-                    <a
+                    <Link
                         href="/doctor/profile"
                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                     >
                         Profile
-                    </a>
+                    </Link>
                 </li>
 
                 <li>
@@ -53,28 +54,28 @@ const Sidebar = () => {
 
                         <ul className="mt-2 space-y-1 px-4">
                             <li>
-                                <a
+                                <Link
                                     href="/doctor/hospital"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     Connected Hospitals
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
+                                <Link
                                     href="/doctor/hospital"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     All Hospitals
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
+                                <Link
                                     href="/doctor/hospital"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     Appointments
-                                </a>
+                                </Link>
                             </li>
 
                         </ul>
@@ -105,20 +106,20 @@ const Sidebar = () => {
 
                         <ul className="mt-2 space-y-1 px-4">
                             <li>
-                                <a
+                                <Link
                                     href="/doctor/patient"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     Patients
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
+                                <Link
                                     href="/doctor/patient"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     Appointments
-                                </a>
+                                </Link>
                             </li>
 
                         </ul>

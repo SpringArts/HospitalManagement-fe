@@ -18,6 +18,7 @@ const ChatApp = ({ params }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const token = Cookies.get("token");
+    const user = JSON.parse(Cookies.get("user_info"))
     const [formData, setFormData] = useState({
         doctorId: params.doctorId,
         patientId: params.patientId,
@@ -29,37 +30,39 @@ const ChatApp = ({ params }) => {
             cluster: 'ap3'
         });
 
-        const channel = pusher.subscribe('message' + bookingId);
-        channel.bind('chat', function (data) {
+        const channel = pusher.subscribe('message.' + bookingId);
+        channel.bind('fresher', function (data) {
             console.log(data);
             setMessages(prevMessages => [...prevMessages, data.message]);
         });
 
         return () => {
-            channel.unbind('chat');
-            pusher.unsubscribe('message' + bookingId);
+            channel.unbind('fresher');
+            pusher.unsubscribe('message.' + bookingId);
         };
     }
-    // const pusherJob = async () => {
-    //     try {
-    //         Pusher.logToConsole = true;
-    //         const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
-    //             cluster: 'ap3'
-    //         });
-
-    //         const channel = pusher.subscribe('message' + bookingId);
-    //         channel.bind('chat', function (data) {
-    //             console.log(data);
-    //             setMessages(prevMessages => [...prevMessages, data.message]);
-    //         });
-    //     } catch (error) {
-    //         console.error('Error fetching messages:', error);
-    //     }
-    // }
 
     const formatHumanTime = (timestamp) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
         return new Date(timestamp).toLocaleString(undefined, options);
+    };
+
+    const getAllMessages = async () => {
+        try {
+            await axios
+                .get(`/message/${params.doctorId}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    setMessages(response.data.message.messages);
+                });
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
     };
 
 
@@ -81,6 +84,7 @@ const ChatApp = ({ params }) => {
         setNewMessage('');
     };
     useEffect(() => {
+        getAllMessages();
         pusherJob();
     }, []);
 
@@ -92,7 +96,10 @@ const ChatApp = ({ params }) => {
                         <nav aria-label="Breadcrumb">
                             <ol className="flex items-center gap-1 text-sm text-gray-600">
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700">
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
                                         <span className="sr-only"> Home </span>
 
                                         <svg
@@ -128,7 +135,13 @@ const ChatApp = ({ params }) => {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700"> appointment </a>
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
+                                        {" "}
+                                        appointment{" "}
+                                    </a>
                                 </li>
                                 <li className="rtl:rotate-180">
                                     <svg
@@ -146,7 +159,13 @@ const ChatApp = ({ params }) => {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700"> chatting </a>
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
+                                        {" "}
+                                        chatting{" "}
+                                    </a>
                                 </li>
                             </ol>
                         </nav>
@@ -161,19 +180,30 @@ const ChatApp = ({ params }) => {
                 <div className="max-w-screen mx-auto bg-white rounded-lg shadow-lg mt-10 overflow-hidden">
                     <div className="border-t-4 border-blue-500 p-6">
                         <div className="h-96 overflow-y-auto mb-4">
-                            {messages.map((message) => (
+                            {messages.map((message, index) => (
                                 <div
-                                    key={message.id}
-                                    className='mb-4 text-right text-blue-600'
+                                    key={index}
+                                    className={`mb-4 ${message.sender_id === user?.id
+                                        ? "text-right text-blue-600"
+                                        : "text-left text-gray-700"
+                                        }`}
                                 >
                                     <div
-                                        className='p-4 rounded-lg inline-block border border-blue-300 bg-blue-200'
+                                        className={`p-4 rounded-lg inline-block border ${message.sender === user?.id
+                                            ? "border-blue-300 bg-blue-200"
+                                            : "border-gray-300 bg-gray-200"
+                                            }`}
                                     >
-                                        <div className="mb-2 text-xs text-gray-500">{formatHumanTime(message.created_at)}</div>
+                                        <div className="mb-2 text-xs text-gray-500">
+                                            {formatHumanTime(
+                                                message.created_at,
+                                            )}
+                                        </div>
                                         {message.message}
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                     </div>
                     <div className="flex items-center p-4 border-t border-gray-300">
@@ -191,16 +221,18 @@ const ChatApp = ({ params }) => {
                             Send
                         </button>
                     </div>
-
                 </div>
-                <div className='pt-5 flex justify-start'>
+                <div className="pt-5 flex justify-start">
                     <button
                         onClick={handlePopup}
-                        className='border rounded font-normal p-4 shadow-lg bg-red-400 hover:bg-red-500 text-white'>
+                        className="border rounded font-normal p-4 shadow-lg bg-red-400 hover:bg-red-500 text-white"
+                    >
                         Leave
                     </button>
                 </div>
-                {showPopup ? <ConfirmPopup onopen={showPopup} onclose={setShowPopup} /> : null}
+                {showPopup ? (
+                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} />
+                ) : null}
             </div>
         </Layout>
     );

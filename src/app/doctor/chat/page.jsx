@@ -16,23 +16,24 @@ const page = () => {
     const [receiver, setReceiver] = useState();
     const [messages, setMessages] = useState([]);
     const token = Cookies.get("token");
-    const userInfo = Cookies.get("user_info");
+    const userInfo = JSON.parse(Cookies.get("user_info"));
     const bookingId = '212202';
 
     const pusherJob = () => {
+        fetchRecentMessages();
         const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
             cluster: 'ap3'
         });
 
-        const channel = pusher.subscribe('message' + bookingId);
-        channel.bind('chat', function (data) {
+        const channel = pusher.subscribe('message.' + bookingId);
+        channel.bind('fresher', function (data) {
             console.log(data);
             setMessages(prevMessages => [...prevMessages, data.message]);
         });
 
         return () => {
-            channel.unbind('chat');
-            pusher.unsubscribe('message' + bookingId);
+            channel.unbind('fresher');
+            pusher.unsubscribe('message.' + bookingId);
         };
 
     };
@@ -50,13 +51,12 @@ const page = () => {
             setReceiver(res.data.message.receiver);
             setMessages(res.data.message.messages);
         } catch (error) {
-            toast.error(error.message || "Error fetching messages");
+            toast.error(error.message);
             console.error(error);
         }
     };
 
     useEffect(() => {
-        fetchRecentMessages();
         pusherJob();
     }, [receiverId, bookingId]);
 

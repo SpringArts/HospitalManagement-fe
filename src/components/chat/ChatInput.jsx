@@ -30,17 +30,17 @@ export default function ChatInput({ receiver, fetchRecentMessages }) {
 
     return (
 
-        <div className="bg-gray-100 fixed bottom-0">
-            <div className="flex items-center p-4 border-t border-gray-300">
+        <div className="chat-input-container bg-gray-100 p-4 border-t border-gray-200">
+            <div className="flex items-center">
                 <input
                     type="text"
-                    className="flex-1 mr-2 p-2 border rounded transition duration-300 ease-in-out focus:border-transparent hover:border-blue-500"
+                    className="flex-1 mr-2 p-2 border rounded focus:outline-none focus:border-blue-500"
                     placeholder="Type your message..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <button
-                    className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                     onClick={sendMessage}
                 >
                     Send

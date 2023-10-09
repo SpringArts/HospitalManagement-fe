@@ -62,40 +62,26 @@ const page = () => {
 
     return (
         <>
-            <div className="">
-                <div className="messenger p-4 h-screen ">
-                    <div className="flex overflow-hidden">
-                        <div className="w-96 pt-3 sticky overflow-hidden bg-white border-r border-slate-100 ">
-                            <div className="search-box overflow-y-auto">
-                                <ChatSidebar recentMessages={recentMessages} getReceiverId={(value) => setReceiverId(value)} />
+            <div className="messenger-container flex h-screen">
+                <ChatSidebar recentMessages={recentMessages} getReceiverId={(value) => setReceiverId(value)} />
+
+                <div className="messenger-content flex-auto flex flex-col">
+                    {receiver ? (
+                        <>
+                            <ChatUserInfoHeader receiver={receiver} />
+                            <div className="chat-messages flex-auto overflow-y-auto p-4">
+                                <ChatMessage
+                                    messages={messages}
+                                    auth_id={userInfo?.id}
+                                />
                             </div>
+                            <ChatInput receiver={receiver} fetchRecentMessages={fetchRecentMessages} />
+                        </>
+                    ) : (
+                        <div className="flex justify-center items-center h-full bg-gray-100">
+                            <p className="text-xl text-gray-600">Please select a user to start chatting</p>
                         </div>
-                        {/* Message */}
-                        <div className="flex-auto overflow-auto">
-                            {receiver?.id ? (
-                                <>
-                                    <ChatUserInfoHeader receiver={receiver} />
-                                    <div className="messenger mt-4">
-                                        {/* Chat */}
-                                        <div className="h-full px-4 overflow-y-auto mb-10">
-                                            <ChatMessage
-                                                messages={messages}
-                                                auth_id={userInfo?.id}
-                                            />
-                                        </div>
-
-                                        {/* Message Input */}
-                                        <ChatInput receiver={receiver} fetchRecentMessages={fetchRecentMessages} />
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="flex justify-center items-center bg-slate-100 h-screen">
-                                    <p>Please select a user to start chatting</p>
-                                </div>
-                            )}
-
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </>

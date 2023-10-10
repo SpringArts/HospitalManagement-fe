@@ -122,9 +122,7 @@ const AppointmentCard = ({
                         {isButtonDisabled ? (
                             <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
                                 <button
-                                    className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? 'cursor-not-allowed' : ''}`}
-                                    disabled={isButtonDisabled}
-                                >
+                                    className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? '' : 'cursor-not-allowed'}`}                                >
                                     Enter Room Now
                                 </button>
                             </Link>

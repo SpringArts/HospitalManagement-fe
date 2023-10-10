@@ -2,7 +2,7 @@ import axios from "@/lib/axios";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-export default function ChatInput({ receiver, fetchRecentMessages }) {
+export default function ChatInput({ receiver, fetchRecentMessages , bookingId }) {
     console.log(receiver);
     const token = Cookies.get("token");
     const [message, setMessage] = useState('');
@@ -18,7 +18,7 @@ export default function ChatInput({ receiver, fetchRecentMessages }) {
             ...formData,
             message: message,
         };
-        await axios.post(`/message/${receiver.id}?bookingId=212202`, updatedFormData, {
+        await axios.post(`/message/${receiver.id}?bookingId=${bookingId}`, updatedFormData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

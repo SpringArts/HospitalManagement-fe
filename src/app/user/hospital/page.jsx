@@ -26,13 +26,13 @@ function Page() {
                     },
                 },
             );
+
             if (data) {
-                setHospitalLists(data.data.data);
-                setMeta(data.data.meta);
+                setHospitalLists(data.data);
+                setMeta(data.meta);
                 setLoading(false);
             }
 
-            console.log(data.data.data);
         } catch (err) {
             console.log(err);
             // setLoading(false);
@@ -140,117 +140,116 @@ function Page() {
                     {
                         loading
                             ? Array.from({ length: 6 }).map((_, index) => (
-                                  <div
-                                      key={index}
-                                      className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4 animate-pulse"
-                                  >
-                                      <div className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm">
-                                          <div className="animate-pulse h-20 bg-gray-200"></div>
-                                          <div className="mt-4 space-y-4">
-                                              <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                                              <div className="h-4 bg-gray-200 rounded"></div>
-                                              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              ))
+                                <div
+                                    key={index}
+                                    className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4 animate-pulse"
+                                >
+                                    <div className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm">
+                                        <div className="animate-pulse h-20 bg-gray-200"></div>
+                                        <div className="mt-4 space-y-4">
+                                            <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                                            <div className="h-4 bg-gray-200 rounded"></div>
+                                            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
                             : hospitalLists.map((item, index) => (
-                                  <div
-                                      key={index}
-                                      className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4"
-                                  >
-                                      <Link
-                                          href={`/user/hospital/${item.id}/doctors`}
-                                          className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm transition hover:shadow-lg"
-                                      >
-                                          <div>
-                                              <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                                <div
+                                    key={index}
+                                    className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4"
+                                >
+                                    <Link
+                                        href={`/user/hospital/${item.id}/doctors`}
+                                        className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm transition hover:shadow-lg"
+                                    >
+                                        <div>
+                                            <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
 
-                                              <div className="sm:flex sm:justify-between sm:gap-4">
-                                                  <div>
-                                                      <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
-                                                          {item?.name}
-                                                      </h3>
-                                                  </div>
+                                            <div className="sm:flex sm:justify-between sm:gap-4">
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
+                                                        {item?.name}
+                                                    </h3>
+                                                </div>
 
-                                                  <div className="hidden sm:block sm:shrink-0">
-                                                      <Image
-                                                          src="/login.svg"
-                                                          alt="Doctor Avatar"
-                                                          width="0"
-                                                          height="0"
-                                                          className="h-16 w-16 rounded-lg object-cover shadow-sm"
-                                                      />
-                                                  </div>
-                                              </div>
+                                                <div className="hidden sm:block sm:shrink-0">
+                                                    <Image
+                                                        src="/login.svg"
+                                                        alt="Doctor Avatar"
+                                                        width="0"
+                                                        height="0"
+                                                        className="h-16 w-16 rounded-lg object-cover shadow-sm"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                              <div className="mt-4">
-                                                  <p className="max-w-[40ch] text-sm text-gray-500 line-clamp-2">
-                                                      {item?.bio}
-                                                  </p>
-                                              </div>
+                                            <div className="mt-4">
+                                                <p className="max-w-[40ch] text-sm text-gray-500 line-clamp-2">
+                                                    {item?.bio}
+                                                </p>
+                                            </div>
 
-                                              <div className="mt-6 flex gap-4 sm:gap-6">
-                                                  <div className="flex flex-col-reverse">
-                                                      <div className="text-xs text-gray-500">
-                                                          {" "}
-                                                          {item?.createdAt}
-                                                      </div>
-                                                      <div className="text-sm font-medium text-gray-600">
-                                                          Published
-                                                      </div>
-                                                  </div>
+                                            <div className="mt-6 flex gap-4 sm:gap-6">
+                                                <div className="flex flex-col-reverse">
+                                                    <div className="text-xs text-gray-500">
+                                                        {" "}
+                                                        {item?.createdAt}
+                                                    </div>
+                                                    <div className="text-sm font-medium text-gray-600">
+                                                        Published
+                                                    </div>
+                                                </div>
 
-                                                  <div className="flex flex-col-reverse">
-                                                      <div className="text-xs text-gray-500">
-                                                          <div>
-                                                              {item.department
-                                                                  ?.length >
-                                                              0 ? (
-                                                                  <div className="flex flex-wrap gap-1">
-                                                                      {item.department.map(
-                                                                          (
-                                                                              dep,
-                                                                              index,
-                                                                          ) => (
-                                                                              <div
-                                                                                  key={
-                                                                                      dep.id
-                                                                                  }
-                                                                                  className={`${
-                                                                                      index >=
-                                                                                      3
-                                                                                          ? "mt-2"
-                                                                                          : ""
-                                                                                  }`}
-                                                                              >
-                                                                                  <span className="whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-600">
-                                                                                      {
-                                                                                          dep
-                                                                                      }
-                                                                                  </span>
-                                                                              </div>
-                                                                          ),
-                                                                      )}
-                                                                  </div>
-                                                              ) : (
-                                                                  <span className="text-gray-500">
-                                                                      No
-                                                                      departments
-                                                                      available
-                                                                  </span>
-                                                              )}
-                                                          </div>
-                                                      </div>
-                                                      <div className="text-sm font-medium text-gray-600">
-                                                          Treatment
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </Link>
-                                  </div>
-                              )) // Render hospital cards when data is available
+                                                <div className="flex flex-col-reverse">
+                                                    <div className="text-xs text-gray-500">
+                                                        <div>
+                                                            {item.department
+                                                                ?.length >
+                                                                0 ? (
+                                                                <div className="flex flex-wrap gap-1">
+                                                                    {item.department.map(
+                                                                        (
+                                                                            dep,
+                                                                            index,
+                                                                        ) => (
+                                                                            <div
+                                                                                key={
+                                                                                    dep.id
+                                                                                }
+                                                                                className={`${index >=
+                                                                                    3
+                                                                                    ? "mt-2"
+                                                                                    : ""
+                                                                                    }`}
+                                                                            >
+                                                                                <span className="whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-600">
+                                                                                    {
+                                                                                        dep
+                                                                                    }
+                                                                                </span>
+                                                                            </div>
+                                                                        ),
+                                                                    )}
+                                                                </div>
+                                                            ) : (
+                                                                <span className="text-gray-500">
+                                                                    No
+                                                                    departments
+                                                                    available
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-sm font-medium text-gray-600">
+                                                        Treatment
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            )) // Render hospital cards when data is available
                     }
                 </div>
 

@@ -64,10 +64,10 @@ export default function UserBookingList({ selectedButton }) {
     const sortedAppointments = rearrangeAppointments(appointments);
 
     return (
-        <div className="grid grid-cols-1 mt-5">
+        <div className="grid grid-cols-1 gap-4 mt-5">
             {error && <div className="text-red-500">{error}</div>}
-            {sortedAppointments
-                ? sortedAppointments.map((appointment) => (
+            {sortedAppointments && sortedAppointments.length > 0 ? (
+                sortedAppointments.map((appointment) => (
                     <AppointmentCard
                         key={appointment.id}
                         id={appointment.id}
@@ -84,7 +84,11 @@ export default function UserBookingList({ selectedButton }) {
                         appointmentType={appointment.appointmentType}
                     />
                 ))
-                : null}
+            ) : (
+                <div className="text-gray-600">No appointments found.</div>
+            )}
         </div>
+
+
     );
 }

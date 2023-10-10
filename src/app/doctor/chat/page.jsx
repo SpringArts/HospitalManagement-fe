@@ -24,21 +24,22 @@ const page = () => {
     const token = Cookies.get("token");
     const userInfo = JSON.parse(Cookies.get("user_info"));
 
+    const bookingId = '212202';
 
     const pusherJob = () => {
         const pusher = new Pusher("45465ed7bfec0f979e65", {
             cluster: "ap1",
         });
 
-        const channel = pusher.subscribe("message." + bookingId);
-        channel.bind("real-time-chat", function (data) {
+        const channel = pusher.subscribe('message.' + bookingId);
+        channel.bind('fresher', function (data) {
             console.log(data);
             setMessages((prevMessages) => [...prevMessages, data.message]);
         });
 
         return () => {
-            channel.unbind("real-time-chat");
-            pusher.unsubscribe("message." + bookingId);
+            channel.unbind('fresher');
+            pusher.unsubscribe('message.' + bookingId);
         };
     };
 
@@ -56,7 +57,7 @@ const page = () => {
             setReceiver(res.data.message.receiver);
             setMessages(res.data.message.messages);
         } catch (error) {
-            toast.error(error.message || "Error fetching messages");
+            toast.error(error.message);
             console.error(error);
         }
     };
@@ -67,9 +68,6 @@ const page = () => {
 
     useEffect(() => {
         pusherJob();
-        if (patientId) {
-            setReceiverId(patientId);
-        }
     }, []);
 
     return (

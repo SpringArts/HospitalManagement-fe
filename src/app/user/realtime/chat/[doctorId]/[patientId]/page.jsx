@@ -29,13 +29,17 @@ const ChatApp = ({ params }) => {
             cluster: "ap1",
         });
 
-        const channel = pusher.subscribe("message.127041");
-        channel.bind("real-time-chat", function (data) {
-            console.log(data);
-            setMessages((prevMessages) => [...prevMessages, data.message]);
+
+        const channel = pusher.subscribe('message.' + bookingId);
+        channel.bind('fresher', function (data) {
+            setMessages(prevMessages => [...prevMessages, data.message]);
         });
 
-    };
+        return () => {
+            channel.unbind('fresher');
+            pusher.unsubscribe('message.' + bookingId);
+        };
+    }
 
     const formatHumanTime = (timestamp) => {
         const options = {
@@ -46,6 +50,24 @@ const ChatApp = ({ params }) => {
             minute: "2-digit",
         };
         return new Date(timestamp).toLocaleString(undefined, options);
+    };
+
+    const getAllMessages = async () => {
+        try {
+            await axios
+                .get(`/message/${params.doctorId}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    setMessages(response.data.message.messages);
+                });
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
     };
 
     const handlePopup = () => {
@@ -188,18 +210,17 @@ const ChatApp = ({ params }) => {
                             {messages.map((message, index) => (
                                 <div
                                     key={index}
-                                    className={`mb-4 ${
-                                        message.sender_id === user?.id
-                                            ? "text-right text-blue-600"
-                                            : "text-left text-gray-700"
-                                    }`}
+
+                                    className={`mb-4 ${message.sender_id === user?.id
+                                        ? "text-right text-blue-600"
+                                        : "text-left text-gray-700"
+                                        }`}
                                 >
                                     <div
-                                        className={`p-4 rounded-lg inline-block border ${
-                                            message.sender === user?.id
-                                                ? "border-blue-300 bg-blue-200"
-                                                : "border-gray-300 bg-gray-200"
-                                        }`}
+                                        className={`p-4 rounded-lg inline-block border ${message.sender === user?.id
+                                            ? "border-blue-300 bg-blue-200"
+                                            : "border-gray-300 bg-gray-200"
+                                            }`}
                                     >
                                         <div className="mb-2 text-xs text-gray-500">
                                             {formatHumanTime(
@@ -238,7 +259,7 @@ const ChatApp = ({ params }) => {
                     </button>
                 </div>
                 {showPopup ? (
-                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} />
+                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} bookingId={bookingId} />
                 ) : null}
             </div>
         </Layout>

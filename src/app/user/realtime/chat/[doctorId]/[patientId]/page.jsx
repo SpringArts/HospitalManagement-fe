@@ -1,22 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Layout from '../../../../Layout';
-import ConfirmPopup from '@/components/AppointmentPopUp/ConfirmPopup';
-import axios from '@/lib/axios';
+import { useState, useEffect } from "react";
+import Layout from "../../../../Layout";
+import ConfirmPopup from "@/components/AppointmentPopUp/ConfirmPopup";
+import axios from "@/lib/axios";
 import Cookies from "js-cookie";
-import Pusher from 'pusher-js';
-import { useSearchParams } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
-
+import Pusher from "pusher-js";
+import { useSearchParams } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const ChatApp = ({ params }) => {
-    const searchParams = useSearchParams()
-    const bookingId = searchParams.get('bookId')
+    const searchParams = useSearchParams();
+    const bookingId = searchParams.get("bookId");
 
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    const [newMessage, setNewMessage] = useState("");
     const token = Cookies.get("token");
     const user = JSON.parse(Cookies.get("user_info"))
     const [formData, setFormData] = useState({
@@ -26,9 +25,10 @@ const ChatApp = ({ params }) => {
     });
 
     const pusherJob = () => {
-        const pusher = new Pusher('7ba581dfe6bdd5a3ec55', {
-            cluster: 'ap3'
+        const pusher = new Pusher("45465ed7bfec0f979e65", {
+            cluster: "ap1",
         });
+
 
         const channel = pusher.subscribe('message.' + bookingId);
         channel.bind('fresher', function (data) {
@@ -42,7 +42,13 @@ const ChatApp = ({ params }) => {
     }
 
     const formatHumanTime = (timestamp) => {
-        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        const options = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
         return new Date(timestamp).toLocaleString(undefined, options);
     };
 
@@ -64,24 +70,46 @@ const ChatApp = ({ params }) => {
         }
     };
 
-
     const handlePopup = () => {
         setShowPopup(!showPopup);
-    }
+    };
 
     const sendMessage = async () => {
         const updatedFormData = {
             ...formData,
             message: newMessage,
         };
-        await axios.post('/message', updatedFormData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+        await axios.post(
+            "/message/2?booking_id=127041",
+            { message: newMessage },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             },
-        });
-        setNewMessage('');
+        );
+        setNewMessage("");
     };
+
+    const getAllMessages = async () => {
+        try {
+            await axios
+                .get(`/message/2`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    setMessages(response.data.message.messages);
+                });
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         getAllMessages();
         pusherJob();
@@ -182,6 +210,7 @@ const ChatApp = ({ params }) => {
                             {messages.map((message, index) => (
                                 <div
                                     key={index}
+
                                     className={`mb-4 ${message.sender_id === user?.id
                                         ? "text-right text-blue-600"
                                         : "text-left text-gray-700"

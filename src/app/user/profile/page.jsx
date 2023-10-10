@@ -1,6 +1,7 @@
 import Layout from "../Layout";
 import UserProfile from "@/components/profile/Profile";
 import UserBookingData from "@/components/profile/UserBookingData";
+
 export default function page() {
     return (
         <Layout className={"max-w-2xl  lg:max-w-3xl"}>

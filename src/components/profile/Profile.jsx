@@ -3,9 +3,11 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import profileImg from "../../../public/images/userProfile.png";
 import { useEffect, useState } from "react";
+import { Loading } from "../loading/Loading";
 
 function UserProfile() {
     const [userInfo, setUserInfo] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         // Retrieve the encoded 'user_info' from cookies
@@ -19,6 +21,7 @@ function UserProfile() {
                 // Parse the JSON string into a JavaScript object
                 const userInfoObject = JSON.parse(decodedUserInfo);
                 setUserInfo(userInfoObject);
+                setLoading(true);
             } catch (error) {
                 console.error("Error parsing user_info:", error);
             }
@@ -27,7 +30,7 @@ function UserProfile() {
 
     return (
         <div className="flex flex-col md:flex-row  mt-5 justify-center mb-4 sm:justify-start gap-5 ">
-            {userInfo ? (
+            {loading && userInfo ? (
                 <>
                     <div className=" h-auto mx-auto w-28  md:w-44 rounded-full md:mx-0">
                         <Image
@@ -49,7 +52,9 @@ function UserProfile() {
                     </div>
                 </>
             ) : (
-                <>Loading your profile</>
+                <div className="mx-auto my-5">
+                    <Loading />
+                </div>
             )}
         </div>
     );

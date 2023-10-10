@@ -56,7 +56,7 @@ const List = () => {
 
     return (
         <div className="p-6 bg-white shadow rounded-xl">
-
+            <h1>Appointments</h1>
             {
                 appointmentData && appointmentData.map(appointment => (
                     <div key={appointment.id} className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">

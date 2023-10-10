@@ -7,7 +7,6 @@ const ChatMessage = ({ messages, auth_id }) => {
     const isReceiveMessage = (message) => {
         return message.receiver_id === auth_id
     }
-    console.log(messages);
 
     return (
         <div className="w-full h-full overflow-y-auto">

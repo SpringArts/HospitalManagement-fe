@@ -52,7 +52,7 @@ const page = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(res.data.message.booking_id)
+            setBookingId(res.data.message.booking_id)
             setRecentMessages(res.data.message.chatUsers);
             setReceiver(res.data.message.receiver);
             setMessages(res.data.message.messages);
@@ -91,6 +91,7 @@ const page = () => {
                             <ChatInput
                                 receiver={receiver}
                                 fetchRecentMessages={fetchRecentMessages}
+                                bookingId={bookingId}
                             />
                         </>
                     ) : (

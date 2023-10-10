@@ -1,8 +1,25 @@
+import axios from "@/lib/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import React from "react"
+import toast from "react-hot-toast";
 
-const ConfirmPopup = ({ onopen, onclose }) => {
-    const confirmPopup = () => {
-        onclose();
+const ConfirmPopup = ({ onopen, onclose, bookingId }) => {
+    const router = useRouter();
+    const confirmPopup = async () => {
+        const res = await axios.post(`/leave-chat/${bookingId}`, null, {
+            headers: {
+                Accept: "application/json",
+                ContentType: "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+        });
+        if (res.status === 200) {
+            toast.success("You have left the chat");
+            onclose();
+            router.push("/user");
+        }
+
     }
 
     const closePopup = () => {

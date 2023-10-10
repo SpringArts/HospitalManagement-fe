@@ -32,7 +32,6 @@ const ChatApp = ({ params }) => {
 
         const channel = pusher.subscribe('message.' + bookingId);
         channel.bind('fresher', function (data) {
-            console.log(data);
             setMessages(prevMessages => [...prevMessages, data.message]);
         });
 
@@ -231,7 +230,7 @@ const ChatApp = ({ params }) => {
                     </button>
                 </div>
                 {showPopup ? (
-                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} />
+                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} bookingId={bookingId} />
                 ) : null}
             </div>
         </Layout>

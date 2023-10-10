@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={`${poppins.className} mx-auto bg-white`}>
-                {/* <ProtectRoute /> */}
+                <ProtectRoute />
                 {children}
                 <Toaster position="top-right" reverseOrder={false} />
             </body>

@@ -76,78 +76,74 @@ const AppointmentCard = ({
     const isButtonDisabled = checkAppointmentTime(appointmentTime);
 
     return (
-        <div className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
-            <h2 className="text-base mb-2 font-medium text-zinc-700">
+        <div className="shadow bg-white border rounded-xl p-4 mt-5">
+            <h2 className="text-lg mb-2 font-semibold text-zinc-700">
                 {formatDateTime(appointmentDate, appointmentTime)}
             </h2>
-            <hr />
-            <div className="flex py-3 px-1.5 gap-3">
-                <Image
-                    alt="doctor image"
-                    width={100}
-                    height={100}
-                    src={profileImg}
-                    className="bg-gray-200 w-20 h-20 rounded-2xl p-3"
-                />
-                <div className="flex gap-1 flex-col">
-                    <h1 className="text-lg text-zinc-800">{doctorName}</h1>
-                    <div className="flex gap-1">
+            <hr className="my-2" />
+            <div className="flex items-center py-3 gap-3">
+                <div className="w-20 h-20 bg-gray-200 rounded-full overflow-hidden">
+                    <Image
+                        alt="doctor image"
+                        width={100}
+                        height={100}
+                        src={profileImg}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <h1 className="text-xl font-semibold text-zinc-800">{doctorName}</h1>
+                    <div className="flex items-center gap-1 text-sm text-zinc-500">
                         <MapPin size={20} color="#006400" />
-                        <p className="text-sm text-zinc-500">
-                            {doctorLocation.join(", ")}
-                        </p>
+                        <p>{doctorLocation.join(", ")}</p>
                     </div>
-                    <div className="flex gap-1">
+                    <div className="flex items-center gap-1 text-sm text-zinc-500">
                         <IdentificationCard size={20} color="#006400" />
-                        <p className="text-sm text-zinc-500">
-                            Booking ID :{" "}
-                            <span className="text-green-600">#{bookingId}</span>
+                        <p>
+                            Booking ID: <span className="text-green-600">#{bookingId}</span>
                         </p>
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mt-4">
                 {is_visible === 0 ? null : (
                     <div className="">
                         <button
                             onClick={handleCancelAppointment}
-                            className="bg-red-500 text-white px-3 py-3 rounded-md hover:bg-red-600"
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300"
+                            disabled={isUpdating}
                         >
                             {isUpdating ? "Cancelling..." : "Cancel"}
                         </button>
                     </div>
                 )}
-                {
-                    (appointmentType != "outpatient" && status == 'upcoming' && is_visible === 1) ? (
-                        <div className="flex shrink-0">
-                            <div className="flex shrink-0">
-                                {isButtonDisabled ? (
-                                    <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
-                                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-3 rounded-md">
-                                            Enter Room Now
-                                        </button>
-                                    </Link>
-
-                                ) : (
-                                    <button className="bg-gray-500 text-white px-3 py-3 rounded-md cursor-not-allowed" disabled>
-                                        Enter Room Now
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex shrink-0">
-                            <button className="bg-gray-500 text-white px-3 py-3 rounded-md" disabled>
-                                Empty Room
+                {(appointmentType !== "outpatient" && status === 'upcoming' && is_visible === 1) ? (
+                    <div className="flex shrink-0">
+                        {isButtonDisabled ? (
+                            <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
+                                <button
+                                    className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? 'cursor-not-allowed' : ''}`}
+                                    disabled={isButtonDisabled}
+                                >
+                                    Enter Room Now
+                                </button>
+                            </Link>
+                        ) : (
+                            <button className="bg-gray-500 text-white px-4 py-2 rounded-md cursor-not-allowed" disabled>
+                                Enter Room Now
                             </button>
-                        </div>
-                    )
-                }
-
+                        )}
+                    </div>
+                ) : (
+                    <div className="flex shrink-0">
+                        <button className="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>
+                            Empty Room
+                        </button>
+                    </div>
+                )}
             </div>
-
-
         </div>
+
     );
 };
 

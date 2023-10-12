@@ -1,21 +1,101 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Layout from '../../Layout';
-import ConfirmPopup from '@/components/AppointmentPopUp/ConfirmPopup';
+import { useState, useEffect } from "react";
+import Layout from "../../../../Layout";
+import ConfirmPopup from "@/components/AppointmentPopUp/ConfirmPopup";
+import axios from "@/lib/axios";
+import Cookies from "js-cookie";
+import Pusher from "pusher-js";
+import { useSearchParams } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
-const ChatApp = () => {
+const ChatApp = ({ params }) => {
+    const searchParams = useSearchParams();
+    const bookingId = searchParams.get("bookId");
+
     const [showPopup, setShowPopup] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+    const token = Cookies.get("token");
+    const user = JSON.parse(Cookies.get("user_info"))
+    const [formData, setFormData] = useState({
+        doctorId: params.doctorId,
+        patientId: params.patientId,
+        bookingId: bookingId,
+    });
+
+    const pusherJob = () => {
+        const pusher = new Pusher("45465ed7bfec0f979e65", {
+            cluster: "ap1",
+        });
+
+
+        const channel = pusher.subscribe('message.' + bookingId);
+        channel.bind('fresher', function (data) {
+            setMessages(prevMessages => [...prevMessages, data.message]);
+        });
+
+        return () => {
+            channel.unbind('fresher');
+            pusher.unsubscribe('message.' + bookingId);
+        };
+    }
+
+    const formatHumanTime = (timestamp) => {
+        const options = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        return new Date(timestamp).toLocaleString(undefined, options);
+    };
+
+    const getAllMessages = async () => {
+        try {
+            await axios
+                .get(`/message/${params.doctorId}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    setMessages(response.data.message.messages);
+                });
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
+    };
+
     const handlePopup = () => {
         setShowPopup(!showPopup);
-    }
-    const messages = [
-        { text: 'Hi there!', sender: 'user', timestamp: '10:00 AM' },
-        { text: 'Hello! How can I assist you today?', sender: 'admin', timestamp: '10:05 AM' },
-        { text: 'I have a question about my appointment.', sender: 'user', timestamp: '10:10 AM' },
-        { text: 'Sure, feel free to ask your question.', sender: 'admin', timestamp: '10:15 AM' },
-        // Add more messages as needed
-    ];
+    };
+
+    const sendMessage = async () => {
+        const updatedFormData = {
+            ...formData,
+            message: newMessage,
+        };
+        await axios.post(
+            `/message/${params.doctorId}?booking_id=${bookingId}`,
+            { message: newMessage },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        setNewMessage("");
+    };
+
+    useEffect(() => {
+        getAllMessages();
+        pusherJob();
+    }, []);
 
     return (
         <Layout>
@@ -25,7 +105,10 @@ const ChatApp = () => {
                         <nav aria-label="Breadcrumb">
                             <ol className="flex items-center gap-1 text-sm text-gray-600">
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700">
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
                                         <span className="sr-only"> Home </span>
 
                                         <svg
@@ -61,7 +144,13 @@ const ChatApp = () => {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700"> appointment </a>
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
+                                        {" "}
+                                        appointment{" "}
+                                    </a>
                                 </li>
                                 <li className="rtl:rotate-180">
                                     <svg
@@ -79,7 +168,13 @@ const ChatApp = () => {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700"> chatting </a>
+                                    <a
+                                        href="#"
+                                        className="block transition hover:text-gray-700"
+                                    >
+                                        {" "}
+                                        chatting{" "}
+                                    </a>
                                 </li>
                             </ol>
                         </nav>
@@ -97,20 +192,28 @@ const ChatApp = () => {
                             {messages.map((message, index) => (
                                 <div
                                     key={index}
-                                    className={`mb-4 ${message.sender === 'user' ? 'text-right text-blue-600' : 'text-left text-gray-700'
+
+                                    className={`mb-4 ${message.sender_id === user?.id
+                                        ? "text-right text-blue-600"
+                                        : "text-left text-gray-700"
                                         }`}
                                 >
                                     <div
-                                        className={`p-4 rounded-lg inline-block border ${message.sender === 'user'
-                                            ? 'border-blue-300 bg-blue-200'
-                                            : 'border-gray-300 bg-gray-200'
+                                        className={`p-4 rounded-lg inline-block border ${message.sender === user?.id
+                                            ? "border-blue-300 bg-blue-200"
+                                            : "border-gray-300 bg-gray-200"
                                             }`}
                                     >
-                                        <div className="mb-2 text-xs text-gray-500">{message.timestamp}</div>
-                                        {message.text}
+                                        <div className="mb-2 text-xs text-gray-500">
+                                            {formatHumanTime(
+                                                message.created_at,
+                                            )}
+                                        </div>
+                                        {message.message}
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                     </div>
                     <div className="flex items-center p-4 border-t border-gray-300">
@@ -118,21 +221,28 @@ const ChatApp = () => {
                             type="text"
                             className="flex-1 mr-2 p-2 border rounded transition duration-300 ease-in-out focus:border-transparent hover:border-blue-500"
                             placeholder="Type your message..."
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
                         />
-                        <button className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 ease-in-out">
+                        <button
+                            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+                            onClick={sendMessage}
+                        >
                             Send
                         </button>
                     </div>
-
                 </div>
-                <div className='pt-5 flex justify-start'>
+                <div className="pt-5 flex justify-start">
                     <button
                         onClick={handlePopup}
-                        className='border rounded font-normal p-4 shadow-lg bg-red-400 hover:bg-red-500 text-white'>
+                        className="border rounded font-normal p-4 shadow-lg bg-red-400 hover:bg-red-500 text-white"
+                    >
                         Leave
                     </button>
                 </div>
-                {showPopup ? <ConfirmPopup onopen={showPopup} onclose={setShowPopup} /> : null}
+                {showPopup ? (
+                    <ConfirmPopup onopen={showPopup} onclose={setShowPopup} bookingId={bookingId} />
+                ) : null}
             </div>
         </Layout>
     );

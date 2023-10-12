@@ -21,7 +21,7 @@ const Page = ({ params }) => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     const fetchData = async () => {
-        const { data } = await axios.get(
+        const res = await axios.get(
             `/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
             {
                 headers: {
@@ -30,8 +30,9 @@ const Page = ({ params }) => {
                 },
             },
         );
-        setData(data.data.data);
-        setMeta(data.data.meta);
+
+        setData(res.data.data);
+        setMeta(res.data.meta);
         setLoading(false);
     };
 

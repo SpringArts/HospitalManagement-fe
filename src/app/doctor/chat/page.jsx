@@ -18,31 +18,28 @@ const page = () => {
 
     const [recentMessages, setRecentMessages] = useState([]);
     const [receiverId, setReceiverId] = useState();
-    const [receiver, setReceiver] = useState();
+    const [receiver, setReceiver] = useState(patientId);
     const [messages, setMessages] = useState([]);
-    const [bookingId , setBookingId] = useState();
+    const [bookingId, setBookingId] = useState();
     const token = Cookies.get("token");
     const userInfo = JSON.parse(Cookies.get("user_info"));
 
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY, {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER,
+    });
 
 
-
+    const channel = pusher.subscribe('message.' + bookingId);
+    channel.bind('fresher', function (data) {
+        setMessages(prevMessages => [...prevMessages, data.message]);
+    });
     const pusherJob = () => {
-        const pusher = new Pusher("45465ed7bfec0f979e65", {
-            cluster: "ap1",
-        });
-
-        const channel = pusher.subscribe('message.' + bookingId);
-        channel.bind('fresher', function (data) {
-            console.log(data);
-            setMessages((prevMessages) => [...prevMessages, data.message]);
-        });
 
         return () => {
             channel.unbind('fresher');
             pusher.unsubscribe('message.' + bookingId);
         };
-    };
+    }
 
     const fetchRecentMessages = async () => {
         try {
@@ -53,6 +50,7 @@ const page = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
             setBookingId(res.data.message.booking_id)
             setRecentMessages(res.data.message.chatUsers);
             setReceiver(res.data.message.receiver);
@@ -65,15 +63,8 @@ const page = () => {
 
     useEffect(() => {
         fetchRecentMessages();
-    }, [receiverId]);
-
-    useEffect(() => {
         pusherJob();
-        if(patientId){
-            setReceiverId(patientId)
-        }
-    }, []);
-
+    }, [receiverId]);
 
 
     return (
@@ -98,6 +89,7 @@ const page = () => {
                                 receiver={receiver}
                                 fetchRecentMessages={fetchRecentMessages}
                                 bookingId={bookingId}
+                                pusherJob={pusherJob}
                             />
                         </>
                     ) : (

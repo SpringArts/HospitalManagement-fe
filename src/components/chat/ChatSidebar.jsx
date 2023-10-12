@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FaUserCircle, FaSearch } from 'react-icons/fa'
 
 const ChatSidebar = ({ recentMessages, getReceiverId }) => {
+    console.log(recentMessages);
     return (
         <>
             <div className="sidebar-container w-72 p-4 bg-white border-r border-gray-200">
@@ -24,7 +25,7 @@ const ChatSidebar = ({ recentMessages, getReceiverId }) => {
                             </div>
                             <div className="user-details">
                                 <h3 className="text-lg font-medium">{user.name}</h3>
-                                <p className="text-sm text-gray-500">aaa</p>
+                                <p className="text-sm text-gray-500">{user.message}</p>
                             </div>
                         </div>
                     ))}

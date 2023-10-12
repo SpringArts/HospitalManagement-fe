@@ -80,7 +80,7 @@ const ChatApp = ({ params }) => {
             message: newMessage,
         };
         await axios.post(
-            "/message/2?booking_id=127041",
+            `/message/${params.doctorId}?booking_id=${bookingId}`,
             { message: newMessage },
             {
                 headers: {
@@ -90,24 +90,6 @@ const ChatApp = ({ params }) => {
             },
         );
         setNewMessage("");
-    };
-
-    const getAllMessages = async () => {
-        try {
-            await axios
-                .get(`/message/2`, {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((response) => {
-                    setMessages(response.data.message.messages);
-                });
-        } catch (error) {
-            toast.error(error);
-            console.log(error);
-        }
     };
 
     useEffect(() => {

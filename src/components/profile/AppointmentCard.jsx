@@ -21,6 +21,7 @@ const AppointmentCard = ({
     doctorId,
     patientId,
 }) => {
+    console.log(patientId)
     const [isUpdating, setIsUpdating] = useState(false);
     const [cancelActionTriggered, setCancelActionTriggered] = useState(false);
     const currentTime = new Date();

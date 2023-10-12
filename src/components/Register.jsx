@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "@/lib/axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 export default function Register() {
     const router = useRouter();
     const toastSuccess = () =>
@@ -31,7 +33,7 @@ export default function Register() {
             console.log("Registration successful:", response.data.message);
 
             toastSuccess();
-            router.push("auth/login");
+            toast.push("auth/login");
         } catch (error) {
             toast.error(
                 error.response.data.errors.email

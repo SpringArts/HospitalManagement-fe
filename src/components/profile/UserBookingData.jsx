@@ -26,41 +26,36 @@ export default function UserBookingData() {
         fetchData();
     }, []);
     return (
-        <div className="mt-6">
-            <div className="border-b border-gray-200">
-                <nav
-                    className="-mb-px justify-center flex gap-6 md:gap-12"
-                    aria-label="Tabs"
+        <div className="mt-6 border-b border-gray-200 pb-4">
+            <nav className="flex justify-center gap-8">
+                <button
+                    className={`text-sm md:text-base font-medium transition duration-300 ${selectedButton === 1 ? 'text-pink-500 border-b-2 border-pink-500' : 'text-gray-500'
+                        } hover:text-pink-500 hover:border-pink-500 focus:outline-none focus:text-pink-500 focus:border-pink-500`}
+                    onClick={() => handleButtonClick(1)}
                 >
-                    <button
-                        className={`shrink-0  px-1 pb-4 text-sm md:text-base font-medium  ${selectedButton === 1 ? activeStyle : defStyle
-                            }`}
-                        onClick={() => handleButtonClick(1)}
-                    >
-                        UpComing
-                    </button>
+                    Upcoming
+                </button>
 
-                    <button
-                        className={`shrink-0   px-1 pb-4 text-sm md:text-base font-medium ${selectedButton === 2 ? activeStyle : defStyle
-                            }`}
-                        onClick={() => handleButtonClick(2)}
-                    >
-                        Completed
-                    </button>
+                <button
+                    className={`text-sm md:text-base font-medium transition duration-300 ${selectedButton === 2 ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-500'
+                        } hover:text-blue-500 hover:border-blue-500 focus:outline-none focus:text-blue-500 focus:border-blue-500`}
+                    onClick={() => handleButtonClick(2)}
+                >
+                    Completed
+                </button>
 
-                    <button
-                        className={`shrink-0 px-1 pb-4 text-sm md:text-base font-medium ${selectedButton === 3 ? activeStyle : defStyle
-                            }`}
-                        onClick={() => handleButtonClick(3)}
-                    >
-                        Cancelled
-                    </button>
-                </nav>
+                <button
+                    className={`text-sm md:text-base font-medium transition duration-300 ${selectedButton === 3 ? 'text-green-500 border-b-2 border-green-500' : 'text-gray-500'
+                        } hover:text-green-500 hover:border-green-500 focus:outline-none focus:text-green-500 focus:border-green-500`}
+                    onClick={() => handleButtonClick(3)}
+                >
+                    Cancelled
+                </button>
+            </nav>
+            <div className="mt-4">
+                <UserBookingList selectedButton={selectedButton} dynamicData={dynamicData} />
             </div>
-            <UserBookingList
-                selectedButton={selectedButton}
-                dynamicData={dynamicData}
-            />
         </div>
+
     );
 }

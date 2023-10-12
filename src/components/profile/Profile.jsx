@@ -1,15 +1,17 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import profileImg from "../../../public/images/userProfile.png";
-
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios";
+import { Loading } from "../loading/Loading";
 
 function UserProfile() {
     const [userInfo, setUserInfo] = useState(null);
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         // Retrieve the encoded 'user_info' from cookies
         const encodedUserInfo = Cookies.get("user_info");
@@ -22,6 +24,7 @@ function UserProfile() {
                 // Parse the JSON string into a JavaScript object
                 const userInfoObject = JSON.parse(decodedUserInfo);
                 setUserInfo(userInfoObject);
+                setLoading(true);
             } catch (error) {
                 console.error("Error parsing user_info:", error);
             }
@@ -41,9 +44,8 @@ function UserProfile() {
 
             // Clear the user_info cookie and redirect to the login page
             Cookies.remove("user_info");
-            Cookies.remove('token');
+            Cookies.remove("token");
             router.push("/auth/login");
-
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -51,7 +53,7 @@ function UserProfile() {
 
     return (
         <div className="flex flex-col md:flex-row items-center mt-5 space-y-2 md:space-y-0 md:space-x-4">
-            {userInfo ? (
+            {loading && userInfo ? (
                 <>
                     <div className="h-32 w-32 md:h-44 md:w-44 rounded-full overflow-hidden">
                         <Image
@@ -79,7 +81,9 @@ function UserProfile() {
                     </div>
                 </>
             ) : (
-                <p className="text-zinc-600">Loading your profile...</p>
+                <div className="mx-auto my-5">
+                    <Loading />
+                </div>
             )}
         </div>
     );

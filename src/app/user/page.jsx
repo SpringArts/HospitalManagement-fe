@@ -71,7 +71,7 @@ export default function Page() {
                 <div className="max-w-xl">
                     <h2 className="text-4xl text-zinc-800 font-bold md:text-6xl">
                         Find Your Best{" "}
-                        <span className="text-red-400">HEALER</span>
+                        <span className="text-red-500">HEALER</span>
                     </h2>
                     <p className="mt-4 text-zinc-600 ">
                         Discover the perfect healer tailored to your needs and

@@ -52,7 +52,6 @@ export default function Login() {
             [name]: value,
         });
     };
-    console.log(formData);
     return (
         <form method="POST" onSubmit={handleLogin}>
             <div className="relative mt-5">

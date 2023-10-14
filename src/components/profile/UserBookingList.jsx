@@ -39,6 +39,7 @@ export default function UserBookingList({ selectedButton }) {
             }
 
             setAppointments(filteredAppointments);
+            console.log(appointments);
         } catch (error) {
             setError("Error fetching data. Please try again later.");
         }
@@ -63,24 +64,31 @@ export default function UserBookingList({ selectedButton }) {
     const sortedAppointments = rearrangeAppointments(appointments);
 
     return (
-        <div className="grid grid-cols-1 mt-5">
+        <div className="grid grid-cols-1 gap-4 mt-5">
             {error && <div className="text-red-500">{error}</div>}
-            {sortedAppointments
-                ? sortedAppointments.map((appointment) => (
-                      <AppointmentCard
-                          key={appointment.id}
-                          id={appointment.id}
-                          fetchData={fetchData}
-                          is_visible={appointment.is_visible}
-                          status={appointment.status}
-                          appointmentDate={appointment.appointmentDate}
-                          appointmentTime={appointment.appointmentTime}
-                          doctorName={appointment.doctorName}
-                          doctorLocation={appointment.doctorLocation}
-                          bookingId={appointment.bookingId}
-                      />
-                  ))
-                : null}
+            {sortedAppointments && sortedAppointments.length > 0 ? (
+                sortedAppointments.map((appointment) => (
+                    <AppointmentCard
+                        key={appointment.id}
+                        id={appointment.id}
+                        fetchData={fetchData}
+                        is_visible={appointment.is_visible}
+                        status={appointment.status}
+                        appointmentDate={appointment.appointmentDate}
+                        appointmentTime={appointment.appointmentTime}
+                        patientId={appointment.patientId}
+                        doctorId={appointment.doctorId}
+                        doctorName={appointment.doctorName ?? 'Unknown'}
+                        doctorLocation={appointment.doctorLocation}
+                        bookingId={appointment.bookingId}
+                        appointmentType={appointment.appointmentType}
+                    />
+                ))
+            ) : (
+                <div className="text-gray-600">No appointments found.</div>
+            )}
         </div>
+
+
     );
 }

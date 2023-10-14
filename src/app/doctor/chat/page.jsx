@@ -24,7 +24,8 @@ const page = () => {
     const token = Cookies.get("token");
     const userInfo = JSON.parse(Cookies.get("user_info"));
 
-    const bookingId = '212202';
+
+
 
     const pusherJob = () => {
         const pusher = new Pusher("45465ed7bfec0f979e65", {
@@ -64,11 +65,16 @@ const page = () => {
 
     useEffect(() => {
         fetchRecentMessages();
-    }, [receiverId, bookingId]);
+    }, [receiverId]);
 
     useEffect(() => {
         pusherJob();
+        if(patientId){
+            setReceiverId(patientId)
+        }
     }, []);
+
+
 
     return (
         <>

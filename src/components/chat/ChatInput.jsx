@@ -1,8 +1,8 @@
 import axios from "@/lib/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Cookies from "js-cookie";
 
-export default function ChatInput({ receiver, fetchRecentMessages, bookingId, pusherJob }) {
+export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) {
     const token = Cookies.get("token");
     const [message, setMessage] = useState('');
 
@@ -17,7 +17,6 @@ export default function ChatInput({ receiver, fetchRecentMessages, bookingId, pu
         });
         setMessage('');
         fetchRecentMessages();
-        pusherJob();
     };
 
     return (

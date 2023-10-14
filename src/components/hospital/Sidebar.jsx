@@ -96,6 +96,14 @@ const Sidebar = () => {
                                 </ul>
                             </details>
                         </li>
+                        <li>
+                            <Link
+                                href='/user/hospital'
+                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700"
+                            >
+                                HOME
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 

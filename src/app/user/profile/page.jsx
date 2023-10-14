@@ -1,6 +1,7 @@
 import Layout from "@/components/profile/Layout";
 import UserProfile from "@/components/profile/Profile";
 import UserBookingData from "@/components/profile/UserBookingData";
+
 export default function page() {
     return (
         <Layout>

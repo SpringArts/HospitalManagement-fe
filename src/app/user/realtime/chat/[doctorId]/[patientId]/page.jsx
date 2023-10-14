@@ -25,8 +25,8 @@ const ChatApp = ({ params }) => {
     });
 
     const pusherJob = () => {
-        const pusher = new Pusher("45465ed7bfec0f979e65", {
-            cluster: "ap1",
+        const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY, {
+            cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER,
         });
 
 
@@ -54,16 +54,14 @@ const ChatApp = ({ params }) => {
 
     const getAllMessages = async () => {
         try {
-            await axios
+            const res = await axios
                 .get(`/message/${params.doctorId}`, {
                     headers: {
                         Accept: "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                })
-                .then((response) => {
-                    setMessages(response.data.message.messages);
                 });
+            setMessages(res.data.message.messages);
         } catch (error) {
             toast.error(error);
             console.log(error);
@@ -75,10 +73,6 @@ const ChatApp = ({ params }) => {
     };
 
     const sendMessage = async () => {
-        const updatedFormData = {
-            ...formData,
-            message: newMessage,
-        };
         await axios.post(
             `/message/${params.doctorId}?booking_id=${bookingId}`,
             { message: newMessage },

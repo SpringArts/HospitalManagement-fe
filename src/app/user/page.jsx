@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Layout from "./Layout";
 
 const ServiceCard = ({ title, description }) => {
@@ -80,12 +81,12 @@ export default function Page() {
                         begins with finding your best healer.
                     </p>
                     {/* Call to action button */}
-                    <a
-                        href="#"
+                    <Link
+                        href="/user/hospital"
                         className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
                     >
                         Get Started Now
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">

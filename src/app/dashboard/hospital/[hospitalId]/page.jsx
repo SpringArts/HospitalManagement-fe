@@ -36,7 +36,6 @@ const Dashboard = ({ params }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(formData);
             // Send form data to the Laravel backend using an API endpoint
             const response = await axios.put(`/dashboard/${hospitalId}/head`, formData, {
                 headers: {
@@ -98,14 +97,11 @@ const Dashboard = ({ params }) => {
         setDataCount(fetchDataCount.data.data);
         setHospitalInfo(fetchHospitalInfo.data.data);
         setHeadmasterInfo(fetchHeadMasterInfo.data.data);
-        console.log(fetchHeadMasterInfo)
     }
-
-
 
     useEffect(() => {
         fetchData();
-    }, [headmasterInfo])
+    }, []) //Add if you want to live change when headmaster change
 
     return (
         <Layout>

@@ -20,29 +20,23 @@ const page = () => {
     const [receiverId, setReceiverId] = useState();
     const [receiver, setReceiver] = useState();
     const [messages, setMessages] = useState([]);
-    const [bookingId , setBookingId] = useState();
+    const [bookingId, setBookingId] = useState();
     const token = Cookies.get("token");
     const userInfo = JSON.parse(Cookies.get("user_info"));
 
 
-
-
-    const pusherJob = () => {
+    const pusherJob = async () => {
         const pusher = new Pusher("45465ed7bfec0f979e65", {
             cluster: "ap1",
         });
 
         const channel = pusher.subscribe('message.' + bookingId);
+        console.log(channel, bookingId)
         channel.bind('fresher', function (data) {
-            console.log(data);
+            console.log("Ok tl");
             setMessages((prevMessages) => [...prevMessages, data.message]);
         });
-
-        return () => {
-            channel.unbind('fresher');
-            pusher.unsubscribe('message.' + bookingId);
-        };
-    };
+    }
 
     const fetchRecentMessages = async () => {
         try {
@@ -63,16 +57,19 @@ const page = () => {
         }
     };
 
+
     useEffect(() => {
+
         fetchRecentMessages();
+
     }, [receiverId]);
 
     useEffect(() => {
-        pusherJob();
-        if(patientId){
+        if (patientId) {
             setReceiverId(patientId)
         }
-    }, []);
+        pusherJob();
+    }, [bookingId]);
 
 
 

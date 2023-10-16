@@ -1,11 +1,8 @@
 "use client"
 
-import React, {useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
-
-import { IdentificationCard } from "@phosphor-icons/react";
-import { MapPin } from "react-feather";
 
 const List = () => {
     const [appointmentData, setAppointmentData] = useState(null)
@@ -18,19 +15,18 @@ const List = () => {
     const httpRequest = useCallback(async () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${user.id}/appointments?page=${currentPage}&perPage=${itemsPerPage}`, {
             method: 'GET',
-            headers: {  
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             }
         })
 
-        if(!response.ok) {
+        if (!response.ok) {
             setError('Something wrong.')
             return
         }
         const responseData = await response.json()
-        console.log('*********************: ', responseData.data)
         setAppointmentData(responseData.data)
     }, [currentPage, itemsPerPage, token, user.id])
 
@@ -47,9 +43,8 @@ const List = () => {
         );
 
         const [hours, minutes] = timeString.split(":");
-        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${
-            hours >= 12 ? "PM" : "AM"
-        }`;
+        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${hours >= 12 ? "PM" : "AM"
+            }`;
 
         return `${formattedDate} - ${formattedTime}`;
     };
@@ -61,7 +56,7 @@ const List = () => {
                 appointmentData && appointmentData.map(appointment => (
                     <div key={appointment.id} className="shadow bg-zinc-50 border rounded-xl p-3 mt-5">
                         <h2 className="text-base mb-2 font-medium text-zinc-700">
-                        {formatDateTime(appointment.appointmentTime, appointment.appointmentDate)}
+                            {formatDateTime(appointment.appointmentTime, appointment.appointmentDate)}
                         </h2>
                         <hr />
                         <div className="flex py-3 px-1.5 gap-3">

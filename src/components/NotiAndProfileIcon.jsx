@@ -11,13 +11,6 @@ export default function NotiAndProfileIcon({ className }) {
         <div
             className={`flex gap-3 md:gap-5 justify-center items-center ${className}`}
         >
-            <Link href={notiPath}>
-                <BellSimple
-                    size={28}
-                    weight={`${pathname === notiPath ? "fill" : "regular"}`}
-                    color={colorCode}
-                />
-            </Link>
             <Link href={profilePath}>
                 <UserCircle
                     size={28}

@@ -1,8 +1,5 @@
 import React from "react";
 import { User, Users, Calendar, Home as HomeIcon } from "react-feather";
-import { FaRegHospital } from "react-icons/fa";
-import { PiUsersFour } from "react-icons/pi";
-import { FcCalendar } from "react-icons/fc";
 import Layout from "../../components/doctor/Layout";
 import List from "@/components/doctor/appointment/List";
 
@@ -45,7 +42,7 @@ const Home = () => {
                 />
             </div>
             {/* APPOINTMENTS */}
-            <List/>
+            <List />
         </Layout>
     );
 };

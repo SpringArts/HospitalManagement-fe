@@ -1,10 +1,10 @@
-import React from "react";
+"use client"
+
+import React, { useCallback, useEffect, useState } from "react";
 import { User, Users, Calendar, Home as HomeIcon } from "react-feather";
-import { FaRegHospital } from "react-icons/fa";
-import { PiUsersFour } from "react-icons/pi";
-import { FcCalendar } from "react-icons/fc";
 import Layout from "../../components/doctor/Layout";
 import List from "@/components/doctor/appointment/List";
+import Cookies from "js-cookie";
 
 
 const InfoCard = ({ title, count, icon: Icon, color }) => {
@@ -22,30 +22,60 @@ const InfoCard = ({ title, count, icon: Icon, color }) => {
 };
 
 const Home = () => {
+    const [countData, setCountData] = useState(null)
+    const token = Cookies.get("token");
+    const user = JSON.parse(Cookies.get("user_info"));
+    const [error, setError] = useState(null);
+
+    const getCountDataHttp = useCallback(async () => {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${user.id}/counts`,
+            {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+
+        if (!response.ok) {
+            setError("Something wrong.");
+            return;
+        }
+        const responseData = await response.json();
+        setCountData(responseData);
+    }, [token, user.id]);
+
+    useEffect(() => {
+        getCountDataHttp()
+    }, [getCountDataHttp])
+
     return (
         <Layout title="Dashboard">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <InfoCard
                     title="Hospitals"
-                    count={11}
+                    count={countData? countData.hospital : 0}
                     icon={HomeIcon}
                     color="white"
                 />
                 <InfoCard
                     title="Patients"
-                    count={4}
+                    count={countData? countData.patient : 0}
                     icon={Users}
                     color="white"
                 />
                 <InfoCard
                     title="Appointments"
-                    count={2}
+                    count={countData? countData.appointment : 0}
                     icon={Calendar}
                     color="white"
                 />
             </div>
             {/* APPOINTMENTS */}
-            <List/>
+            <List />
         </Layout>
     );
 };

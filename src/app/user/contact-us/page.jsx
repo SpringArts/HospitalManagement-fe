@@ -7,7 +7,7 @@ const ContactusPage = () => {
         <Layout>
             <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-md">
-                    <h1 className="text-center text-3xl font-bold text-indigo-600 mb-6">
+                    <h1 className="text-center text-3xl font-bold text-green-500 mb-6">
                         Contact Us
                     </h1>
 
@@ -44,7 +44,7 @@ const ContactusPage = () => {
 
                         <button
                             type="submit"
-                            className="block w-full rounded-lg bg-indigo-600 text-white py-3 text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring focus:border-indigo-300"
+                            className="block w-full rounded-lg bg-green-500 text-white py-3 text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring focus:border-indigo-300"
                         >
                             Send
                         </button>

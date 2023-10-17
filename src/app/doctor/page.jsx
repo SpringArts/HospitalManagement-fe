@@ -69,7 +69,7 @@ const Home = () => {
                 />
                 <InfoCard
                     title="Appointments"
-                    count={countData? countData.appointment : 0}
+                    count={countData? countData.patient : 0}
                     icon={Calendar}
                     color="white"
                 />

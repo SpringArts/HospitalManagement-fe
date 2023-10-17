@@ -34,8 +34,43 @@ useEffect(()=>{
     getAllAppointmentForDoctor()
 },[])
 
+const exportHttp = async () => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/appointment/export`,
+        {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    if (!response.ok) {
+        setError("Something wrong.");
+        return;
+    }
+
+    const filename = 'appointments.xlsx';
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
   return (
     <Layout title="Appointment">
+        <div className='flex justify-end'>
+            <div className="my-5">
+                <button onClick={exportHttp} className="bg-gray-500 text-white px-3 py-3 rounded-md">
+                    Download Appointment Excel
+                </button>
+            </div>
+        </div>
         <div className="grid grid-cols-1 mt-5">
             {/* {error && <div className="text-red-500">{error}</div>} */}
             {appointmentLists

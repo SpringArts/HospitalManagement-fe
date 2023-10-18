@@ -47,6 +47,7 @@ const Page = ({ params }) => {
     };
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        
     };
 
     useEffect(() => {

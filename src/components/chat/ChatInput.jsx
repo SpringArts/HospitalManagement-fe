@@ -1,6 +1,7 @@
 import axios from "@/lib/axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) {
     const token = Cookies.get("token");
@@ -31,11 +32,16 @@ export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) 
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none mr-2"
                     onClick={sendMessage}
                 >
                     Send
                 </button>
+                <Link href='/user/hospital' className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                >
+                    Back
+                </Link>
+
             </div>
         </div>
 

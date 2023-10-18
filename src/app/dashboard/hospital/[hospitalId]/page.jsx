@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 const InfoCard = ({ title, count, icon: Icon, color }) => {
     return (
@@ -33,6 +34,7 @@ const Dashboard = ({ params }) => {
         userId: "",
     });
 
+    const router = useRouter();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -43,9 +45,12 @@ const Dashboard = ({ params }) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(response);
             if (response.status === 200) {
                 toast.success('Successfully Changed!')
+                Cookies.remove('token');
+                Cookies.remove('user_info');
+                router.push('/auth/login');
+
             }
             else {
                 toast.error('Something went wrong!')

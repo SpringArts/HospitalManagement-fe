@@ -29,8 +29,8 @@ export default function UserBookingList({ selectedButton }) {
             } else if (selectedButton === 2) {
                 filteredAppointments = filteredAppointments.filter(
                     (appointment) =>
-                        appointment.status === "complete" &&
-                        appointment.is_visible === 1,
+                        appointment.status === "completed" &&
+                        appointment.is_visible === 0,
                 );
             } else if (selectedButton === 3) {
                 filteredAppointments = filteredAppointments.filter(

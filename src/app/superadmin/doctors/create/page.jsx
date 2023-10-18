@@ -21,17 +21,18 @@ const page = () => {
     const [license, setLicense] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
-    const [bio, setBio] = useState("I'm 5 years Experienced doctor.");
+    const [bio, setBio] = useState("");
 
     const getUserLists = async () => {
         await axios
-            .get(`http://127.0.0.1:8000/api/users?perPage=10`, {
+            .get(`http://127.0.0.1:8000/api/users?perPage=100`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,
                 },
             })
             .then((response) => {
+                console.log(response)
                 setUserLists(response.data.data);
             });
     };
@@ -44,7 +45,9 @@ const page = () => {
                 },
             })
             .then((response) => {
-                setHospitalLists(response.data.data.data);
+                console.log(response)
+
+                setHospitalLists(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -59,6 +62,8 @@ const page = () => {
                 },
             })
             .then((response) => {
+                console.log(response)
+
                 setDepartmentLists(response.data.data);
             })
             .catch((error) => {
@@ -72,12 +77,6 @@ const page = () => {
         getDepartmentLists();
     }, []);
 
-    console.log(hospitalLists)
-
-    // const handleSubmit = async(e) =>{
-    //     e.preventDefault();
-    //     console.log({user_id : selectUser , hospital_id : selectHospital , department_id : department , experience , duty_start_time :startTime , duty_end_time : endTime , license , bio })
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -123,7 +122,7 @@ const page = () => {
                     <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
                         <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
                             <h3 className="text-lg font-semibold tracking-wider my-3 text-center">
-                                Create New Hospital
+                                Create New Doctor
                             </h3>
                             <form
                                 action=""

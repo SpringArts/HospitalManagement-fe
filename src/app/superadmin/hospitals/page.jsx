@@ -54,9 +54,10 @@ const page = () => {
                     },
                 )
                 .then((response) => {
+                    console.log(response.data.data)
                     setIsLoading(false);
-                    setHospitalLists(response.data.data.data);
-                    setRowCountState(response.data.data.meta.totalItems);
+                    setHospitalLists(response.data.data);
+                    setRowCountState(response.data.meta.totalItems);
                     setIsSuccess(true);
                 })
                 .then((error) => console.log(error));
@@ -79,11 +80,11 @@ const page = () => {
 
     const handleSaveClick = async (id, row) => {
         try {
-            const { name, email, phone, address, bio } = row;
+            const { name, email, phone, address, location, bio } = row;
             await axios
                 .put(
                     `http://127.0.0.1:8000/api/hospitals/${id}`,
-                    { name, email, phone, address, bio },
+                    { name, email, phone, address, location, bio },
                     {
                         headers: {
                             Accept: "application/json",
@@ -156,15 +157,6 @@ const page = () => {
 
     const columns = useMemo(
         () => [
-            {
-                field: 'image',
-                headerName: "Profile",
-                width: 60,
-                sortable: false,
-                type: 'image',
-                editable: true,
-                // renderCell: (params) => <ImageAction src={params} />
-            },
             {
                 field: "id",
                 headerName: "ID",

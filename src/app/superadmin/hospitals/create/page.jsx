@@ -17,6 +17,7 @@ const create = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [bio, setBio] = useState("");
+    const [location, setLocation ] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +26,7 @@ const create = () => {
             await axios
                 .post(
                     "http://127.0.0.1:8000/api/hospitals",
-                    { name, email, phone, address, bio },
+                    { name, email, phone, address,location , bio },
                     {
                         headers: {
                             Accept: "application/json",
@@ -117,6 +118,21 @@ const create = () => {
                                         value={address}
                                         onChange={(e) =>
                                             setAddress(e.target.value)
+                                        }
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="sr-only" htmlFor="name">
+                                        Location
+                                    </label>
+                                    <input
+                                        className="w-full rounded-lg border border-gray-400 p-3 text-sm"
+                                        placeholder="Enter your location"
+                                        type="text"
+                                        value={location}
+                                        onChange={(e) =>
+                                            setLocation(e.target.value)
                                         }
                                     />
                                 </div>

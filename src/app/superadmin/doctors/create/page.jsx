@@ -25,7 +25,7 @@ const page = () => {
 
     const getUserLists = async () => {
         await axios
-            .get(`http://127.0.0.1:8000/api/users?perPage=100`, {
+            .get(`http://127.0.0.1:8000/api/normal-users`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,

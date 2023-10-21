@@ -64,7 +64,7 @@ const PatientForm = ({ params }) => {
                     Authorization: `Bearer ${token}`,
                 },
             }),
-            axios.get('/departments', {
+            axios.get('/all-departments', {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,

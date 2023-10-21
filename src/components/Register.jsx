@@ -33,7 +33,7 @@ export default function Register() {
             console.log("Registration successful:", response.data.message);
 
             toastSuccess();
-            toast.push("auth/login");
+            router.push("/auth/login");
         } catch (error) {
             toast.error(
                 error.response.data.errors.email

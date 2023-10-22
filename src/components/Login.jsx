@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { CiAlarmOn } from 'react-icons/ci'
 import Link from "next/link";
 export default function Login() {
     const toastSuccess = () =>
@@ -20,10 +21,13 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        toast('Please wait a second', {
+            icon: <CiAlarmOn />,
+            position: "top-center"
+        });
+
         try {
             const response = await axios.post("/login", data);
-            console.log(data);
-
             console.log("Login successfully: ", response.data);
             let resData = response.data;
             let user = resData.data.user;
@@ -52,6 +56,7 @@ export default function Login() {
             [name]: value,
         });
     };
+
     return (
         <form method="POST" onSubmit={handleLogin}>
             <div className="relative mt-5">

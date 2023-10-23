@@ -33,6 +33,7 @@ const Page = ({ params }) => {
 
         setData(res.data.data);
         setMeta(res.data.meta);
+        console.log(res.data.data);
         setLoading(false);
     };
 
@@ -159,75 +160,75 @@ const Page = ({ params }) => {
             <div className="flex flex-wrap">
                 {loading
                     ? Array.from({ length: 6 }).map((_, index) => (
-                          <div
-                              key={index}
-                              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4 animate-pulse"
-                          >
-                              <div className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm">
-                                  <div className="animate-pulse h-20 bg-gray-200"></div>
-                                  <div className="mt-4 space-y-4">
-                                      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                                      <div className="h-4 bg-gray-200 rounded"></div>
-                                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                                  </div>
-                              </div>
-                          </div>
-                      ))
+                        <div
+                            key={index}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4 animate-pulse"
+                        >
+                            <div className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm">
+                                <div className="animate-pulse h-20 bg-gray-200"></div>
+                                <div className="mt-4 space-y-4">
+                                    <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                                    <div className="h-4 bg-gray-200 rounded"></div>
+                                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
                     : data.map((item, index) => (
-                          <div
-                              key={index}
-                              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
-                          >
-                              <article className="rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition hover:shadow-lg sm:p-6">
-                                  <div className="flex items-center">
-                                      <div className=" rounded-lg p-3">
-                                          <Image
-                                              src="/login.svg"
-                                              alt="Doctor Avatar"
-                                              width="0"
-                                              height="0"
-                                              className="w-28 h-auto"
-                                          />
-                                      </div>
+                        <div
+                            key={index}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
+                        >
+                            <article className="rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition hover:shadow-lg sm:p-6">
+                                <div className="flex items-center">
+                                    <div className=" rounded-lg p-3">
+                                        <Image
+                                            src="/login.svg"
+                                            alt="Doctor Avatar"
+                                            width="0"
+                                            height="0"
+                                            className="w-28 h-auto"
+                                        />
+                                    </div>
 
-                                      <div className="ml-1">
-                                          <a href="#">
-                                              <h3 className="mt-0.5 text-base font-medium text-gray-900">
-                                                  {item.name}
-                                              </h3>
-                                          </a>
-                                          <p className="text-sm text-gray-500">
-                                              Department: {item.department}
-                                          </p>
-                                          <p className="text-sm text-gray-500">
-                                              Experience: {item.experience}{" "}
-                                              years
-                                          </p>
-                                      </div>
-                                  </div>
+                                    <div className="ml-1">
+                                        <a href="#">
+                                            <h3 className="mt-0.5 text-base font-medium text-gray-900">
+                                                {item.name}
+                                            </h3>
+                                        </a>
+                                        <p className="text-sm text-gray-500">
+                                            Department: {item.department}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            Experience: {item.experience}{" "}
+                                            years
+                                        </p>
+                                    </div>
+                                </div>
 
-                                  <p className="mt-5 line-clamp-2 text-sm/relaxed text-gray-500">
-                                      {item.bio}
-                                  </p>
+                                <p className="mt-5 line-clamp-2 text-sm/relaxed text-gray-500">
+                                    {item.bio}
+                                </p>
 
-                                  <button
-                                      className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                                      onClick={() => {
-                                          setSelectedDoctor(item);
-                                          setIsOpen(true);
-                                      }}
-                                  >
-                                      Appointment
-                                      <span
-                                          aria-hidden="true"
-                                          className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
-                                      >
-                                          &rarr;
-                                      </span>
-                                  </button>
-                              </article>
-                          </div>
-                      ))}
+                                <button
+                                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                                    onClick={() => {
+                                        setSelectedDoctor(item);
+                                        setIsOpen(true);
+                                    }}
+                                >
+                                    Appointment
+                                    <span
+                                        aria-hidden="true"
+                                        className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
+                                    >
+                                        &rarr;
+                                    </span>
+                                </button>
+                            </article>
+                        </div>
+                    ))}
             </div>
 
             {selectedDoctor && isOpen && (

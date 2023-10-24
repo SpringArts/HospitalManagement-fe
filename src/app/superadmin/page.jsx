@@ -72,6 +72,7 @@ const page = () => {
 
     return (
         <Layout>
+            <test/>
             <div
                 className="p-5 !w-full min-w-full"
                 sx={{

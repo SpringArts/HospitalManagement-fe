@@ -43,20 +43,23 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
 
     const handleCheckButtonClick = async (e) => {
         e.preventDefault();
-        // console.log(formData);
-        const response = await axios.post("/check-appointment", formData, {
-            headers: {
-                Authorization: `Bearer ${Cookies.get("token")}`,
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-        });
-        // console.log(response);
-        if (response.data.data === null) {
-            toast.error(response.data.message);
-        } else {
-            toast.success(response.data.message);
+        try {
+            const response = await axios.post("/check-appointment", formData, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            });
+            if (response.data.data === null) {
+                toast.error(response.data.message);
+            } else {
+                toast.success(response.data.message);
+            }
+        } catch (error) {
+            toast.error(error.message)
         }
+       
     };
 
     return (

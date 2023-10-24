@@ -39,12 +39,9 @@ const PatientForm = ({ params }) => {
             if (response.status === 201) {
                 toast.success('Successfully Created!')
             }
-            else {
-                toast.error('Something went wrong!')
-            }
 
         } catch (error) {
-            toast.error('Something went wrong!')
+            toast.error(error)
             console.error('Error sending form data:', error);
         }
     }

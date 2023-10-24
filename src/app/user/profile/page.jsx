@@ -5,7 +5,6 @@ import UserBookingData from "@/components/profile/UserBookingData";
 export default function page() {
     return (
         <Layout>
-
             <div className="">
                 <div className="flex flex-col justify-center w-full mt-4">
                     <div className="uppercase flex gap-x-2 text-xs text-start mb-4 md:text-base">

@@ -10,6 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 
 const page = () => {
     const token = Cookies.get("token");
@@ -22,7 +23,7 @@ const page = () => {
         page: 0,
         pageSize: 10,
     });
-    console.log("A sin py pr tl");
+    const {toastError} = useToast()
     const getPatientLists = async () => {
         try {
             await axios
@@ -45,6 +46,7 @@ const page = () => {
                 });
         } catch (err) {
             console.log(err);
+            toastError(err.message)
         }
     };
 

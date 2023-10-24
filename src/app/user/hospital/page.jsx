@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/Pagination";
+import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 
 function Page() {
     const [meta, setMeta] = useState({});
@@ -15,6 +16,7 @@ function Page() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true); // Add loading state
     const token = Cookies.get("token");
+    const {toastError} = useToast()
 
     const getHospitalList = async () => {
         try {
@@ -36,6 +38,7 @@ function Page() {
         } catch (err) {
             console.log(err);
             // setLoading(false);
+            console.log(err)
         }
     };
     const handlePageChange = (newPage) => {

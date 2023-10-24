@@ -13,7 +13,7 @@ export default function NotiAndProfileIcon({ className }) {
         >
             <Link href={profilePath}>
                 <UserCircle
-                    size={28}
+                    size={32}
                     weight={`${pathname === profilePath ? "fill" : "regular"}`}
                     color={colorCode}
                 />

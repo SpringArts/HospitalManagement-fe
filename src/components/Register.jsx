@@ -19,7 +19,6 @@ export default function Register() {
         e.preventDefault();
         try {
             const response = await axios.post("/register", data);
-
             toastSuccess(response.data.message);
             router.push("/auth/login");
         } catch (error) {

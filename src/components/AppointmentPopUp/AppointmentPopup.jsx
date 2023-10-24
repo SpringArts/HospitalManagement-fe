@@ -6,13 +6,13 @@ import toast, { Toaster } from "react-hot-toast";
 
 const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     const [appointmentTime, setAppointmentTime] = useState([]);
-
     const [formData, setFormData] = useState({
         doctorId: doctorId,
         appointmentType: "outpatient",
         appointmentDate: "",
         appointmentTime: "",
         description: "",
+        patientId: JSON.parse(Cookies.get("user_info")).id,
     });
 
     const { name } = JSON.parse(Cookies.get("user_info"));
@@ -65,8 +65,8 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     return (
         <div
             className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${isOpen
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none transform scale-95"
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none transform scale-95"
                 }`}
         >
             <div

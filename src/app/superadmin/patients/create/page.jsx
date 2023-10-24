@@ -3,6 +3,7 @@ import React ,{useState , useEffect } from "react";
 import Layout from "../../Layout";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 
 const page = () => {
 
@@ -10,6 +11,7 @@ const page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userLists, setUserLists] = useState([]);
   const [hospitalLists, setHospitalLists] = useState([]);
+  const {toastError} =  useToast()
 
   const [selectUser, setSelectUser] = useState("");
   const [selectHospital, setSelectHospital] = useState("");
@@ -38,7 +40,7 @@ const getHospitalLists = async () => {
             setHospitalLists(response.data.data.data);
         })
         .catch((error) => {
-            console.log(error);
+            toastError(error.message)
         });
 };
 

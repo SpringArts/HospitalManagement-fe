@@ -15,7 +15,7 @@ const Pagination = ({ meta, onPageChange, perPage }) => {
             <ol className="flex justify-center gap-1 text-xs font-medium">
                 <li>
 
-                    {meta.currentPage > 1 && (
+                    {meta?.currentPage > 1 && (
                         <div
                             onClick={() => handlePageChange(meta.currentPage - 1)}
                             className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
@@ -37,7 +37,7 @@ const Pagination = ({ meta, onPageChange, perPage }) => {
                     )}
 
                 </li>
-                {meta.totalPages > 5 ? (
+                {meta?.totalPages > 5 ? (
                     <>
                         {meta.currentPage > 3 && (
                             <div
@@ -87,7 +87,7 @@ const Pagination = ({ meta, onPageChange, perPage }) => {
                         )}
                     </>
                 ) : (
-                    Array.from({ length: meta.totalPages }, (_, index) => index + 1).map((page) => (
+                    Array.from({ length: meta?.totalPages }, (_, index) => index + 1).map((page) => (
                         <div
                             key={page}
                             onClick={() => handlePageChange(page)}
@@ -100,7 +100,7 @@ const Pagination = ({ meta, onPageChange, perPage }) => {
                 )}
 
                 <li>
-                    {meta.currentPage < meta.totalPages && (
+                    {meta?.currentPage < meta?.totalPages && (
                         <div
                             onClick={() => handlePageChange(meta.currentPage + 1)}
                             className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 cursor-pointer"

@@ -20,30 +20,41 @@ const Page = ({ params }) => {
     const hospitalId = params.hospitalId;
 
     const fetchData = async () => {
-        const { data } = await axios.get(
-            `/dashboard/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
-            {
+        try {
+            const { data } = await axios.get(
+                `/dashboard/hospital/${hospitalId}/doctors?keyword=${search}&page=${page}&perPage=${perPage}`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            setData(data.data);
+            setMeta(data.meta);
+            
+        } catch (error) {
+            toast.error(error)
+        }
+       
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await axios.delete(`/doctors/${id}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-            },
-        );
-        setData(data.data);
-        setMeta(data.meta);
-    };
-
-    const handleDelete = async (id) => {
-    
-        const res = await axios.delete(`/doctors/${id}`, {
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if (res.status === 200) {
-            toast.success('Successfully Deleted!')
+            });
+            if (res.status === 200) {
+                toast.success('Successfully Deleted!')
+            }
+        } catch (error) {
+            toast.error(error)
         }
+    
+        
     };
     const handlePageChange = (newPage) => {
         setPage(newPage);
@@ -52,7 +63,7 @@ const Page = ({ params }) => {
 
     useEffect(() => {
         fetchData();
-    }, [page, search, data]);
+    }, [page, search]);
 
     return (
         <Layout>
@@ -169,7 +180,7 @@ const Page = ({ params }) => {
             <div className="flex flex-wrap">
                 {data?.map((item, index) => (
                     <div
-                        key={index}
+                        key={item.id}
                         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3  xl:w-1/3 p-4"
                     >
                         <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6">
@@ -220,7 +231,7 @@ const Page = ({ params }) => {
                 ))}
             </div>
 
-            {data.length === 0 ? (
+            {data?.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-600 text-lg pt-5">
                     <p className="mb-2">No data available</p>
                     <p className="text-sm">

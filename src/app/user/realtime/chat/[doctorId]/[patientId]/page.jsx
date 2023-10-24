@@ -63,8 +63,7 @@ const ChatApp = ({ params }) => {
                 });
             setMessages(res.data.message.messages);
         } catch (error) {
-            toast.error(error);
-            console.log(error);
+            toast.error(error.message);
         }
     };
 

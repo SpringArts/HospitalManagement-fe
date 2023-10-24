@@ -3,11 +3,14 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
+import { useToast } from "../ErrorHandlingToast/useToaster";
+
 
 const Sidebar = () => {
     const userInfo = JSON.parse(Cookies.get("user_info"));
     const token = Cookies.get("token");
     const [hospitalId, setHospitalId] = useState(null);
+    const {toastError} = useToast()
     //Fetch Hostpital Data if role is hospitalAdmin
     const fetchData = async () => {
         try {
@@ -20,7 +23,7 @@ const Sidebar = () => {
                 setHospitalId(res.data.hospitalId);
             }
         } catch (error) {
-            console.log(error);
+            toastError(error)
         }
     }
 

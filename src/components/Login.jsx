@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { CiAlarmOn } from 'react-icons/ci'
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 export default function Login() {
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
-    const {toastSuccess, toastError} = useToast()
+    const { toastSuccess, toastError } = useToast()
 
     let data = JSON.stringify(formData);
 

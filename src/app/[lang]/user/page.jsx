@@ -1,5 +1,10 @@
+"use client"
+import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import Layout from "./Layout";
+import { usePathname } from "next/navigation";
+import { getDictionary } from '../../../../getDictionary';
+import useLang from '@/hooks/use-lang';
 
 const ServiceCard = ({ title, description }) => {
     return (
@@ -33,36 +38,32 @@ const ServiceCard = ({ title, description }) => {
 };
 
 export default function Page() {
+    const { langVar } = useLang()
+
     const services = [
         {
-            title: "General Medical Care",
-            description:
-                "The branch of medicine that deals with the diagnosis and (nonsurgical) treatment of diseases of the internal organs (especially in adults).",
+            title: langVar?.page.home.general_title,
+            description: langVar?.page.home.general_desc,
         },
         {
-            title: "Surgical Services",
-            description:
-                "Provide operative procedures (surgeries) for the correction of deformities and defects, repair of injuries, and cure of certain diseases. ",
+            title: langVar?.page.home.surgical_title,
+            description: langVar?.page.home.surgical_desc
         },
         {
-            title: "Specialized Treatments",
-            description:
-                "Specialized treatment issues include specific screening techniques, ability to address both issues in the treatment plan.",
+            title: langVar?.page.home.specialized_title,
+            description: langVar?.page.home.specialized_desc
         },
         {
-            title: "Emergency Care 24/7",
-            description:
-                "Involves life-threatening illnesses or accidents which require immediate treatment and an emergency department (A&E).",
+            title: langVar?.page.home.emergency_title,
+            description: langVar?.page.home.emergency_desc
         },
         {
-            title: "Maternity and Pediatrics",
-            description:
-                "The health service provided to mothers (women in their child bearing age) and children.",
+            title: langVar?.page.home.maternity_title,
+            description: langVar?.page.home.maternity_desc
         },
         {
-            title: "COVID-19 Safety Measures",
-            description:
-                "Handles promotion of R&D, production, distribution policies, and drug pricing.",
+            title: langVar?.page.home.covid_title,
+            description: langVar?.page.home.covid_desc
         },
     ];
 
@@ -70,22 +71,20 @@ export default function Page() {
         <Layout>
             <section className="max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
                 <div className="max-w-xl">
-                    <h2 className="text-4xl text-zinc-800 font-bold md:text-6xl">
-                        Find Your Best{" "}
-                        <span className="text-red-500">HEALER</span>
+                    <h2 className="text-3xl mb-4 text-zinc-800 font-bold md:text-6xl">
+                        {/* Find Your Best{" "} 
+                        <span className="text-red-500">HEALER</span> */}
+                        {langVar?.page.home.title}
                     </h2>
                     <p className="mt-4 text-zinc-600 ">
-                        Discover the perfect healer tailored to your needs and
-                        preferences. Your journey to optimal well-being starts
-                        here.Your path to vibrant health and inner harmony
-                        begins with finding your best healer.
+                        {langVar?.page.home.description}
                     </p>
                     {/* Call to action button */}
                     <Link
                         href="/user/hospital"
                         className="mt-8 inline-block rounded bg-green-500 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
                     >
-                        Get Started Now
+                        {langVar?.page.home.get_start}
                     </Link>
                 </div>
 

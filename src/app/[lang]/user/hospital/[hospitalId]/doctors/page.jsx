@@ -1,5 +1,4 @@
 "use client";
-import Layout from "@/app/user/Layout";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
@@ -7,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import AppointmentPopup from "@/components/AppointmentPopUp/AppointmentPopup";
+import Layout from "../../../Layout";
+import useLang from "@/hooks/use-lang";
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);
@@ -19,6 +20,7 @@ const Page = ({ params }) => {
     const token = Cookies.get("token");
     const [loading, setLoading] = useState(true);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
+    const { langVar } = useLang()
 
     const fetchData = async () => {
         const res = await axios.get(
@@ -96,7 +98,7 @@ const Page = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Partners{" "}
+                                    {langVar?.navigation.partners}{" "}
                                 </a>
                             </li>
                             <li className="rtl:rotate-180">
@@ -120,7 +122,7 @@ const Page = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Doctors{" "}
+                                    {langVar?.navigation.doctors}{" "}
                                 </a>
                             </li>
                         </ol>
@@ -128,8 +130,9 @@ const Page = ({ params }) => {
                 </div>
                 <div className="flex flex-col gap-y-5">
                     <h3 className="text-3xl font-medium justify-start md:text-5xl">
-                        <span className="text-zinc-800">Hospital</span>
-                        <span className=" text-green-500">Doctors</span>
+                        {/* <span className="text-zinc-800">Hospital</span> */}
+                        {/* <span className=" text-green-500">Doctors</span> */}
+                        {langVar?.page.doctor.title}
                     </h3>
                 </div>
             </div>
@@ -152,7 +155,7 @@ const Page = ({ params }) => {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="my-2 p-3 bg-gray-50 border rounded-full text-gray-400 text-sm block w-full pl-10 bg-transparent placeholder:text-gray-800 border-black focus:border-[#327CEC] focus:ring-blue-600"
-                            placeholder="Search Doctor Name"
+                            placeholder={langVar?.page.doctor.search_input}
                         />
                     </div>
                 </div>

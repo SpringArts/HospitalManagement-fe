@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import axios from "axios";
 import toast from "react-hot-toast";
+import axios from "@/lib/axios";
 
 const create = () => {
     const router = useRouter();
@@ -17,28 +17,39 @@ const create = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [bio, setBio] = useState("");
-    const [location, setLocation ] = useState("");
+    const [location, setLocation] = useState("");
+    const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState("");
 
+
+    const fetchUser = async () => {
+        const res = await axios.get("/normal-users", {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        setUsers(res.data.data);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios
-                .post(
-                    "http://127.0.0.1:8000/api/hospitals",
-                    { name, email, phone, address,location , bio },
-                    {
-                        headers: {
-                            Accept: "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
+            const res = await axios.post("/hospitals", { name, email, phone, address, location, bio, userId },
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
                     },
-                )
-                .then((response) => {
-                    router.push("/superadmin/hospitals");
-                    toast.success("The hospital is created successfully.");
-                    setIsLoading(false)
-                });
+                },
+            );
+
+            if (res.status === 201) {
+                toast.success("The hospital is created successfully.");
+                router.push("/superadmin/hospitals");
+                setIsLoading(false);
+            }
+
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 toast.error(error.response.data.errors);
@@ -47,6 +58,10 @@ const create = () => {
             }
         }
     };
+
+    useEffect(() => {
+        fetchUser();
+    })
 
     return (
         <Layout>
@@ -107,6 +122,25 @@ const create = () => {
                                     />
                                 </div>
 
+
+                                <div>
+                                    <label className="sr-only" htmlFor="hospitalAdmin">
+                                        Hospital Admin
+                                    </label>
+                                    <select
+                                        name="userId"
+                                        id="userId"
+                                        onChange={(e) => setUserId(e.target.value)}
+                                        className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                    >
+                                        <option value="">Please select</option>
+                                        {users.map((user) => (
+                                            <option key={user.id} value={user.id}>
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div>
                                     <label className="sr-only" htmlFor="name">
                                         Address

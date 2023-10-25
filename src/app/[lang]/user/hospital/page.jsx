@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import { useToast } from "@/components/ErrorHandlingToast/useToaster";
+import useLang from "@/hooks/use-lang";
 
 function Page() {
     const [meta, setMeta] = useState({});
@@ -16,7 +17,9 @@ function Page() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true); // Add loading state
     const token = Cookies.get("token");
-    const {toastError} = useToast()
+    const { toastError } = useToast()
+
+    const { langVar, langType } = useLang()
 
     const getHospitalList = async () => {
         try {
@@ -102,7 +105,7 @@ function Page() {
                                         className="block transition hover:text-gray-700"
                                     >
                                         {" "}
-                                        Partners{" "}
+                                        {langVar?.navigation.partners}{" "}
                                     </a>
                                 </li>
                             </ol>
@@ -110,8 +113,9 @@ function Page() {
                     </div>
                     <div className="flex flex-col gap-y-5">
                         <h3 className="text-3xl font-medium justify-start md:text-5xl">
-                            <span className="text-zinc-800">Partners</span>
-                            <span className=" text-green-500">Hospital</span>
+                            {/* <span className="text-zinc-800">Partners</span> */}
+                            {/* <span className=" text-green-500">Hospital</span> */}
+                            {langVar?.page.hospital.title}
                         </h3>
                     </div>
                 </div>
@@ -134,7 +138,7 @@ function Page() {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="my-2 p-3 bg-gray-50 border rounded-full text-gray-400 text-sm block w-full pl-10 bg-transparent placeholder:text-gray-800 border-black focus:border-[#327CEC] focus:ring-blue-600"
-                            placeholder="Search Hospital Name"
+                            placeholder={langVar?.page.hospital.search_input}
                         />
                     </div>
                 </div>
@@ -163,7 +167,7 @@ function Page() {
                                     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/3 p-4"
                                 >
                                     <Link
-                                        href={`/user/hospital/${item.id}/doctors`}
+                                        href={`/${langType}/user/hospital/${item.id}/doctors`}
                                         className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 shadow-sm transition hover:shadow-lg"
                                     >
                                         <div>

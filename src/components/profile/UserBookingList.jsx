@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import AppointmentCard from "./AppointmentCard";
+import useLang from "@/hooks/use-lang";
 
 export default function UserBookingList({ selectedButton }) {
     const [appointments, setAppointments] = useState([]);
     const [error, setError] = useState(null);
+    const { langVar } = useLang()
 
     const token = Cookies.get("token");
 
@@ -85,7 +87,7 @@ export default function UserBookingList({ selectedButton }) {
                     />
                 ))
             ) : (
-                <div className="text-gray-600">No appointments found.</div>
+                <div className="text-gray-600">{langVar?.page.profile.no_appoint}</div>
             )}
         </div>
 

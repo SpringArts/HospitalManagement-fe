@@ -6,11 +6,11 @@ import axios from "@/lib/axios";
 import { useToast } from "../ErrorHandlingToast/useToaster";
 
 
-const Sidebar = () => {
+const Sidebar = ({ langVar }) => {
     const userInfo = JSON.parse(Cookies.get("user_info"));
     const token = Cookies.get("token");
     const [hospitalId, setHospitalId] = useState(null);
-    const {toastError} = useToast()
+    const { toastError } = useToast()
     //Fetch Hostpital Data if role is hospitalAdmin
     const fetchData = async () => {
         try {
@@ -40,7 +40,7 @@ const Sidebar = () => {
                             href="/user/profile"
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            Appointment Lists
+                            {langVar?.page.profile.appoint_list}
                         </Link>
                     </li>
 
@@ -51,7 +51,7 @@ const Sidebar = () => {
                                     href="/doctor"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )
@@ -63,7 +63,7 @@ const Sidebar = () => {
                                     href="/superadmin"
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )
@@ -76,7 +76,7 @@ const Sidebar = () => {
                                     href={`/dashboard/hospital/${hospitalId}`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )

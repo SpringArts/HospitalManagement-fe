@@ -1,8 +1,12 @@
+"use client"
 import Layout from "@/components/profile/Layout";
 import UserProfile from "@/components/profile/Profile";
 import UserBookingData from "@/components/profile/UserBookingData";
+import useLang from "@/hooks/use-lang";
 
 export default function page() {
+    const { langVar } = useLang()
+
     return (
         <Layout>
             <div className="">
@@ -47,15 +51,15 @@ export default function page() {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="block transition hover:text-gray-700"> Profile </a>
+                                    <a href="#" className="block transition hover:text-gray-700"> {langVar?.navigation.profile} </a>
                                 </li>
 
                             </ol>
                         </nav>
                     </div>
-                    <UserProfile />
+                    <UserProfile langVar={langVar} />
                 </div>
-                <UserBookingData />
+                <UserBookingData langVar={langVar} />
             </div>
 
         </Layout>

@@ -1,25 +1,21 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 import Layout from "../Layout";
+import useLang from "@/hooks/use-lang";
 
 const page = () => {
+    const { langVar } = useLang()
     return (
         <Layout>
             <div className="bg-white ">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
                     <div className="mx-auto mb-8 max-w-screen-sm lg:mb-16">
                         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-zinc-700">
-                            Our team
+                            {langVar?.page.about.title}
                         </h2>
                         <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                            At{" "}
-                            <span className="text-green-500 font-semibold">
-                                Team Fresher
-                            </span>{" "}
-                            Team, our team of dedicated developers is at the
-                            heart of our success. With a passion for innovation
-                            and a commitment to excellence, they bring your
-                            digital dreams to life.
+                            {langVar?.page.about.description}
                         </p>
                     </div>
                     <div className="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
@@ -33,9 +29,9 @@ const page = () => {
                                 priority
                             />
                             <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">
-                                <a href="#">Aung Zaw Phyo</a>
+                                <a href="#">{langVar?.page.about.aungzawphyo}</a>
                             </h3>
-                            <p>Developer</p>
+                            <p>{langVar?.page.about.developer}</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
                                     <a
@@ -102,9 +98,9 @@ const page = () => {
                                 priority
                             />
                             <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
-                                <a href="#">Khant Lin Nyan</a>
+                                <a href="#">{langVar?.page.about.khantlinnyan}</a>
                             </h3>
-                            <p>Developer</p>
+                            <p>{langVar?.page.about.developer}</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
                                     <a
@@ -171,9 +167,9 @@ const page = () => {
                                 priority
                             />
                             <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
-                                <a href="#">Lwin Moe Aung</a>
+                                <a href="#">{langVar?.page.about.lwinmoeaung}</a>
                             </h3>
-                            <p>Developer</p>
+                            <p>{langVar?.page.about.developer}</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
                                     <a
@@ -240,9 +236,9 @@ const page = () => {
                                 priority
                             />
                             <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
-                                <a href="#">Min Hein Ko Ko</a>
+                                <a href="#">{langVar?.page.about.minheinkoko}</a>
                             </h3>
-                            <p>Developer</p>
+                            <p>{langVar?.page.about.developer}</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
                                     <a
@@ -309,9 +305,9 @@ const page = () => {
                                 priority
                             />
                             <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">
-                                <a href="#">Yoon Yoon Htike</a>
+                                <a href="#">{langVar?.page.about.yoonyoonhtike}</a>
                             </h3>
-                            <p>UI/UX</p>
+                            <p>{langVar?.page.about.ui_ux}</p>
                             <ul className="flex justify-center mt-4 space-x-4">
                                 <li>
                                     <a

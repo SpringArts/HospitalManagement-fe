@@ -1,10 +1,12 @@
 import Cookies from "js-cookie";
 import React, { useState } from "react";
+import { useToast } from "../ErrorHandlingToast/useToaster";
 
 const EditForm = (props) => {
     const [nameInput, setNameInput] = useState(props.user.name);
     const [emailInput, setEmailInput] = useState(props.user.email);
     const [phoneInput, setPhoneInput] = useState(props.user.phone);
+    const {toastSuccess, toastError} = useToast()
     const [addressInput, setAddressInput] = useState(props.user.address ?? "");
     const [passwordInput, setPasswordInput] = useState("");
     const [error, setError] = useState(null);
@@ -14,40 +16,46 @@ const EditForm = (props) => {
         event.preventDefault();
         setError(null);
         setIsLoading(true);
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${props.user.id}/update`,
-            {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${props.user.id}/update`,
+                {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        name: nameInput,
+                        email: emailInput,
+                        phone: phoneInput,
+                        address: addressInput,
+                        password: passwordInput,
+                    }),
                 },
-                body: JSON.stringify({
-                    name: nameInput,
-                    email: emailInput,
-                    phone: phoneInput,
-                    address: addressInput,
-                    password: passwordInput,
-                }),
-            },
-        );
-
-        setIsLoading(false);
-        if (response.status === 422) {
+            );
+    
+            setIsLoading(false);
+            if (response.status === 422) {
+                const responseData = await response.json();
+                setError(responseData.message);
+                return;
+            }
+    
+            if (!response.ok) {
+                setError("Something wrong.");
+                return;
+            }
+            toastSuccess(response.message)
             const responseData = await response.json();
-            setError(responseData.message);
-            return;
-        }
-
-        if (!response.ok) {
-            setError("Something wrong.");
-            return;
-        }
-        const responseData = await response.json();
         // console.log(responseData.data.user)
         Cookies.set("user_info", JSON.stringify(responseData.data.user));
         props.onUpdateUserInfo(responseData.data.user);
+        } catch (error) {
+            toastError(error.message)
+        }
+        
     };
 
     return (

@@ -59,7 +59,9 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
             }
             
         } catch (error) {
-            toast.error(error.message)
+            const errorMessage = JSON.stringify(error.response.data.error);
+
+    toast.error(errorMessage);
         }
        
     };
@@ -187,6 +189,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     How do you feel today?
                                 </label>
                                 <textarea
+                                required
                                     name="description"
                                     id="OrderNotes"
                                     value={formData.description}

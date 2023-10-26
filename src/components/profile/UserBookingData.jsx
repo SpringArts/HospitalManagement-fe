@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import UserBookingList from "./UserBookingList";
+import toast from "react-hot-toast";
 export default function UserBookingData() {
     const token = Cookies.get("token");
     const [selectedButton, setSelectedButton] = useState(1);
@@ -14,11 +15,17 @@ export default function UserBookingData() {
         setSelectedButton(number);
     };
     const fetchData = async () => {
-        const res = await axios.get("/appointments", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        try {
+            const res = await axios.get("/appointments", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            toast.error(error.response.data.message
+                
+        )
+        }
     };
 
     useEffect(() => {

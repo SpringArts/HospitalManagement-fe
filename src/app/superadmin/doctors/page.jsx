@@ -83,9 +83,9 @@ const page = () => {
                 });
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                toast.error(error.response.data.errors);
+                toast.error(error.response.data.message);
             } else {
-                toast.error(error.message);
+                toast.error(error.response.data.message);
             }
         }
     };

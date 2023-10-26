@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import Cookies from "js-cookie";
 import axios from "@/lib/axios";
-
+import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 const AppointmentPage = () => {
     const [data, setData] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [totalPages, setTotalPages] = useState(1);
     const [departments, setDepartments] = useState();
+    const {toastError} = useToast()
     const token = Cookies.get("token");
 
     function getStatusColorClass(status) {
@@ -37,27 +38,31 @@ const AppointmentPage = () => {
     }
 
     const fetchData = async () => {
-        const [fetchAppointments, departments] = await Promise.all([
-            axios.get(`/appointments?page=${currentPage}&perPage=${itemsPerPage}`, {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }),
-            axios.get('/departments', {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-        ]);
-        //   console.log(fetchAppointments.data);
-        setCurrentPage(fetchAppointments.data.meta.currentPage);
-        setItemsPerPage(7);
-        setTotalPages(fetchAppointments.data.meta.totalPages);
-        setData(fetchAppointments.data.data);
-        setDepartments(departments.data.data);
-    }
+        try {
+            const [fetchAppointments, departments] = await Promise.all([
+                axios.get(`/appointments?page=${currentPage}&perPage=${itemsPerPage}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                axios.get('/departments', {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            ]);
+            //   console.log(fetchAppointments.data);
+            setCurrentPage(fetchAppointments.data.meta.currentPage);
+            setItemsPerPage(7);
+            setTotalPages(fetchAppointments.data.meta.totalPages);
+            setData(fetchAppointments.data.data);
+            setDepartments(departments.data.data);
+        } catch (error) {
+            console.log(error.response.data)
+        }
+    } 
 
 
     useEffect(() => {

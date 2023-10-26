@@ -15,6 +15,7 @@ const Page = ({ params }) => {
     const [meta, setMeta] = useState({});
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(6);
+    const [click, setClick] = useState(false)
     const [search, setSearch] = useState("");
     const token = Cookies.get("token");
     const hospitalId = params.hospitalId;
@@ -50,6 +51,7 @@ const Page = ({ params }) => {
             if (res.status === 200) {
                 toast.success('Successfully Deleted!')
             }
+            setClick(prev => !prev)
         } catch (error) {
             toast.error(error)
         }
@@ -63,7 +65,7 @@ const Page = ({ params }) => {
 
     useEffect(() => {
         fetchData();
-    }, [page, search]);
+    }, [page, search, click]);
 
     return (
         <Layout>

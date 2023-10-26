@@ -26,6 +26,7 @@ const PatientForm = ({ params }) => {
         bio: "",
     });
 
+    const [click, setClick] = useState(false)
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -39,10 +40,9 @@ const PatientForm = ({ params }) => {
             if (response.status === 201) {
                 toast.success('Successfully Created!')
             }
-
+            setClick(()=> !click)
         } catch (error) {
-            toast.error(error)
-            console.error('Error sending form data:', error);
+        toast.error(error)
         }
     }
     const handleInputChange = (e) => {
@@ -74,7 +74,7 @@ const PatientForm = ({ params }) => {
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [click])
     return (
         <Layout>
             <div className="flex flex-col justify-center w-full mt-4">
@@ -173,6 +173,7 @@ const PatientForm = ({ params }) => {
                         <select
                             name="userId"
                             id="userId"
+                            required
                             onChange={handleInputChange}
                             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                         >
@@ -195,6 +196,7 @@ const PatientForm = ({ params }) => {
                             name="departmentId"
                             onChange={handleInputChange}
                             id="departmentId"
+                            required
                             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                         >
                             <option value="">Please select</option>
@@ -212,6 +214,7 @@ const PatientForm = ({ params }) => {
                         </label>
 
                         <input
+                        required
                             type="text"
                             min={1}
                             name="license"
@@ -227,6 +230,7 @@ const PatientForm = ({ params }) => {
                         </label>
 
                         <input
+                        required
                             type="number"
                             name="experience"
                             onChange={handleInputChange}
@@ -238,6 +242,7 @@ const PatientForm = ({ params }) => {
                         <label className="block text-sm font-medium text-gray-600 mb-1">Duty Start Time</label>
                         <input
                             name="dutyStartTime"
+
                             onChange={handleInputChange}
                             type="time"
                             className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
@@ -261,6 +266,7 @@ const PatientForm = ({ params }) => {
 
                         <textarea
                             id="Bio"
+                            required
                             name="bio"
                             onChange={handleInputChange}
                             className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"

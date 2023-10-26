@@ -1,3 +1,4 @@
+'use client'
 import Layout from "@/components/profile/Layout";
 import UserProfile from "@/components/profile/Profile";
 import UserBookingData from "@/components/profile/UserBookingData";

@@ -2,9 +2,14 @@
 import Cookies from "js-cookie";
 import Navbar from "../Navbar";
 import Sidebar from "./Sidebar";
+import { Cookie } from "next/font/google";
 
 const Layout = ({ children }) => {
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+    let userInfo
+    if ((Cookies.get('user_info'))) {
+     userInfo = JSON.parse(Cookies.get("user_info"));
+    }
+
     const Navtitle = [
         {
             id: 1,
@@ -31,7 +36,7 @@ const Layout = ({ children }) => {
         <div>
             <Navbar NavbarTitle={Navtitle} />
             <div className="flex min-h-screen">
-                {userInfo.role !== "patient" && (
+                {userInfo?.role !== "patient" && (
                     <div className="w-1/4 bg-gray-200">
                         <Sidebar />
                     </div>

@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         },
         {
             id: 2,
-            name: "Partners",
+            name: "Hospitals",
             to: "/user/hospital",
         },
         {

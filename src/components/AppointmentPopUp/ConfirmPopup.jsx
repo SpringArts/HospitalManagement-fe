@@ -1,10 +1,16 @@
 import axios from "@/lib/axios";
+import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React from "react"
 import toast from "react-hot-toast";
 
-const ConfirmPopup = ({ onopen, onclose, bookingId }) => {
+const ConfirmPopup = ({ onopen, onclose, bookingId, params }) => {
+//  
+
+   console.log(params)
+
+
     const router = useRouter();
     const confirmPopup = async () => {
         const res = await axios.post(`/leave-chat/${bookingId}`, null, {
@@ -17,7 +23,7 @@ const ConfirmPopup = ({ onopen, onclose, bookingId }) => {
         if (res.status === 200) {
             toast.success("You have left the chat");
             onclose();
-            router.push("/user");
+            router.push(`/user/chat-success${doctorId}/${patientId}?bookId=${bookingId}`)
         }
 
     }

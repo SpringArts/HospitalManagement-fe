@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useToast } from "./ErrorHandlingToast/useToaster";
+import toast from "react-hot-toast";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";

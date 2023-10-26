@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import toast, { Toaster } from 'react-hot-toast';
+import useLang from "@/hooks/use-lang";
 
 
 const PatientForm = ({ params }) => {
@@ -25,6 +26,7 @@ const PatientForm = ({ params }) => {
         dutyEndTime: "",
         bio: "",
     });
+    const { langVar, langType } = useLang()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -126,7 +128,7 @@ const PatientForm = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Dashboard{" "}
+                                    {langVar?.hospital.dashboard}{" "}
                                 </a>
                             </li>
                             <li className="rtl:rotate-180">
@@ -150,7 +152,7 @@ const PatientForm = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Doctors{" "}
+                                    {langVar?.hospital.doctor}{" "}
                                 </a>
                             </li>
                         </ol>
@@ -158,8 +160,8 @@ const PatientForm = ({ params }) => {
                 </div>
                 <div className="flex flex-col gap-y-5">
                     <h3 className="text-3xl font-medium justify-start md:text-5xl">
-                        <span className="text-zinc-800">Doctor</span>
-                        <span className=" text-green-500">Register</span>
+                        <span className="text-zinc-800">{langVar?.hospital.doctor_register_1}</span>
+                        <span className=" text-green-500">{langVar?.hospital.doctor_register_2}</span>
                     </h3>
                 </div>
             </div>
@@ -167,7 +169,7 @@ const PatientForm = ({ params }) => {
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="user" className="block text-sm font-medium text-gray-900">
-                            Doctor Name
+                            {langVar?.hospital.doctor}
                         </label>
 
                         <select
@@ -176,7 +178,7 @@ const PatientForm = ({ params }) => {
                             onChange={handleInputChange}
                             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                         >
-                            <option value="">Please select</option>
+                            <option value="">{langVar?.hospital.please_select}</option>
                             {users.map((user) => (
                                 <option key={user.id} value={user.id}>
                                     {user.name}
@@ -188,7 +190,7 @@ const PatientForm = ({ params }) => {
 
                     <div>
                         <label htmlFor="department" className="block text-sm font-medium text-gray-900">
-                            Department
+                            {langVar?.hospital.department}
                         </label>
 
                         <select
@@ -197,7 +199,7 @@ const PatientForm = ({ params }) => {
                             id="departmentId"
                             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                         >
-                            <option value="">Please select</option>
+                            <option value="">{langVar?.hospital.please_select}</option>
                             {departments.map((department) => (
                                 <option key={department.id} value={department.id}>
                                     {department.name}
@@ -208,7 +210,7 @@ const PatientForm = ({ params }) => {
                     </div>
                     <div>
                         <label htmlFor="License" className="block text-sm font-medium text-gray-600 mb-1">
-                            License
+                            {langVar?.hospital.license}
                         </label>
 
                         <input
@@ -223,7 +225,7 @@ const PatientForm = ({ params }) => {
                     </div>
                     <div>
                         <label htmlFor="UserEmail" className="block text-sm font-medium text-gray-600 mb-1">
-                            Experiences
+                            {langVar?.hospital.experience}
                         </label>
 
                         <input
@@ -235,7 +237,7 @@ const PatientForm = ({ params }) => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-600 mb-1">Duty Start Time</label>
+                        <label className="block text-sm font-medium text-gray-600 mb-1">{langVar?.hospital.duty_start_time}</label>
                         <input
                             name="dutyStartTime"
                             onChange={handleInputChange}
@@ -245,7 +247,7 @@ const PatientForm = ({ params }) => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-600 mb-1"> Duty End Time</label>
+                        <label className="block text-sm font-medium text-gray-600 mb-1"> {langVar?.hospital.duty_end_time}</label>
                         <input
                             name="dutyEndTime"
                             onChange={handleInputChange}
@@ -256,7 +258,7 @@ const PatientForm = ({ params }) => {
                     </div>
                     <div>
                         <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
-                            Bio
+                            {langVar?.hospital.bio}
                         </label>
 
                         <textarea
@@ -265,7 +267,7 @@ const PatientForm = ({ params }) => {
                             onChange={handleInputChange}
                             className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
                             rows="4"
-                            placeholder="Enter your bio..."
+                            placeholder={langVar?.hospital.enter_bio}
                         ></textarea>
                     </div>
 
@@ -275,7 +277,7 @@ const PatientForm = ({ params }) => {
                             className="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
                             type="submit"
                         >
-                            Create
+                            {langVar?.hospital.create}
                         </button>
                     </div>
                 </form>

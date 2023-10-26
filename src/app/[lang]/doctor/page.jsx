@@ -2,9 +2,10 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { User, Users, Calendar, Home as HomeIcon } from "react-feather";
-import Layout from "../../components/doctor/Layout";
+import Layout from "../../../components/doctor/Layout";
 import List from "@/components/doctor/appointment/List";
 import Cookies from "js-cookie";
+import useLang from "@/hooks/use-lang";
 
 
 const InfoCard = ({ title, count, icon: Icon, color }) => {
@@ -26,6 +27,7 @@ const Home = () => {
     const token = Cookies.get("token");
     const user = JSON.parse(Cookies.get("user_info"));
     const [error, setError] = useState(null);
+    const { langVar, langType } = useLang()
 
     const getCountDataHttp = useCallback(async () => {
         const response = await fetch(
@@ -53,29 +55,29 @@ const Home = () => {
     }, [getCountDataHttp])
 
     return (
-        <Layout title="Dashboard">
+        <Layout title={langVar?.doctor.dashboard}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <InfoCard
-                    title="Hospitals"
-                    count={countData? countData.hospital : 0}
+                    title={langVar?.doctor.hospitals}
+                    count={countData ? countData.hospital : 0}
                     icon={HomeIcon}
                     color="white"
                 />
                 <InfoCard
-                    title="Patients"
-                    count={countData? countData.patient : 0}
+                    title={langVar?.doctor.patients}
+                    count={countData ? countData.patient : 0}
                     icon={Users}
                     color="white"
                 />
                 <InfoCard
-                    title="Appointments"
-                    count={countData? countData.appointment : 0}
+                    title={langVar?.doctor.appointments}
+                    count={countData ? countData.appointment : 0}
                     icon={Calendar}
                     color="white"
                 />
             </div>
             {/* APPOINTMENTS */}
-            <List />
+            <List langVar={langVar} langType={langType} />
         </Layout>
     );
 };

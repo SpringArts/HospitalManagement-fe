@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import EditForm from "@/components/doctor/EditForm";
+import useLang from "@/hooks/use-lang";
 
 const ProfilePage = () => {
     const [isShowForm, setIsShowForm] = useState(false);
     const [updatedInfo, setUpdatedInfo] = useState(null)
     const user = JSON.parse(Cookies.get("user_info"));
+    const { langVar, langType } = useLang()
 
     const updateUserInfo = (user) => {
         setUpdatedInfo(user)
@@ -19,7 +21,7 @@ const ProfilePage = () => {
     };
 
     return (
-        <Layout title="Profile">
+        <Layout title={langVar?.doctor.profile}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="shadow p-3 rounded">
                     <div className="mb-5">
@@ -43,12 +45,12 @@ const ProfilePage = () => {
                                 type="submit"
                                 onClick={showFormChangeHandler}
                             >
-                                Edit Profile
+                                {langVar?.doctor.edit_profile}
                             </button>
                         )}
                     </div>
                 </div>
-                {isShowForm && <EditForm user={user} onUpdateUserInfo={updateUserInfo} onShowFormChangeHandler={showFormChangeHandler} />}
+                {isShowForm && <EditForm langVar={langVar} user={user} onUpdateUserInfo={updateUserInfo} onShowFormChangeHandler={showFormChangeHandler} />}
             </div>
         </Layout>
     );

@@ -10,6 +10,7 @@ const EditForm = (props) => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const token = Cookies.get("token");
+    const langVar = props.langVar
     const submitHandler = async (event) => {
         event.preventDefault();
         setError(null);
@@ -52,7 +53,7 @@ const EditForm = (props) => {
 
     return (
         <div className="shadow p-3 rounded">
-            <h1 className="mb-4">Change Your Profile Information</h1>
+            <h1 className="mb-4">{langVar?.doctor.change_info}</h1>
             <form onSubmit={submitHandler}>
                 {error && (
                     <div className="bg-[#eee] p-3 mb-3 text-red-800">{error}</div>
@@ -62,7 +63,7 @@ const EditForm = (props) => {
                         htmlFor="name"
                         className="block text-sm font-medium text-gray-600 mb-1"
                     >
-                        Name
+                        {langVar?.doctor.name}
                     </label>
                     <input
                         type="text"
@@ -77,7 +78,7 @@ const EditForm = (props) => {
                         htmlFor="emamil"
                         className="block text-sm font-medium text-gray-600 mb-1"
                     >
-                        Email
+                        {langVar?.doctor.email}
                     </label>
                     <input
                         type="email"
@@ -92,7 +93,7 @@ const EditForm = (props) => {
                         htmlFor="phone"
                         className="block text-sm font-medium text-gray-600 mb-1"
                     >
-                        Phone
+                        {langVar?.doctor.phone}
                     </label>
                     <input
                         type="tel"
@@ -107,7 +108,7 @@ const EditForm = (props) => {
                         htmlFor="address"
                         className="block text-sm font-medium text-gray-600 mb-1"
                     >
-                        Address
+                        {langVar?.doctor.address}
                     </label>
                     <textarea
                         id="address"
@@ -121,7 +122,7 @@ const EditForm = (props) => {
                         htmlFor="passwrod"
                         className="block text-sm font-medium text-gray-600 mb-1"
                     >
-                        Password
+                        {langVar?.doctor.password}
                     </label>
                     <input
                         type="password"
@@ -137,13 +138,13 @@ const EditForm = (props) => {
                         type="button"
                         onClick={props.onShowFormChangeHandler}
                     >
-                        CLOSE
+                        {langVar?.doctor.close}
                     </button>
                     <button
                         className="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
                         type="submit" disabled={isLoading}
                     >
-                        CONFIRM
+                        {langVar?.doctor.confirm}
                     </button>
                 </div>
             </form>

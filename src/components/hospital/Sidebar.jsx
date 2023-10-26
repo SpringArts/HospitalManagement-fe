@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
+import useLang from "@/hooks/use-lang";
 
 const Sidebar = () => {
     const params = useParams();
@@ -12,6 +13,8 @@ const Sidebar = () => {
     const token = Cookies.get("token");
     const [hospitalName, setHospitalName] = useState("");
     const [hospitalEmail, setHospitalEmail] = useState("");
+    const { langVar, langType } = useLang()
+
     const fetchData = async () => {
         try {
             const res = await axios.get(`/hospitals/${hospitalId}`, {
@@ -44,10 +47,10 @@ const Sidebar = () => {
                     <ul className="mt-6 space-y-1">
                         <li>
                             <Link
-                                href={`/dashboard/hospital/${hospitalId}`}
+                                href={`/${langType}/dashboard/hospital/${hospitalId}`}
                                 className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                             >
-                                Dashboard
+                                {langVar?.hospital.dashboard}
                             </Link>
                         </li>
 
@@ -56,7 +59,7 @@ const Sidebar = () => {
                                 <summary
                                     className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    <span className="text-sm font-medium"> Doctor Section </span>
+                                    <span className="text-sm font-medium"> {langVar?.hospital.doctor_section} </span>
 
                                     <span
                                         className="shrink-0 transition duration-300 group-open:-rotate-180"
@@ -78,19 +81,19 @@ const Sidebar = () => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <Link href={`/dashboard/hospital/${hospitalId}/doctors`}
+                                        <Link href={`/${langType}/dashboard/hospital/${hospitalId}/doctors`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                         >
-                                            Doctor Lists
+                                            {langVar?.hospital.doctor_list}
                                         </Link>
                                     </li>
 
                                     <li>
                                         <Link
-                                            href={`/dashboard/hospital/${hospitalId}/doctors/create`}
+                                            href={`/${langType}/dashboard/hospital/${hospitalId}/doctors/create`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                         >
-                                            Register New Doctor
+                                            {langVar?.hospital.register_doctor}
                                         </Link>
                                     </li>
                                 </ul>
@@ -98,10 +101,10 @@ const Sidebar = () => {
                         </li>
                         <li>
                             <Link
-                                href='/user/hospital'
+                                href={`/${langType}/user/hospital`}
                                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700"
                             >
-                                HOME
+                                {langVar?.hospital.home}
                             </Link>
                         </li>
                     </ul>

@@ -10,6 +10,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
+import useLang from "@/hooks/use-lang";
 
 const InfoCard = ({ title, count, icon: Icon, color }) => {
     return (
@@ -33,6 +34,7 @@ const Dashboard = ({ params }) => {
     const [formData, setFormData] = useState({
         userId: "",
     });
+    const { langVar, langType } = useLang()
 
     const router = useRouter();
     const handleSubmit = async (e) => {
@@ -111,12 +113,12 @@ const Dashboard = ({ params }) => {
     return (
         <Layout>
             <div className="container mx-auto mt-10">
-                <h1 className="text-3xl font-semibold mb-6 text-center">Welcome to {hospitalInfo.name}!</h1>
+                <h1 className="text-3xl font-semibold mb-6 text-center">{langVar?.hospital.welcome} {hospitalInfo.name}!</h1>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <InfoCard title="Doctor Count" count={dataCount.doctorCount} icon={User} color="blue" />
-                    <InfoCard title="Patient Count" count={dataCount.patientCount} icon={Users} color="green" />
-                    <InfoCard title="Appointment Count" count={dataCount.appointmentCount} icon={Calendar} color="red" />
+                    <InfoCard title={langVar?.hospital.doctors} count={dataCount.doctorCount} icon={User} color="blue" />
+                    <InfoCard title={langVar?.hospital.patients} count={dataCount.patientCount} icon={Users} color="green" />
+                    <InfoCard title={langVar?.hospital.appointments} count={dataCount.appointmentCount} icon={Calendar} color="red" />
                 </div>
 
                 <div className="mt-10 grid gap-6 grid-cols-1 md:grid-cols-2">
@@ -124,38 +126,38 @@ const Dashboard = ({ params }) => {
                     <article className="flex flex-col bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
                         <div className="p-4 sm:p-6 flex-1 flex flex-col">
                             <div className="mb-6">
-                                <h2 className="text-xl font-semibold text-gray-800 mb-2">Hospital Information</h2>
+                                <h2 className="text-xl font-semibold text-gray-800 mb-2">{langVar?.hospital.hospital_info}</h2>
                                 <div className="grid grid-cols-2 gap-2">
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Hospital Name</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.hospital_name}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.name}</p>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Email</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.email}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.email}</p>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Phone</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.phone}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.phone}</p>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Address</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.address}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.address}</p>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Location</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.location}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.location}</p>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="text-sm font-medium text-gray-600">Bio</h4>
+                                        <h4 className="text-sm font-medium text-gray-600">{langVar?.hospital.bio}</h4>
                                         <p className="text-xs text-gray-500">{hospitalInfo.bio}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex justify-start">
-                                <Link href={`/dashboard/hospital/${hospitalId}/doctors`} passHref
+                                <Link href={`/${langType}/dashboard/hospital/${hospitalId}/doctors`} passHref
                                     className="bg-blue-500 hover:bg-blue-600 px-5 py-3 text-white text-xs font-bold transition rounded-lg">
-                                    View Doctors
+                                    {langVar?.hospital.view_doctor}
                                 </Link>
                             </div>
                         </div>
@@ -177,7 +179,7 @@ const Dashboard = ({ params }) => {
                                         {headmasterInfo.name}
                                     </h3>
 
-                                    <p className="mt-1 text-xs font-medium text-gray-600">headmaster</p>
+                                    <p className="mt-1 text-xs font-medium text-gray-600">{langVar?.hospital.headmaster}</p>
                                 </div>
 
                                 <div className="hidden sm:block sm:shrink-0">
@@ -193,18 +195,18 @@ const Dashboard = ({ params }) => {
 
                             <div className="mt-4">
                                 <p className="max-w-[40ch] text-sm text-gray-500">
-                                    Meet our dedicated hospital headmaster. With a wealth of experience and unwavering commitment,headmaster leads our medical team with compassion and expertise.
+                                    {langVar?.hospital.content}
                                 </p>
                             </div>
 
                             <dl className="mt-6 flex gap-4 sm:gap-6">
                                 <div className="flex flex-col-reverse">
-                                    <dt className="text-sm font-medium text-gray-600">Joined</dt>
+                                    <dt className="text-sm font-medium text-gray-600">{langVar?.hospital.joined}</dt>
                                     <dd className="text-xs text-gray-500"> {headmasterInfo.created_at}</dd>
                                 </div>
 
                                 <div className="flex flex-col-reverse">
-                                    <dt className="text-sm font-medium text-gray-600">Email</dt>
+                                    <dt className="text-sm font-medium text-gray-600">{langVar?.hospital.email}</dt>
                                     <dd className="text-xs text-gray-500"> {headmasterInfo.email}</dd>
                                 </div>
                             </dl>
@@ -212,9 +214,9 @@ const Dashboard = ({ params }) => {
                     </div>
 
                     <div className="bg-white rounded-lg overflow-hidden shadow-md p-6">
-                        <h2 className="text-xl font-semibold mb-4 text-gray-900">Change Headmaster</h2>
+                        <h2 className="text-xl font-semibold mb-4 text-gray-900">{langVar?.hospital.change_headmaster}</h2>
                         <p className="text-sm text-gray-600 mb-6">
-                            Select a new headmaster for the hospital. Please choose from the list below and click the button to assign.
+                            {langVar?.hospital.select_content}
                         </p>
                         <form onSubmit={handleSubmit}>
                             <div className="flex items-center space-x-4">
@@ -225,7 +227,7 @@ const Dashboard = ({ params }) => {
                                         onChange={handleInputChange}
                                         className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
                                     >
-                                        <option value="">Please select</option>
+                                        <option value="">{langVar?.hospital.please_select}</option>
                                         {users.map((user) => (
                                             <option key={user.id} value={user.doctorInfo.id}>
                                                 {user.doctorInfo.name}
@@ -236,7 +238,7 @@ const Dashboard = ({ params }) => {
                                         type="submit"
                                         className="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
                                     >
-                                        Assign
+                                        {langVar?.hospital.assign}
                                     </button>
                                 </div>
                             </div>

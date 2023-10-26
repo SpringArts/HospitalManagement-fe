@@ -1,8 +1,10 @@
 import React from "react";
 import UserProfile from "./UserProfile";
 import Link from "next/link";
+import useLang from "@/hooks/use-lang";
 
 const Sidebar = () => {
+    const { langVar, langType } = useLang()
     return (
         <div className="flex h-screen overflow-hidden sticky flex-col justify-between border-e bg-white">
             <div className="px-4 py-6">
@@ -13,55 +15,55 @@ const Sidebar = () => {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            href="/doctor"
+                            href={`/${langType}/doctor`}
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            General
+                            {langVar?.doctor.dashboard}
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            href="/doctor/profile"
+                            href={`/${langType}/doctor/profile`}
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            Profile
+                            {langVar?.doctor.profile}
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            href="/doctor/hospital"
+                            href={`/${langType}/doctor/hospital`}
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            Connected Hospitals
+                            {langVar?.doctor.connected_hospitals}
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            href="/doctor/patient"
+                            href={`/${langType}/doctor/patient`}
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            Patients
+                            {langVar?.doctor.patients}
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            href="/doctor/appointment"
+                            href={`/${langType}/doctor/appointment`}
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            Appointments
+                            {langVar?.doctor.appointments}
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            href="/user/hospital"
+                            href={`/${langType}/user/hospital`}
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            HOME
+                            {langVar?.doctor.home}
                         </Link>
                     </li>
                 </ul>

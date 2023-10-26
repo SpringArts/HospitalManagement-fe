@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { User, Mail, Phone } from "react-feather";
 import Cookies from "js-cookie";
+import useLang from "@/hooks/use-lang";
 
 const PatientPage = () => {
     const [patientData, setPatientData] = useState([])
@@ -14,63 +15,64 @@ const PatientPage = () => {
     const [error, setError] = useState(null);
     const token = Cookies.get("token");
     const user = JSON.parse(Cookies.get("user_info"));
+    const { langVar } = useLang()
 
     const httpRequest = useCallback(async () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${user.id}/patients?page=${currentPage}&perPage=${itemsPerPage}`, {
             method: 'GET',
-            headers: {  
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             }
         })
 
-        if(!response.ok) {
+        if (!response.ok) {
             setError('Something wrong.')
             return
         }
         const responseData = await response.json()
         setPatientData(responseData.data)
-    }, [currentPage, itemsPerPage, token])
+    }, [currentPage, itemsPerPage, token, user])
 
     useEffect(() => {
         httpRequest()
     }, [currentPage, httpRequest])
 
-  return (
-    <Layout title='Patients'>
-        <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {
-                    !error && patientData && patientData.map(patient => (
-                        <a key={patient}
-                            href="#"
-                            className="relative block overflow-hidden rounded-lg shadow border border-gray-100"
-                        >
-                            <span
-                                className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
-                            ></span>
-                            <Image className="rounded-t mb-3 w-full mx-auto max-h-[350px]" alt='Doctor Profile' width={100} height={200} src={patient.image ? patient.image : '/patient.webp'}/>
-                            <div className="p-3">
-                                <p className="flex items-center mb-3">
-                                    <User className="mr-3"/> 
-                                    {patient.name}
-                                </p>
-                                <p className="flex items-center mb-3">
-                                    <Mail className="mr-3"/> 
-                                    {patient.email}
-                                </p>
-                                <p className="flex items-center mb-3">
-                                    <Phone className="mr-3"/> 
-                                    {patient.phone ? patient.phone : '-'}
-                                </p>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
+    return (
+        <Layout title={langVar?.doctor.patients}>
+            <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {
+                        !error && patientData && patientData.map(patient => (
+                            <a key={patient}
+                                href="#"
+                                className="relative block overflow-hidden rounded-lg shadow border border-gray-100"
+                            >
+                                <span
+                                    className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+                                ></span>
+                                <Image className="rounded-t mb-3 w-full mx-auto max-h-[350px]" alt='Doctor Profile' width={100} height={200} src={patient.image ? patient.image : '/patient.webp'} />
+                                <div className="p-3">
+                                    <p className="flex items-center mb-3">
+                                        <User className="mr-3" />
+                                        {patient.name}
+                                    </p>
+                                    <p className="flex items-center mb-3">
+                                        <Mail className="mr-3" />
+                                        {patient.email}
+                                    </p>
+                                    <p className="flex items-center mb-3">
+                                        <Phone className="mr-3" />
+                                        {patient.phone ? patient.phone : '-'}
+                                    </p>
+                                </div>
+                            </a>
+                        ))
+                    }
+                </div>
 
-            {/* <ReactPaginate
+                {/* <ReactPaginate
                         breakLabel="..."
                         nextLabe="next"
                         onPageChange={(page) => {
@@ -88,9 +90,9 @@ const PatientPage = () => {
                         containerClassName="flex justify-center items-center w-full mt-8 gap-x-3"
                         pageClassName="border border-white hover:bg-pink-200 transition-all duration-200 ease-in-out disabled:opacity-70 disabled:text-gray-100 mb-10 px-4 py-3 text-sm rounded-full tracking tracking-wider"
                     /> */}
-        </div>
-    </Layout>
-);
+            </div>
+        </Layout>
+    );
 };
 
 export default PatientPage;

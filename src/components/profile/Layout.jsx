@@ -39,7 +39,7 @@ const Layout = ({ children }) => {
             <div className="flex min-h-screen">
                 {userInfo.role !== "patient" && (
                     <div className="w-1/4 bg-gray-200">
-                        <Sidebar langVar={langVar} />
+                        <Sidebar langVar={langVar} langType={langType} />
                     </div>
                 )}
 

@@ -21,9 +21,9 @@ const useLang = () => {
         const lang = await getDictionary(langType)
         setLangVar(lang)
     }
-    getLang(langType)
-    // useEffect(() => {
-    // }, [langType])
+    useEffect(() => {
+        getLang(langType)
+    }, [langType])
 
     return {
         langVar,

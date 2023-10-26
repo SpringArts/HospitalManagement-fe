@@ -6,7 +6,7 @@ import axios from "@/lib/axios";
 import { useToast } from "../ErrorHandlingToast/useToaster";
 
 
-const Sidebar = ({ langVar }) => {
+const Sidebar = ({ langVar, langType }) => {
     const userInfo = JSON.parse(Cookies.get("user_info"));
     const token = Cookies.get("token");
     const [hospitalId, setHospitalId] = useState(null);
@@ -37,7 +37,7 @@ const Sidebar = ({ langVar }) => {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            href="/user/profile"
+                            href={`/${langType}/user/profile`}
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
                             {langVar?.page.profile.appoint_list}
@@ -48,7 +48,7 @@ const Sidebar = ({ langVar }) => {
                         userInfo.role === "doctor" && (
                             <li>
                                 <Link
-                                    href="/doctor"
+                                    href={`/${langType}/doctor`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     {langVar?.page.profile.dashboard}
@@ -60,7 +60,7 @@ const Sidebar = ({ langVar }) => {
                         userInfo.role === "superAdmin" && (
                             <li>
                                 <Link
-                                    href="/superadmin"
+                                    href={`/${langType}/superadmin`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     {langVar?.page.profile.dashboard}
@@ -73,7 +73,7 @@ const Sidebar = ({ langVar }) => {
                         userInfo.role === "hospitalAdmin" && (
                             <li>
                                 <Link
-                                    href={`/dashboard/hospital/${hospitalId}`}
+                                    href={`/${langType}/dashboard/hospital/${hospitalId}`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     {langVar?.page.profile.dashboard}

@@ -9,6 +9,7 @@ import Pagination from "@/components/Pagination";
 import AppointmentPopup from "@/components/AppointmentPopUp/AppointmentPopup";
 import Layout from "@/components/hospital/Layout";
 import toast, { Toaster } from 'react-hot-toast';
+import useLang from "@/hooks/use-lang";
 
 const Page = ({ params }) => {
     const [data, setData] = useState([]);
@@ -18,6 +19,7 @@ const Page = ({ params }) => {
     const [search, setSearch] = useState("");
     const token = Cookies.get("token");
     const hospitalId = params.hospitalId;
+    const { langVar, langType } = useLang()
 
     const fetchData = async () => {
         try {
@@ -32,11 +34,11 @@ const Page = ({ params }) => {
             );
             setData(data.data);
             setMeta(data.meta);
-            
+
         } catch (error) {
             toast.error(error)
         }
-       
+
     };
 
     const handleDelete = async (id) => {
@@ -53,12 +55,12 @@ const Page = ({ params }) => {
         } catch (error) {
             toast.error(error)
         }
-    
-        
+
+
     };
     const handlePageChange = (newPage) => {
         setPage(newPage);
-        
+
     };
 
     useEffect(() => {
@@ -116,7 +118,7 @@ const Page = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Dashboard{" "}
+                                    {langVar?.hospital.dashboard}{" "}
                                 </a>
                             </li>
                             <li className="rtl:rotate-180">
@@ -140,7 +142,7 @@ const Page = ({ params }) => {
                                     className="block transition hover:text-gray-700"
                                 >
                                     {" "}
-                                    Doctors{" "}
+                                    {langVar?.hospital.doctor}{" "}
                                 </a>
                             </li>
                         </ol>
@@ -148,8 +150,8 @@ const Page = ({ params }) => {
                 </div>
                 <div className="flex flex-col gap-y-5">
                     <h3 className="text-3xl font-medium justify-start md:text-5xl">
-                        <span className="text-zinc-800">Hospital</span>
-                        <span className=" text-green-500">Doctors</span>
+                        <span className="text-zinc-800">{langVar?.hospital.hospital_doctors_1}</span>
+                        <span className=" text-green-500">{langVar?.hospital.hospital_doctors_2}</span>
                     </h3>
                 </div>
             </div>
@@ -172,7 +174,7 @@ const Page = ({ params }) => {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="my-2 p-3 bg-gray-50 border rounded-full text-gray-400 text-sm block w-full pl-10 bg-transparent placeholder:text-gray-800 border-black focus:border-[#327CEC] focus:ring-blue-600"
-                            placeholder="Search Doctor Name"
+                            placeholder={langVar?.hospital.search_doctor}
                         />
                     </div>
                 </div>
@@ -218,7 +220,7 @@ const Page = ({ params }) => {
                                 className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
                                 onClick={() => handleDelete(item.id)}
                             >
-                                Delete
+                                {langVar?.hospital.delete}
                                 <span
                                     aria-hidden="true"
                                     className="block transition-all group-hover:ms-0.5 rtl:rotate-180"

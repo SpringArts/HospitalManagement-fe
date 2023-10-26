@@ -2,14 +2,15 @@
 
 import Layout from "@/components/doctor/Layout";
 import React, { useCallback, useEffect, useState } from "react";
-import {FaRegHospital, FaLocationArrow} from 'react-icons/fa'
-import {BsTelephone} from 'react-icons/bs'
-import {HiOutlineMail} from 'react-icons/hi'
+import { FaRegHospital, FaLocationArrow } from 'react-icons/fa'
+import { BsTelephone } from 'react-icons/bs'
+import { HiOutlineMail } from 'react-icons/hi'
 import Image from "next/image";
 import Cookies from "js-cookie";
 import ReactPaginate from "react-paginate";
 import axios from "@/lib/axios";
 import { Home, Phone, Mail } from "react-feather";
+import useLang from "@/hooks/use-lang";
 
 const HospitalPage = (props) => {
     const [hospitalData, setHospitalData] = useState([])
@@ -18,17 +19,18 @@ const HospitalPage = (props) => {
     const [error, setError] = useState(null);
     const token = Cookies.get("token");
     const user = JSON.parse(Cookies.get("user_info"));
+    const { langVar } = useLang()
     const httpRequest = useCallback(async () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/doctor/${user.id}/hospitals?page=${currentPage}&perPage=${itemsPerPage}`, {
             method: 'GET',
-            headers: {  
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             }
         })
 
-        if(!response.ok) {
+        if (!response.ok) {
             setError('Something wrong.')
             return
         }
@@ -41,34 +43,34 @@ const HospitalPage = (props) => {
     }, [currentPage, httpRequest])
 
     return (
-        <Layout title='Hospitals'>
+        <Layout title={langVar?.doctor.hospitals}>
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {
                         !error && hospitalData && hospitalData.map(hospital => (
-                        <a key={hospital.id}
-                            href="#"
-                            className="relative block overflow-hidden rounded shadow-lg border border-gray-100"
-                        >
-                            <span
-                                className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
-                            ></span>
-                            <Image className="rounded-t mb-3 w-full mx-auto" alt='Hospital' width={100} height={100} src={hospital.image ? hospital.image : '/hospital.jpg'}/>
-                            <div className="p-4">
-                                <p className="flex items-start mb-3">
-                                    <Home className="mr-3"/> 
-                                    {hospital.name}
-                                </p>
-                                <p className="flex items-start mb-3">
-                                    <Phone className="mr-3"/> 
-                                    {hospital.phone}
-                                </p>
-                                <p className="flex items-start mb-3">
-                                    <Mail className="mr-3"/> 
-                                    {hospital.email}
-                                </p>
-                            </div>
-                        </a>
+                            <a key={hospital.id}
+                                href="#"
+                                className="relative block overflow-hidden rounded shadow-lg border border-gray-100"
+                            >
+                                <span
+                                    className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+                                ></span>
+                                <Image className="rounded-t mb-3 w-full mx-auto" alt='Hospital' width={100} height={100} src={hospital.image ? hospital.image : '/hospital.jpg'} />
+                                <div className="p-4">
+                                    <p className="flex items-start mb-3">
+                                        <Home className="mr-3" />
+                                        {hospital.name}
+                                    </p>
+                                    <p className="flex items-start mb-3">
+                                        <Phone className="mr-3" />
+                                        {hospital.phone}
+                                    </p>
+                                    <p className="flex items-start mb-3">
+                                        <Mail className="mr-3" />
+                                        {hospital.email}
+                                    </p>
+                                </div>
+                            </a>
                         ))
                     }
                 </div>

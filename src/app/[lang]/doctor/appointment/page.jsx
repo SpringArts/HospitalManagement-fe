@@ -1,16 +1,18 @@
 'use client'
 import Layout from '@/components/doctor/Layout'
 import axios from '@/lib/axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Cookies from 'js-cookie'
 import toast from 'react-hot-toast';
 import AppointmentCard from '@/components/doctor/AppointmentCard';
+import useLang from '@/hooks/use-lang';
 
-const page = () => {
+const Page = () => {
     const token = Cookies.get("token")
     const [appointmentLists, setAppointmentLists] = useState([]);
+    const { langVar } = useLang()
 
-    const getAllAppointmentForDoctor = async () => {
+    const getAllAppointmentForDoctor = useCallback(async () => {
         try {
             await axios
                 .get(`/today-appointment`, {
@@ -28,11 +30,11 @@ const page = () => {
             toast.error(error);
             console.log(error);
         }
-    }
+    }, [token])
 
     useEffect(() => {
         getAllAppointmentForDoctor()
-    }, [])
+    }, [getAllAppointmentForDoctor])
 
     const exportHttp = async () => {
         const response = await fetch(
@@ -62,11 +64,11 @@ const page = () => {
     }
 
     return (
-        <Layout title="Appointment">
+        <Layout title={langVar?.doctor.appointments}>
             <div className='flex justify-end'>
                 <div className="my-5">
                     <button onClick={exportHttp} className="bg-green-500 text-white px-3 py-3 rounded-md">
-                        Download Appointment Excel
+                        {langVar?.doctor.download_appointment_excel}
                     </button>
                 </div>
             </div>
@@ -97,4 +99,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

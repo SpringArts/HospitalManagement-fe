@@ -25,7 +25,9 @@ const AppointmentCard = ({
     const [isUpdating, setIsUpdating] = useState(false);
     const [cancelActionTriggered, setCancelActionTriggered] = useState(false);
     const currentTime = new Date();
-
+    const headers = {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+    };
     const formatDateTime = (dateString, timeString) => {
         const appointmentDate = new Date(dateString);
         const optionsDate = { month: "short", day: "numeric", year: "numeric" };
@@ -57,9 +59,7 @@ const AppointmentCard = ({
         setIsUpdating(true);
 
         try {
-            const headers = {
-                Authorization: `Bearer ${Cookies.get("token")}`,
-            };
+
 
             await axios.delete(`/appointments/${id}`, {
                 headers,
@@ -70,6 +70,13 @@ const AppointmentCard = ({
             setIsUpdating(false);
         }
     };
+
+    const handleVideoChat = async () => {
+        await axios.get(`/enter-video-chat/${bookingId}`, {
+            headers,
+        });
+
+    }
 
     useEffect(() => {
         fetchData();
@@ -118,28 +125,42 @@ const AppointmentCard = ({
                         </button>
                     </div>
                 )}
-                {(appointmentType !== "outpatient" && status === 'upcoming' && is_visible === 1) ? (
-                    <div className="flex shrink-0">
-                        {isButtonDisabled ? (
-                            <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
-                                <button
-                                    className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? '' : 'cursor-not-allowed'}`}                                >
+                {
+                    (appointmentType === "chat" && status === 'upcoming' && is_visible === 1) ? (
+                        <div className="flex shrink-0">
+                            {isButtonDisabled ? (
+                                <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
+                                    <button
+                                        className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? '' : 'cursor-not-allowed'}`}
+                                    >
+                                        Enter Room Now
+                                    </button>
+                                </Link>
+                            ) : (
+                                <button className="bg-gray-500 text-white px-4 py-2 rounded-md cursor-not-allowed" disabled>
                                     Enter Room Now
                                 </button>
-                            </Link>
-                        ) : (
-                            <button className="bg-gray-500 text-white px-4 py-2 rounded-md cursor-not-allowed" disabled>
-                                Enter Room Now
+                            )}
+                        </div>
+                    ) : (appointmentType === "video" && status === 'upcoming' && is_visible === 1) ? (
+                        <div className="flex shrink-0">
+                            <a href={`http://127.0.0.1:8000/api/video-chat/${bookingId}`} target="_blank">
+                                <button
+                                    className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? '' : 'cursor-not-allowed'}`}
+                                >
+                                    Enter Video Room Now
+                                </button>
+                            </a>
+                        </div>
+                    ) : (
+                        <div className="flex shrink-0">
+                            <button className="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>
+                                Empty Room
                             </button>
-                        )}
-                    </div>
-                ) : (
-                    <div className="flex shrink-0">
-                        <button className="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>
-                            Empty Room
-                        </button>
-                    </div>
-                )}
+                        </div>
+                    )
+                }
+
             </div>
         </div>
 

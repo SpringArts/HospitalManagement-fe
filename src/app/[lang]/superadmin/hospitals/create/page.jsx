@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import axios from "axios";
 import toast from "react-hot-toast";
 import useLang from "@/hooks/use-lang";
+import axios from "@/lib/axios";
 
 const Create = () => {
     const router = useRouter();
@@ -20,27 +20,37 @@ const Create = () => {
     const [address, setAddress] = useState("");
     const [bio, setBio] = useState("");
     const [location, setLocation] = useState("");
+    const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState("");
 
+    const fetchUser = async () => {
+        const res = await axios.get("/normal-users", {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        setUsers(res.data.data);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios
-                .post(
-                    "http://127.0.0.1:8000/api/hospitals",
-                    { name, email, phone, address, location, bio },
-                    {
-                        headers: {
-                            Accept: "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
+            const res = await axios.post("/hospitals", { name, email, phone, address, location, bio, userId },
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
                     },
-                )
-                .then((response) => {
-                    router.push("/superadmin/hospitals");
-                    toast.success("The hospital is created successfully.");
-                    setIsLoading(false)
-                });
+                },
+            );
+
+            if (res.status === 201) {
+                toast.success("The hospital is created successfully.");
+                router.push("/superadmin/hospitals");
+                setIsLoading(false);
+            }
+
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 toast.error(error.response.data.errors);
@@ -49,6 +59,10 @@ const Create = () => {
             }
         }
     };
+
+    useEffect(() => {
+        fetchUser();
+    })
 
     return (
         <Layout>
@@ -72,6 +86,7 @@ const Create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_name}
                                         type="text"
+                                        required
                                         value={name}
                                         onChange={(e) =>
                                             setName(e.target.value)
@@ -81,12 +96,13 @@ const Create = () => {
 
                                 <div>
                                     <label className="sr-only" htmlFor="name">
-                                        Email
+                                        Hospital Email Address
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_email}
                                         type="email"
+                                        required
                                         value={email}
                                         onChange={(e) =>
                                             setEmail(e.target.value)
@@ -102,6 +118,7 @@ const Create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_phone}
                                         type="number"
+                                        required
                                         value={phone}
                                         onChange={(e) =>
                                             setPhone(e.target.value)
@@ -109,14 +126,34 @@ const Create = () => {
                                     />
                                 </div>
 
+
+                                <div>
+                                    <label className="sr-only" htmlFor="hospitalAdmin">
+                                        Hospital Admin
+                                    </label>
+                                    <select
+                                        name="userId"
+                                        id="userId"
+                                        onChange={(e) => setUserId(e.target.value)}
+                                        className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                    >
+                                        <option value="">Please select</option>
+                                        {users.map((user) => (
+                                            <option key={user.id} value={user.id}>
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div>
                                     <label className="sr-only" htmlFor="name">
-                                        Address
+                                        Hospital Address
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_address}
                                         type="text"
+                                        required
                                         value={address}
                                         onChange={(e) =>
                                             setAddress(e.target.value)
@@ -132,6 +169,7 @@ const Create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_location}
                                         type="text"
+                                        required
                                         value={location}
                                         onChange={(e) =>
                                             setLocation(e.target.value)
@@ -151,6 +189,7 @@ const Create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder={langVar?.admin.enter_description}
                                         rows="8"
+                                        required
                                         value={bio}
                                         onChange={(e) => setBio(e.target.value)}
                                         id="message"

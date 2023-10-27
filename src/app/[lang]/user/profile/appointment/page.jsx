@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import Cookies from "js-cookie";
 import axios from "@/lib/axios";
+import toast from "react-hot-toast";
 
 const AppointmentPage = () => {
     const [data, setData] = useState();
@@ -37,28 +38,31 @@ const AppointmentPage = () => {
     }
 
     const fetchData = async () => {
-        const [fetchAppointments, departments] = await Promise.all([
-            axios.get(`/appointments?page=${currentPage}&perPage=${itemsPerPage}`, {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }),
-            axios.get('/departments', {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-        ]);
-        //   console.log(fetchAppointments.data);
-        setCurrentPage(fetchAppointments.data.meta.currentPage);
-        setItemsPerPage(7);
-        setTotalPages(fetchAppointments.data.meta.totalPages);
-        setData(fetchAppointments.data.data);
-        setDepartments(departments.data.data);
+        try {
+            const [fetchAppointments, departments] = await Promise.all([
+                axios.get(`/appointments?page=${currentPage}&perPage=${itemsPerPage}`, {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                axios.get('/departments', {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            ]);
+            //   console.log(fetchAppointments.data);
+            setCurrentPage(fetchAppointments.data.meta.currentPage);
+            setItemsPerPage(7);
+            setTotalPages(fetchAppointments.data.meta.totalPages);
+            setData(fetchAppointments.data.data);
+            setDepartments(departments.data.data);
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
     }
-
 
     useEffect(() => {
         fetchData();

@@ -128,8 +128,8 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </Layout>
+            </div >
+        </Layout >
     );
 };
 

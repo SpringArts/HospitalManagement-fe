@@ -2,6 +2,7 @@ import axios from "@/lib/axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) {
     const token = Cookies.get("token");
@@ -9,7 +10,8 @@ export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) 
 
 
     const sendMessage = async (e) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
         await axios.post(`/message/${receiver.id}?bookingId=${bookingId}`, { message }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -18,6 +20,9 @@ export default function ChatInput({ receiver, fetchRecentMessages, bookingId }) 
         });
         setMessage('');
         fetchRecentMessages();
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
     };
 
     return (

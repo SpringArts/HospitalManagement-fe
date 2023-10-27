@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import AppointmentCard from "@/components/doctor/AppointmentCard";
 
-const List = () => {
+const List = ({ langVar, langType }) => {
     const token = Cookies.get("token");
     const [appointmentLists, setAppointmentLists] = useState([]);
     const [error, setError] = useState(null);
@@ -44,44 +44,43 @@ const List = () => {
         );
 
         const [hours, minutes] = timeString.split(":");
-        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${
-            hours >= 12 ? "PM" : "AM"
-        }`;
+        const formattedTime = `${Number(hours) % 12 || 12}:${minutes} ${hours >= 12 ? "PM" : "AM"
+            }`;
 
         return `${formattedDate} - ${formattedTime}`;
     };
 
     return (
         <div className="p-6 bg-white shadow rounded-xl">
-            <h1>Appointments</h1>
+            <h1>{langVar?.doctor.appointments}</h1>
 
             <div className="grid grid-cols-1 mt-5">
                 {/* {error && <div className="text-red-500">{error}</div>} */}
                 {appointmentLists
                     ? appointmentLists?.map((appointment) => (
-                          <AppointmentCard
-                              key={appointment.id}
-                              id={appointment.id}
-                              // fetchData={fetchData}
-                              is_visible={appointment.is_visible}
-                              status={appointment.status}
-                              appointmentDate={appointment.appointmentDate}
-                              appointmentTime={appointment.appointmentTime}
-                              patientId={appointment.patientId}
-                              doctorId={appointment.doctorId}
-                              doctorName={appointment.patientName ?? "Unknown"}
-                              doctorLocation={appointment.doctorLocation}
-                              bookingId={appointment.bookingId}
-                              appointmentType={appointment.appointmentType}
-                          />
-                          // <div>Shi tl</div>
-                      ))
+                        <AppointmentCard
+                            key={appointment.id}
+                            id={appointment.id}
+                            // fetchData={fetchData}
+                            is_visible={appointment.is_visible}
+                            status={appointment.status}
+                            appointmentDate={appointment.appointmentDate}
+                            appointmentTime={appointment.appointmentTime}
+                            patientId={appointment.patientId}
+                            doctorId={appointment.doctorId}
+                            doctorName={appointment.patientName ?? "Unknown"}
+                            doctorLocation={appointment.doctorLocation}
+                            bookingId={appointment.bookingId}
+                            appointmentType={appointment.appointmentType}
+                        />
+                        // <div>Shi tl</div>
+                    ))
                     : null}
 
                 <div className="p-3 text-center">
-                    <Link href="/doctor/appointment">
+                    <Link href={`/${langType}/doctor/appointment`}>
                         <button className="bg-gray-500 text-white px-3 py-3 rounded-md">
-                            See More
+                            {langVar?.doctor.see_more}
                         </button>
                     </Link>
                 </div>

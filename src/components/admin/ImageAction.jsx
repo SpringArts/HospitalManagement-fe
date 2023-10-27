@@ -33,7 +33,6 @@ const ImageAction = ({ image, model }) => {
                     if (error.response && error.response.status === 422) {
                         toast.error(error.response.data.errors);
                     } else {
-                        console.log("line 34");
                         toast.error(error.message);
                     }
                 }

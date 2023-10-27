@@ -3,22 +3,26 @@ import { useState, useEffect } from "react";
 import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import UserBookingList from "./UserBookingList";
-export default function UserBookingData() {
+import useLang from "@/hooks/use-lang";
+import toast from "react-hot-toast";
+export default function UserBookingData({ langVar }) {
     const token = Cookies.get("token");
     const [selectedButton, setSelectedButton] = useState(1);
     const [dynamicData, setDynamicData] = useState([]);
-    const activeStyle = "border-green-600 border-b-2 text-green-500";
-    const defStyle = "text-gray-500 hover:border-gray-300 hover:text-gray-700";
     const handleButtonClick = (number) => {
         setDynamicData(number);
         setSelectedButton(number);
     };
     const fetchData = async () => {
-        const res = await axios.get("/appointments", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        try {
+            const res = await axios.get("/appointments", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     };
 
     useEffect(() => {
@@ -32,7 +36,7 @@ export default function UserBookingData() {
                         } hover:text-pink-500 hover:border-pink-500 focus:outline-none focus:text-pink-500 focus:border-pink-500`}
                     onClick={() => handleButtonClick(1)}
                 >
-                    Upcoming
+                    {langVar?.page.profile.upcoming}
                 </button>
 
                 <button
@@ -40,7 +44,7 @@ export default function UserBookingData() {
                         } hover:text-blue-500 hover:border-blue-500 focus:outline-none focus:text-blue-500 focus:border-blue-500`}
                     onClick={() => handleButtonClick(2)}
                 >
-                    Completed
+                    {langVar?.page.profile.completed}
                 </button>
 
                 <button
@@ -48,7 +52,7 @@ export default function UserBookingData() {
                         } hover:text-green-500 hover:border-green-500 focus:outline-none focus:text-green-500 focus:border-green-500`}
                     onClick={() => handleButtonClick(3)}
                 >
-                    Cancelled
+                    {langVar?.page.profile.canceled}
                 </button>
             </nav>
             <div className="mt-4">

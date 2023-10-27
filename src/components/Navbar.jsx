@@ -38,9 +38,8 @@ export default function Navbar({ NavbarTitle }) {
                 </div>
 
                 <div
-                    className={`flex flex-row w-full rounded-xl items-center justify-between py-2 md:bg-transparent md:block bg-gray-100 ${
-                        open ? "block " : "hidden"
-                    }`}
+                    className={`flex flex-row w-full rounded-xl items-center justify-between py-2 md:bg-transparent md:block bg-gray-100 ${open ? "block " : "hidden"
+                        }`}
                 >
                     <ul className="items-center gap-2 h-auto w-full flex flex-col justify-between md:flex-row ">
                         {NavbarTitle.map((item) => (

@@ -5,12 +5,15 @@ import Image from "next/image";
 import profileImg from "../../../public/images/userProfile.png";
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios";
+import { useToast } from "../ErrorHandlingToast/useToaster";
 import { Loading } from "../loading/Loading";
+import useLang from "@/hooks/use-lang";
 
-function UserProfile() {
+function UserProfile({ langVar }) {
     const [userInfo, setUserInfo] = useState(null);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const { toastError } = useToast()
 
     useEffect(() => {
         // Retrieve the encoded 'user_info' from cookies
@@ -26,7 +29,7 @@ function UserProfile() {
                 setUserInfo(userInfoObject);
                 setLoading(true);
             } catch (error) {
-                console.error("Error parsing user_info:", error);
+                toastError(error)
             }
         }
     }, []);
@@ -47,7 +50,7 @@ function UserProfile() {
             Cookies.remove("token");
             router.push("/auth/login");
         } catch (error) {
-            console.error("Logout failed:", error);
+            toastError(error)
         }
     };
 
@@ -76,7 +79,7 @@ function UserProfile() {
                             className="bg-zinc-600 text-white px-4 py-2 rounded-md hover:bg-zinc-700 block mt-4"
                             onClick={handleLogout} // Add onClick event handler
                         >
-                            Logout
+                            {langVar?.page.profile.logout}
                         </button>
                     </div>
                 </>

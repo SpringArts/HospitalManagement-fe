@@ -3,15 +3,21 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
+import { useToast } from "../ErrorHandlingToast/useToaster";
 
-const Sidebar = () => {
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+
+const Sidebar = ({ langVar, langType }) => {
+    let userInfo
+    if ((Cookies.get('user_info'))) {
+     userInfo = JSON.parse(Cookies.get("user_info"));
+    }
     const token = Cookies.get("token");
     const [hospitalId, setHospitalId] = useState(null);
+    const { toastError } = useToast()
     //Fetch Hostpital Data if role is hospitalAdmin
     const fetchData = async () => {
         try {
-            if (userInfo.role === "hospitalAdmin") {
+            if (userInfo?.role === "hospitalAdmin") {
                 const res = await axios.get("/fetch-hospital", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -20,7 +26,7 @@ const Sidebar = () => {
                 setHospitalId(res.data.hospitalId);
             }
         } catch (error) {
-            console.log(error);
+            toastError(error)
         }
     }
 
@@ -34,46 +40,46 @@ const Sidebar = () => {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            href="/user/profile"
+                            href={`/${langType}/user/profile`}
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            Appointment Lists
+                            {langVar?.page.profile.appoint_list}
                         </Link>
                     </li>
 
                     {
-                        userInfo.role === "doctor" && (
+                        userInfo?.role === "doctor" && (
                             <li>
                                 <Link
-                                    href="/doctor"
+                                    href={`/${langType}/doctor`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )
                     }
                     {
-                        userInfo.role === "superAdmin" && (
+                        userInfo?.role === "superAdmin" && (
                             <li>
                                 <Link
-                                    href="/superadmin"
+                                    href={`/${langType}/superadmin`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )
                     }
 
                     {
-                        userInfo.role === "hospitalAdmin" && (
+                        userInfo?.role === "hospitalAdmin" && (
                             <li>
                                 <Link
-                                    href={`/dashboard/hospital/${hospitalId}`}
+                                    href={`/${langType}/dashboard/hospital/${hospitalId}`}
                                     className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                 >
-                                    Dashboard
+                                    {langVar?.page.profile.dashboard}
                                 </Link>
                             </li>
                         )

@@ -1,48 +1,42 @@
 "use client";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import { useToast } from "./ErrorHandlingToast/useToaster";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { CiAlarmOn } from 'react-icons/ci'
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 export default function Login() {
-    const toastSuccess = () =>
-        toast.success("Successfully Sign in", { position: "top-center" });
-    const toastError = () =>
-        toast.error("Error! cannot find account", { position: "top-center" });
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+    const { toastSuccess, toastError } = useToast()
 
     let data = JSON.stringify(formData);
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        toast('Please wait a second', {
+            icon: <CiAlarmOn />,
+            position: "top-center"
+        });
+
         try {
             const response = await axios.post("/login", data);
-            console.log(data);
-
             console.log("Login successfully: ", response.data);
             let resData = response.data;
             let user = resData.data.user;
             let token = resData.data.token;
             Cookies.set("user_info", JSON.stringify(user));
             Cookies.set("token", token);
-            toastSuccess();
+            toastSuccess(response.data.message);
 
-            if (response.data.status) {
-                router.push("/user");
-            }
+            router.push('/user')
         } catch (error) {
-            toastError();
-            if (error.response && error.response.status === 422) {
-                const validationErrors = error.response.data.errors;
-                console.error("Validation errors:", validationErrors);
-            } else {
-                console.error("Registration error:", error.message);
-            }
+            toastError(error.response.data.message)
         }
     };
     const handleChange = (e) => {
@@ -52,6 +46,7 @@ export default function Login() {
             [name]: value,
         });
     };
+
     return (
         <form method="POST" onSubmit={handleLogin}>
             <div className="relative mt-5">
@@ -75,6 +70,7 @@ export default function Login() {
                     placeholder="Email Address"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                 />
             </div>
             <div className="relative mt-5">
@@ -97,6 +93,7 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
+                    required
                 />
             </div>
             <Link href='/auth/forgot-password' className="text-blue-500 font-normal text-sm">Forgot Password</Link>

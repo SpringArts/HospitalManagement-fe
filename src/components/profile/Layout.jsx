@@ -1,39 +1,48 @@
 'use client';
+import React, { useState, useEffect } from 'react'
 import Cookies from "js-cookie";
 import Navbar from "../Navbar";
 import Sidebar from "./Sidebar";
+import { usePathname } from 'next/navigation';
+import { getDictionary } from '../../../getDictionary';
+import useLang from '@/hooks/use-lang';
 
 const Layout = ({ children }) => {
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+    let userInfo
+    if ((Cookies.get('user_info'))) {
+     userInfo = JSON.parse(Cookies.get("user_info"));
+    }
+    const { langVar, langType } = useLang()
+
     const Navtitle = [
         {
             id: 1,
-            name: "Home",
-            to: "/user",
+            name: langVar?.navigation.home,
+            to: `/${langType}/user`,
         },
         {
             id: 2,
-            name: "Partners",
-            to: "/user/hospital",
+            name: langVar?.navigation.hospitals,
+            to: `/${langType}/user/hospital`,
         },
         {
             id: 3,
-            name: "About",
-            to: "/user/about-us",
+            name: langVar?.navigation.about,
+            to: `/${langType}/user/about-us`,
         },
         {
             id: 4,
-            name: "Contact",
-            to: "/user/contact-us",
+            name: langVar?.navigation.contact,
+            to: `/${langType}/user/contact-us`,
         },
     ];
     return (
         <div>
             <Navbar NavbarTitle={Navtitle} />
             <div className="flex min-h-screen">
-                {userInfo.role !== "patient" && (
+                {userInfo?.role !== "patient" && (
                     <div className="w-1/4 bg-gray-200">
-                        <Sidebar />
+                        <Sidebar langVar={langVar} langType={langType} />
                     </div>
                 )}
 

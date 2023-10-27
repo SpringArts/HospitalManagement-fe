@@ -6,13 +6,13 @@ import toast, { Toaster } from "react-hot-toast";
 
 const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
     const [appointmentTime, setAppointmentTime] = useState([]);
-
     const [formData, setFormData] = useState({
         doctorId: doctorId,
         appointmentType: "outpatient",
         appointmentDate: "",
         appointmentTime: "",
         description: "",
+        patientId: JSON.parse(Cookies.get("user_info")).id,
     });
 
     const { name } = JSON.parse(Cookies.get("user_info"));
@@ -43,27 +43,33 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
 
     const handleCheckButtonClick = async (e) => {
         e.preventDefault();
-        //console.log(formData);
-        const response = await axios.post("/check-appointment", formData, {
-            headers: {
-                Authorization: `Bearer ${Cookies.get("token")}`,
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-        });
-        // console.log(response);
-        if (response.data.data === null) {
-            toast.error(response.data.message);
-        } else {
-            toast.success(response.data.message);
+        try {
+            const response = await axios.post("/check-appointment", formData, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            });
+            if (response.data.data === null) {
+                toast.error(response.data.message);
+            } else {
+                toast.success(response.data.message);
+                
+            }
+            
+        } catch (error) {
+            const errorMessage = JSON.stringify(error.response.data.message);
+            toast.error(errorMessage);
         }
+
     };
 
     return (
         <div
             className={`fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity ${isOpen
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none transform scale-95"
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none transform scale-95"
                 }`}
         >
             <div
@@ -125,6 +131,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         value={formData.appointmentDate}
                                         onChange={handleInputChange}
                                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                        required
                                     />
                                 </div>
                                 <div className="w-1/2">
@@ -140,6 +147,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         value={formData.appointmentTime}
                                         onChange={handleInputChange}
                                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                        required
                                     >
                                         <option value="">Select Time</option>
                                         {appointmentTime.map((item, index) => (
@@ -166,6 +174,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     value={formData.appointmentType}
                                     onChange={handleInputChange}
                                     className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                    required
                                 >
                                     <option value="outpatient">
                                         OutPatient
@@ -189,6 +198,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                     rows="4"
                                     placeholder="Enter your current state of health here..."
+                                    required
                                 ></textarea>
                             </div>
                             <div className="flex justify-between mt-6">

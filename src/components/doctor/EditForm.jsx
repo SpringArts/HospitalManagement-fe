@@ -71,6 +71,7 @@ const EditForm = (props) => {
                         className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                         value={nameInput}
                         onChange={(e) => setNameInput(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="mb-3">
@@ -86,6 +87,7 @@ const EditForm = (props) => {
                         className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                         value={emailInput}
                         onChange={(e) => setEmailInput(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="mb-3">
@@ -101,6 +103,7 @@ const EditForm = (props) => {
                         className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                         value={phoneInput}
                         onChange={(e) => setPhoneInput(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="mb-3">
@@ -115,6 +118,7 @@ const EditForm = (props) => {
                         className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                         value={addressInput}
                         onChange={(e) => setAddressInput(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="mb-3">
@@ -130,6 +134,7 @@ const EditForm = (props) => {
                         className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                         value={passwordInput}
                         onChange={(e) => setPasswordInput(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="text-end">

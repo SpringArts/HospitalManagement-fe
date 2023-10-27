@@ -1,5 +1,5 @@
 'use client'
-import React ,{useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -7,51 +7,51 @@ import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 
 const page = () => {
 
-  const token = Cookies.get("token");
-  const [isLoading, setIsLoading] = useState(false);
-  const [userLists, setUserLists] = useState([]);
-  const [hospitalLists, setHospitalLists] = useState([]);
-  const {toastError} =  useToast()
+    const token = Cookies.get("token");
+    const [isLoading, setIsLoading] = useState(false);
+    const [userLists, setUserLists] = useState([]);
+    const [hospitalLists, setHospitalLists] = useState([]);
+    const { toastError } = useToast()
 
-  const [selectUser, setSelectUser] = useState("");
-  const [selectHospital, setSelectHospital] = useState("");
+    const [selectUser, setSelectUser] = useState("");
+    const [selectHospital, setSelectHospital] = useState("");
 
-  const getUserLists = async () => {
-    await axios
-        .get(`http://127.0.0.1:8000/api/users?perPage=100`, {
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .then((response) => {
-            setUserLists(response.data.data);
-        });
-};
-const getHospitalLists = async () => {
-    await axios
-        .get(`http://127.0.0.1:8000/api/hospitals?perPage=100`, {
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .then((response) => {
-            setHospitalLists(response.data.data.data);
-        })
-        .catch((error) => {
-            toastError(error.message)
-        });
-};
+    const getUserLists = async () => {
+        await axios
+            .get(`http://127.0.0.1:8000/api/users?perPage=100`, {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setUserLists(response.data.data);
+            });
+    };
+    const getHospitalLists = async () => {
+        await axios
+            .get(`http://127.0.0.1:8000/api/hospitals?perPage=100`, {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setHospitalLists(response.data.data.data);
+            })
+            .catch((error) => {
+                toastError(error.message)
+            });
+    };
 
-useEffect(() => {
-  getUserLists();
-  getHospitalLists();
-}, []);
+    useEffect(() => {
+        getUserLists();
+        getHospitalLists();
+    }, []);
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-  }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    }
 
     return (
         <Layout>
@@ -79,8 +79,8 @@ useEffect(() => {
                                         className="mt-1.5 w-full rounded-lg border py-2 ps-2 border-gray-400 text-gray-700 sm:text-sm"
                                     >
                                         <option>Please Choose User</option>
-                                        {userLists?.map((user) => (
-                                            <option value={user.id}>
+                                        {userLists?.map((user, index) => (
+                                            <option value={user.id} key={index}>
                                                 {user?.name}
                                             </option>
                                         ))}
@@ -99,8 +99,8 @@ useEffect(() => {
                                         className="mt-1.5 w-full rounded-lg border py-2 ps-2 border-gray-400 text-gray-700 sm:text-sm"
                                     >
                                         <option>Please Choose Hospital</option>
-                                        {hospitalLists?.map((hospital) => (
-                                            <option value={hospital.id}>
+                                        {hospitalLists?.map((hospital, index) => (
+                                            <option value={hospital.id} key={index}>
                                                 {hospital?.name}
                                             </option>
                                         ))}
@@ -126,8 +126,8 @@ useEffect(() => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </Layout>
+            </div >
+        </Layout >
     );
 };
 

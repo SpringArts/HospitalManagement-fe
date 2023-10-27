@@ -7,7 +7,7 @@ import { useToast } from "./ErrorHandlingToast/useToaster";
 
 export default function Register() {
     const router = useRouter();
-    const {toastSuccess, toastError} = useToast()
+    const { toastSuccess, toastError } = useToast()
 
     const [formData, setFormData] = useState({
         name: "",
@@ -56,6 +56,7 @@ export default function Register() {
                     className="my-2 p-3 bg-gray-50 border rounded-full border-[#EE86D7] text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Name"
                     onChange={handleChange}
+                    required
                 />
             </div>
             <div className="relative mt-5">
@@ -79,6 +80,7 @@ export default function Register() {
                     placeholder="Email Address"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                 />
             </div>
             <div className="relative mt-5">
@@ -101,6 +103,7 @@ export default function Register() {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
+                    required
                 />
             </div>
 

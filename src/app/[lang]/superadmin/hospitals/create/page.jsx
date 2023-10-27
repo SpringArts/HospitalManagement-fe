@@ -23,13 +23,17 @@ const create = () => {
 
 
     const fetchUser = async () => {
-        const res = await axios.get("/normal-users", {
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setUsers(res.data.data);
+        try {
+            const res = await axios.get("/normal-users", {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setUsers(res.data.data);
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +65,7 @@ const create = () => {
 
     useEffect(() => {
         fetchUser();
-    })
+    },[])
 
     return (
         <Layout>

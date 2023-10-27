@@ -7,14 +7,17 @@ import { useToast } from "../ErrorHandlingToast/useToaster";
 
 
 const Sidebar = ({ langVar, langType }) => {
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+    let userInfo
+    if ((Cookies.get('user_info'))) {
+     userInfo = JSON.parse(Cookies.get("user_info"));
+    }
     const token = Cookies.get("token");
     const [hospitalId, setHospitalId] = useState(null);
     const { toastError } = useToast()
     //Fetch Hostpital Data if role is hospitalAdmin
     const fetchData = async () => {
         try {
-            if (userInfo.role === "hospitalAdmin") {
+            if (userInfo?.role === "hospitalAdmin") {
                 const res = await axios.get("/fetch-hospital", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -45,7 +48,7 @@ const Sidebar = ({ langVar, langType }) => {
                     </li>
 
                     {
-                        userInfo.role === "doctor" && (
+                        userInfo?.role === "doctor" && (
                             <li>
                                 <Link
                                     href={`/${langType}/doctor`}
@@ -57,7 +60,7 @@ const Sidebar = ({ langVar, langType }) => {
                         )
                     }
                     {
-                        userInfo.role === "superAdmin" && (
+                        userInfo?.role === "superAdmin" && (
                             <li>
                                 <Link
                                     href={`/${langType}/superadmin`}
@@ -70,7 +73,7 @@ const Sidebar = ({ langVar, langType }) => {
                     }
 
                     {
-                        userInfo.role === "hospitalAdmin" && (
+                        userInfo?.role === "hospitalAdmin" && (
                             <li>
                                 <Link
                                     href={`/${langType}/dashboard/hospital/${hospitalId}`}

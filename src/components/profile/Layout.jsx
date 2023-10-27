@@ -8,7 +8,10 @@ import { getDictionary } from '../../../getDictionary';
 import useLang from '@/hooks/use-lang';
 
 const Layout = ({ children }) => {
-    const userInfo = JSON.parse(Cookies.get("user_info"));
+    let userInfo
+    if ((Cookies.get('user_info'))) {
+     userInfo = JSON.parse(Cookies.get("user_info"));
+    }
     const { langVar, langType } = useLang()
 
     const Navtitle = [
@@ -37,7 +40,7 @@ const Layout = ({ children }) => {
         <div>
             <Navbar NavbarTitle={Navtitle} />
             <div className="flex min-h-screen">
-                {userInfo.role !== "patient" && (
+                {userInfo?.role !== "patient" && (
                     <div className="w-1/4 bg-gray-200">
                         <Sidebar langVar={langVar} langType={langType} />
                     </div>

@@ -55,7 +55,9 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                 toast.error(response.data.message);
             } else {
                 toast.success(response.data.message);
+                
             }
+            
         } catch (error) {
             const errorMessage = JSON.stringify(error.response.data.message);
             toast.error(errorMessage);

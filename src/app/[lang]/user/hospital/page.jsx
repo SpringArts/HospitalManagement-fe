@@ -8,6 +8,8 @@ import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import { useToast } from "@/components/ErrorHandlingToast/useToaster";
 import useLang from "@/hooks/use-lang";
+import RegImg from "@/../public/login.svg"
+
 
 function Page() {
     const [meta, setMeta] = useState({});
@@ -182,7 +184,7 @@ function Page() {
 
                                                 <div className="hidden sm:block sm:shrink-0">
                                                     <Image
-                                                        src="/login.svg"
+                                                        src={RegImg}
                                                         alt="Doctor Avatar"
                                                         width="0"
                                                         height="0"

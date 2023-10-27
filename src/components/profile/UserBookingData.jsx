@@ -8,18 +8,20 @@ export default function UserBookingData({ langVar }) {
     const token = Cookies.get("token");
     const [selectedButton, setSelectedButton] = useState(1);
     const [dynamicData, setDynamicData] = useState([]);
-    const activeStyle = "border-green-600 border-b-2 text-green-500";
-    const defStyle = "text-gray-500 hover:border-gray-300 hover:text-gray-700";
     const handleButtonClick = (number) => {
         setDynamicData(number);
         setSelectedButton(number);
     };
     const fetchData = async () => {
-        const res = await axios.get("/appointments", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        try {
+            const res = await axios.get("/appointments", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     };
 
     useEffect(() => {

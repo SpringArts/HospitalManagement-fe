@@ -57,9 +57,10 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                 toast.success(response.data.message);
             }
         } catch (error) {
-            toast.error(error.message)
+            const errorMessage = JSON.stringify(error.response.data.message);
+            toast.error(errorMessage);
         }
-       
+
     };
 
     return (
@@ -128,6 +129,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         value={formData.appointmentDate}
                                         onChange={handleInputChange}
                                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                        required
                                     />
                                 </div>
                                 <div className="w-1/2">
@@ -143,6 +145,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                         value={formData.appointmentTime}
                                         onChange={handleInputChange}
                                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                        required
                                     >
                                         <option value="">Select Time</option>
                                         {appointmentTime.map((item, index) => (
@@ -169,6 +172,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     value={formData.appointmentType}
                                     onChange={handleInputChange}
                                     className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
+                                    required
                                 >
                                     <option value="outpatient">
                                         OutPatient
@@ -192,6 +196,7 @@ const AppointmentPopUp = ({ isOpen, onClose, doctorName, doctorId }) => {
                                     className="mt-1 w-full rounded-md border border-gray-300 shadow-sm"
                                     rows="4"
                                     placeholder="Enter your current state of health here..."
+                                    required
                                 ></textarea>
                             </div>
                             <div className="flex justify-between mt-6">

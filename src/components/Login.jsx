@@ -70,6 +70,7 @@ export default function Login() {
                     placeholder="Email Address"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                 />
             </div>
             <div className="relative mt-5">
@@ -92,6 +93,7 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
+                    required
                 />
             </div>
             <Link href='/auth/forgot-password' className="text-blue-500 font-normal text-sm">Forgot Password</Link>

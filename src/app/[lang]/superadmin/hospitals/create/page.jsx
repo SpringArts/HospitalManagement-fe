@@ -85,6 +85,7 @@ const create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder="Enter hospital name"
                                         type="text"
+                                        required
                                         value={name}
                                         onChange={(e) =>
                                             setName(e.target.value)
@@ -94,12 +95,13 @@ const create = () => {
 
                                 <div>
                                     <label className="sr-only" htmlFor="name">
-                                        Email
+                                        Hospital Email Address
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder="Enter email address"
                                         type="email"
+                                        required
                                         value={email}
                                         onChange={(e) =>
                                             setEmail(e.target.value)
@@ -115,6 +117,7 @@ const create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder="Enter phone number"
                                         type="number"
+                                        required
                                         value={phone}
                                         onChange={(e) =>
                                             setPhone(e.target.value)
@@ -143,12 +146,13 @@ const create = () => {
                                 </div>
                                 <div>
                                     <label className="sr-only" htmlFor="name">
-                                        Address
+                                        Hospital Address
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
-                                        placeholder="Enter your address"
+                                        placeholder="Enter hospital address"
                                         type="text"
+                                        required
                                         value={address}
                                         onChange={(e) =>
                                             setAddress(e.target.value)
@@ -164,6 +168,7 @@ const create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder="Enter your location"
                                         type="text"
+                                        required
                                         value={location}
                                         onChange={(e) =>
                                             setLocation(e.target.value)
@@ -183,6 +188,7 @@ const create = () => {
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
                                         placeholder="Enter the description about hospital"
                                         rows="8"
+                                        required
                                         value={bio}
                                         onChange={(e) => setBio(e.target.value)}
                                         id="message"

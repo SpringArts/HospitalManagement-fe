@@ -198,6 +198,7 @@ const PatientForm = ({ params }) => {
                             onChange={handleInputChange}
                             id="departmentId"
                             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                            required
                         >
                             <option value="">{langVar?.hospital.please_select}</option>
                             {departments.map((department) => (
@@ -221,6 +222,7 @@ const PatientForm = ({ params }) => {
                             id="license"
                             placeholder="123ABC"
                             className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                            required
                         />
                     </div>
                     <div>
@@ -234,6 +236,7 @@ const PatientForm = ({ params }) => {
                             onChange={handleInputChange}
                             id="experience"
                             className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                            required
                         />
                     </div>
                     <div>
@@ -268,6 +271,7 @@ const PatientForm = ({ params }) => {
                             className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
                             rows="4"
                             placeholder={langVar?.hospital.enter_bio}
+                            required
                         ></textarea>
                     </div>
 

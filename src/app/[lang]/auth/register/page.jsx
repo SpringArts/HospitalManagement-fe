@@ -1,6 +1,8 @@
 import Register from "@/components/Register";
 import Image from "next/image";
 import Link from "next/link";
+import RegImg from "@/../public/login.svg"
+
 export default function Page() {
     return (
         <div className="overflow-hidden">
@@ -56,7 +58,7 @@ export default function Page() {
                         <div className="flex items-center p-3 mt-4 md:ml-48">
                             <Image
                                 className="relative hidden md:block"
-                                src="/login.svg"
+                                src={RegImg}
                                 alt="Register Logo"
                                 width={750}
                                 height={750}

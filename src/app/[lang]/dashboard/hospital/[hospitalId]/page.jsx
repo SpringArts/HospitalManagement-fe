@@ -11,6 +11,8 @@ import Cookies from "js-cookie";
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 import useLang from "@/hooks/use-lang";
+import RegImg from "@/../public/login.svg"
+
 
 const InfoCard = ({ title, count, icon: Icon, color }) => {
     return (
@@ -187,7 +189,7 @@ const Dashboard = ({ params }) => {
                                         alt="Paul Clapton"
                                         width={0}
                                         height={0}
-                                        src="/login.svg"
+                                        src={RegImg}
                                         className="h-16 w-16 rounded-lg object-cover shadow-sm"
                                     />
                                 </div>

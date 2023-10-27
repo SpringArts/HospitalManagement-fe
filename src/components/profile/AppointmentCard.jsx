@@ -129,7 +129,7 @@ const AppointmentCard = ({
                     (appointmentType === "chat" && status === 'upcoming' && is_visible === 1) ? (
                         <div className="flex shrink-0">
                             {isButtonDisabled ? (
-                                <Link href={`/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`} passHref>
+                                <Link href={`/en/user/realtime/chat/${doctorId}/${patientId}?bookId=${bookingId}`}>
                                     <button
                                         className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ${isButtonDisabled ? '' : 'cursor-not-allowed'}`}
                                     >

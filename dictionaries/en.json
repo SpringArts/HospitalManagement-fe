@@ -123,6 +123,41 @@
       "duty_end_time": "Duty End Time",
       "enter_bio": "Enter bio ...",
       "create": "Create"
+    },
+    "admin": {
+      "dashboard": "Dashboard",
+      "hospitals": "Hospitals",
+      "hospital_list": "Hospital List",
+      "doctors": "Doctors",
+      "doctor_list": "Doctor List",
+      "patients": "Patients",
+      "patient_list": "Patient List",
+      "department": "Departments",
+      "department_list": "Department List",
+      "create": "Create",
+      "home": "Home",
+
+      "create_hospital": "Create New Hospital",
+      "enter_name": "Enter name",
+      "enter_phone": "Enter phone",
+      "enter_email": "Enter email",
+      "enter_address": "Enter address",
+      "enter_location": "Enter location",
+      "enter_description": "Enter the description about hospital",
+
+      "create_doctor": "Create New Doctor",
+      "please_choose_user": "Please Choose User",
+      "please_choose_hospital": "Please Choose Hospital",
+      "please_choose_department": "Please Choose Department",
+      "enter_experience": "Enter work experience",
+      "enter_license": "Enter license number",
+      "enter_doctor_desc": "Enter the description",
+      "cancel": "Cancel",
+      
+      "create_patient": "Create New Patient",
+      
+      "create_department": "Create New Department",
+      "enter_department": "Enter Department name"
     }
   }
   

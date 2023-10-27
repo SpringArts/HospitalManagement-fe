@@ -1,8 +1,10 @@
 import React from "react";
 import UserProfile from "./UserProfile";
 import Link from "next/link";
+import useLang from "@/hooks/use-lang";
 
 const Sidebar = () => {
+    const { langVar, langType } = useLang()
     return (
         <div className="flex h-screen overflow-hidden sticky flex-col justify-between border-e bg-white">
             <div className="px-4 py-6">
@@ -13,10 +15,10 @@ const Sidebar = () => {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            href="/superadmin"
+                            href={`/${langType}/superadmin`}
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            General
+                            {langVar?.admin.dashboard}
                         </Link>
                     </li>
 
@@ -25,7 +27,7 @@ const Sidebar = () => {
                             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <span className="text-sm font-medium">
                                     {" "}
-                                    Hospitals{" "}
+                                    {langVar?.admin.hospitals}{" "}
                                 </span>
 
                                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -47,19 +49,19 @@ const Sidebar = () => {
                             <ul className="mt-2 space-y-1 px-4">
                                 <li>
                                     <Link
-                                        href="/superadmin/hospitals"
+                                        href={`/${langType}/superadmin/hospitals`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Hospitals List
+                                        {langVar?.admin.hospital_list}
                                     </Link>
                                 </li>
 
                                 <li>
                                     <Link
-                                        href="/superadmin/hospitals/create"
+                                        href={`/${langType}/superadmin/hospitals/create`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Create
+                                        {langVar?.admin.create}
                                     </Link>
                                 </li>
                             </ul>
@@ -71,7 +73,7 @@ const Sidebar = () => {
                             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <span className="text-sm font-medium">
                                     {" "}
-                                    Doctors{" "}
+                                    {langVar?.admin.doctors}{" "}
                                 </span>
 
                                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -93,19 +95,19 @@ const Sidebar = () => {
                             <ul className="mt-2 space-y-1 px-4">
                                 <li>
                                     <Link
-                                        href="/superadmin/doctors"
+                                        href={`/${langType}/superadmin/doctors`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Doctor Lists
+                                        {langVar?.admin.doctor_list}
                                     </Link>
                                 </li>
 
                                 <li>
                                     <Link
-                                        href="/superadmin/doctors/create"
+                                        href={`/${langType}/superadmin/doctors/create`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Create
+                                        {langVar?.admin.create}
                                     </Link>
                                 </li>
                             </ul>
@@ -117,7 +119,7 @@ const Sidebar = () => {
                             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <span className="text-sm font-medium">
                                     {" "}
-                                    Patients{" "}
+                                    {langVar?.admin.patients}{" "}
                                 </span>
 
                                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -139,19 +141,19 @@ const Sidebar = () => {
                             <ul className="mt-2 space-y-1 px-4">
                                 <li>
                                     <Link
-                                        href="/superadmin/patients"
+                                        href={`/${langType}/superadmin/patients`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Patient Lists
+                                        {langVar?.admin.patient_list}
                                     </Link>
                                 </li>
 
                                 <li>
                                     <Link
-                                        href="/superadmin/patients/create"
+                                        href={`/${langType}/superadmin/patients/create`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Create
+                                        {langVar?.admin.create}
                                     </Link>
                                 </li>
                             </ul>
@@ -163,7 +165,7 @@ const Sidebar = () => {
                             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <span className="text-sm font-medium">
                                     {" "}
-                                    Departments{" "}
+                                    {langVar?.admin.department}{" "}
                                 </span>
 
                                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -185,29 +187,29 @@ const Sidebar = () => {
                             <ul className="mt-2 space-y-1 px-4">
                                 <li>
                                     <Link
-                                        href="/superadmin/management"
+                                        href={`/${langType}/superadmin/management`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Department Lists
+                                        {langVar?.admin.department_list}
                                     </Link>
                                 </li>
 
                                 <li>
                                     <Link
-                                        href="/superadmin/management/create"
+                                        href={`/${langType}/superadmin/management/create`}
                                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        Create
+                                        {langVar?.admin.create}
                                     </Link>
                                 </li>
                             </ul>
                         </details>
                     </li>
                     <Link
-                        href="/user/hospital"
+                        href={`/${langType}/user`}
                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700"
                     >
-                        Home
+                        {langVar?.admin.home}
                     </Link>
                 </ul>
             </div>

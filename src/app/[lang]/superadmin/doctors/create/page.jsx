@@ -5,14 +5,16 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Layout from "../../Layout";
+import useLang from "@/hooks/use-lang";
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const token = Cookies.get("token");
     const [isLoading, setIsLoading] = useState(false);
     const [userLists, setUserLists] = useState([]);
     const [hospitalLists, setHospitalLists] = useState([]);
     const [departmentLists, setDepartmentLists] = useState([]);
+    const { langVar } = useLang()
 
     const [selectUser, setSelectUser] = useState("");
     const [selectHospital, setSelectHospital] = useState("");
@@ -122,7 +124,7 @@ const page = () => {
                     <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
                         <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
                             <h3 className="text-lg font-semibold tracking-wider my-3 text-center">
-                                Create New Doctor
+                                {langVar?.admin.create_doctor}
                             </h3>
                             <form
                                 action=""
@@ -140,7 +142,7 @@ const page = () => {
                                         }
                                         className="mt-1.5 w-full rounded-lg border py-2 ps-2 border-gray-400 text-gray-700 sm:text-sm"
                                     >
-                                        <option>Please Choose User</option>
+                                        <option>{langVar?.admin.please_choose_user}</option>
                                         {userLists?.map((user) => (
                                             <option
                                                 key={user.id}
@@ -163,7 +165,7 @@ const page = () => {
                                         }
                                         className="mt-1.5 w-full rounded-lg border py-2 ps-2 border-gray-400 text-gray-700 sm:text-sm"
                                     >
-                                        <option>Please Choose Hospital</option>
+                                        <option>{langVar?.admin.please_choose_hospital}</option>
                                         {hospitalLists?.map((hospital) => (
                                             <option
                                                 key={hospital.id}
@@ -186,7 +188,7 @@ const page = () => {
                                         className="mt-1.5 w-full rounded-lg border py-2 ps-2 border-gray-400 text-gray-700 sm:text-sm"
                                     >
                                         <option>
-                                            Please Choose Department
+                                            {langVar?.admin.please_choose_department}
                                         </option>
                                         {departmentLists?.map((department) => (
                                             <option
@@ -229,7 +231,7 @@ const page = () => {
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
-                                        placeholder="Enter your work experience"
+                                        placeholder={langVar?.admin.enter_experience}
                                         type="number"
                                         required
                                         value={experience}
@@ -245,7 +247,7 @@ const page = () => {
                                     </label>
                                     <input
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
-                                        placeholder="Enter your license number"
+                                        placeholder={langVar?.admin.enter_license}
                                         type="text"
                                         required
                                         value={license}
@@ -265,7 +267,7 @@ const page = () => {
 
                                     <textarea
                                         className="w-full rounded-lg border border-gray-400 p-3 text-sm"
-                                        placeholder="Enter the description about hospital"
+                                        placeholder={langVar?.admin.enter_doctor_desc}
                                         rows="8"
                                         value={bio}
                                         required
@@ -280,13 +282,13 @@ const page = () => {
                                         type="submit"
                                         className="inline-block w-full rounded-lg hover:bg-white hover:text-black transition-all duration-300 ease-in-out hvoer:border bg-black px-5 py-3 font-medium text-white sm:w-auto"
                                     >
-                                        Create
+                                        {langVar?.admin.create}
                                     </button>
                                     <button
                                         onClick={() => router.back()}
                                         className="inline-block w-full rounded-lg  px-5 py-3 font-medium hover:text-yellow-700 text-yellow-500 sm:w-auto"
                                     >
-                                        Cancel
+                                        {langVar?.admin.cancel}
                                     </button>
                                 </div>
                             </form>
@@ -298,4 +300,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

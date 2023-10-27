@@ -123,5 +123,40 @@
     "duty_end_time": "တာဝန်ပြီးဆုံးချိန်",
     "enter_bio": "ကိုယ်ရေးကိုယ်တာ ထည့်ပါ ...",
     "create": "ဖန်တီးမည်"
+  },
+  "admin": {
+    "dashboard": "ဒက်ရှ်ဘုတ်",
+    "hospitals": "ဆေးရုံများ",
+    "hospital_list": "ဆေးရုံစာရင်း",
+    "doctors": "ဆရာဝန်များ",
+    "doctor_list": "ဆရာဝန်စာရင်း",
+    "patients": "လူနာများ",
+    "patient_list": "လူနာစာရင်း",
+    "department": "ဌာနဆိုင်ရာများ",
+    "department_list": "ဌာနစာရင်း",
+    "create": "ဖန်တီးမည်",
+    "home": "ပင်မစာမျက်နှာ",
+
+    "create_hospital": "ဆေးရုံအသစ်ဖန်တီးပါ",
+    "enter_name": "နာမည် ထည့်ပါ",
+    "enter_phone": "ဖုန်းနံပါတ် ထည့်ပါ",
+    "enter_email": "အီးမေးလ် ထည့်ပါ။",
+    "enter_address": "လိပ်စာ ထည့်ပါ",
+    "enter_location": "တည်နေရာကို ထည့်သွင်းပါ",
+    "enter_description": "ဆေးရုံအကြောင်း ဖော်ပြချက်ကို ထည့်သွင်းပါ",
+
+    "create_doctor": "ဆရာဝန်အသစ်ဖန်တီးပါ",
+    "please_choose_user": "ကျေးဇူးပြု၍ အသုံးပြုသူကို ရွေးချယ်ပါ",
+    "please_choose_hospital": "ကျေးဇူးပြု၍ ဆေးရုံကိုရွေးချယ်ပါ",
+    "please_choose_department": "ကျေးဇူးပြု၍ ဌာနကိုရွေးချယ်ပါ",
+    "enter_experience": "လုပ်ငန်းအတွေ့အကြုံကို ထည့်သွင်းပါ။",
+    "enter_license": "လိုင်စင်နံပါတ် ထည့်ပါ",
+    "enter_doctor_desc": "ဖော်ပြချက်ကို ထည့်သွင်းပါ",
+    "cancel": "မလုပ်တော့ပါ",
+    
+    "create_patient": "လူနာအသစ်ဖန်တီးပါ",
+    
+    "create_department": "ဌာနအသစ် ဖန်တီးပါ။",
+    "enter_department": "ဌာနအမည် ထည့်ပါ။"
   }
 }

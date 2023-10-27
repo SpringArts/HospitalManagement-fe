@@ -4,6 +4,7 @@ import axios from "@/lib/axios";
 import Cookies from "js-cookie";
 import UserBookingList from "./UserBookingList";
 import useLang from "@/hooks/use-lang";
+import toast from "react-hot-toast";
 export default function UserBookingData({ langVar }) {
     const token = Cookies.get("token");
     const [selectedButton, setSelectedButton] = useState(1);
